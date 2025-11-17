@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Github, ExternalLink, Eye } from 'lucide-react';
-import { projects, Project } from './projects.data';
-import { createVariants } from '@/utils/types/motion';
-import './Projects.scss';
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Github, ExternalLink, Eye } from "lucide-react";
+import { projects, Project } from "./projects.data";
+import { createVariants } from "@/utils/types/motion";
+import "./Projects.scss";
 
 interface ProjectsProps {
 	onProjectClick: (project: Project) => void;
@@ -13,7 +13,7 @@ interface ProjectsProps {
 
 const Projects = ({ onProjectClick }: ProjectsProps) => {
 	const { i18n } = useTranslation();
-	const [selectedCategory, setSelectedCategory] = useState<string>('all');
+	const [selectedCategory, setSelectedCategory] = useState<string>("all");
 	const { ref, inView } = useInView({
 		threshold: 0.2,
 		triggerOnce: true,
@@ -37,21 +37,22 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 			opacity: 1,
 			transition: {
 				duration: 0.6,
-				ease: 'easeOut' as const,
+				ease: "easeOut" as const,
 			},
 		},
 	});
 
 	const categories = [
-		{ key: 'all', label: i18n.language === 'ko' ? '전체' : 'All' },
-		{ key: 'security', label: i18n.language === 'ko' ? '보안' : 'Security' },
-		{ key: 'web', label: i18n.language === 'ko' ? '웹' : 'Web' },
-		{ key: 'cloud', label: i18n.language === 'ko' ? '클라우드' : 'Cloud' },
-		{ key: 'other', label: i18n.language === 'ko' ? '기타' : 'Other' },
+		{ key: "all", label: i18n.language === "ko" ? "전체" : "All" },
+		{ key: "security", label: i18n.language === "ko" ? "보안" : "Security" },
+		{ key: "web", label: i18n.language === "ko" ? "웹" : "Web" },
+		{ key: "cloud", label: i18n.language === "ko" ? "클라우드" : "Cloud" },
+		{ key: "other", label: i18n.language === "ko" ? "기타" : "Other" },
 	];
 
-	const filteredProjects = projects.filter(project => 
-		selectedCategory === 'all' || project.category === selectedCategory
+	const filteredProjects = projects.filter(
+		(project) =>
+			selectedCategory === "all" || project.category === selectedCategory,
 	);
 
 	return (
@@ -60,48 +61,52 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 				className="projects__container container"
 				variants={containerVariants}
 				initial="hidden"
-				animate={inView ? 'visible' : 'hidden'}
+				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{i18n.language === 'ko' ? '프로젝트' : 'Projects'}
+					{i18n.language === "ko" ? "프로젝트" : "Projects"}
 				</motion.h2>
 
-				<motion.div className="category-filters" variants={itemVariants}>
-					{categories.map((category) => (
-						<motion.button
-							key={category.key}
-							className={`category-btn ${
-								selectedCategory === category.key ? 'active' : ''
-							}`}
-							onClick={() => setSelectedCategory(category.key)}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-						>
-							{category.label}
-						</motion.button>
-					))}
-				</motion.div>
-
-				<motion.div className="projects-grid" variants={containerVariants}>
-					{filteredProjects.map((project) => (
-						<ProjectCard
-							key={project.id}
-							project={project}
-							onProjectClick={onProjectClick}
-							variants={itemVariants}
-						/>
-					))}
-				</motion.div>
-
-				{filteredProjects.length === 0 && (
-					<motion.div className="no-projects" variants={itemVariants}>
-						<p>{i18n.language === 'ko' ? '해당 카테고리의 프로젝트가 없습니다.' : 'No projects found in this category.'}</p>
+					<motion.div className="category-filters" variants={itemVariants}>
+						{categories.map((category) => (
+							<motion.button
+								key={category.key}
+								className={`category-btn ${
+									selectedCategory === category.key ? "active" : ""
+								}`}
+								onClick={() => setSelectedCategory(category.key)}
+								whileHover={{ scale: 1.05 }}
+								whileTap={{ scale: 0.95 }}
+							>
+								{category.label}
+							</motion.button>
+						))}
 					</motion.div>
-				)}
-			</motion.div>
-		</section>
-	);
-};
+
+					<motion.div className="projects-grid" variants={containerVariants}>
+						{filteredProjects.map((project) => (
+							<ProjectCard
+								key={project.id}
+								project={project}
+								onProjectClick={onProjectClick}
+								variants={itemVariants}
+							/>
+						))}
+					</motion.div>
+
+					{filteredProjects.length === 0 && (
+						<motion.div className="no-projects" variants={itemVariants}>
+							<p>
+								{i18n.language === "ko"
+									? "해당 카테고리의 프로젝트가 없습니다."
+									: "No projects found in this category."}
+							</p>
+						</motion.div>
+					)}
+				</motion.div>
+			</section>
+		);
+	};
 
 interface ProjectCardProps {
 	project: Project;
@@ -109,24 +114,36 @@ interface ProjectCardProps {
 	variants: any;
 }
 
-const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) => {
+const ProjectCard = ({
+	project,
+	onProjectClick,
+	variants,
+}: ProjectCardProps) => {
 	const { i18n } = useTranslation();
-	
+
 	const getCategoryIcon = (category: string) => {
 		switch (category) {
-			case 'security': return '🔐';
-			case 'web': return '🌐';
-			case 'cloud': return '☁️';
-			default: return '💡';
+			case "security":
+				return "🔐";
+			case "web":
+				return "🌐";
+			case "cloud":
+				return "☁️";
+			default:
+				return "💡";
 		}
 	};
 
 	const getCategoryColor = (category: string) => {
 		switch (category) {
-			case 'security': return '#10b981';
-			case 'web': return '#3b82f6';
-			case 'cloud': return '#06b6d4';
-			default: return '#6366f1';
+			case "security":
+				return "#10b981";
+			case "web":
+				return "#3b82f6";
+			case "cloud":
+				return "#06b6d4";
+			default:
+				return "#6366f1";
 		}
 	};
 
@@ -139,18 +156,21 @@ const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) =>
 		>
 			{project.featured && (
 				<div className="featured-badge">
-					⭐ {i18n.language === 'ko' ? '추천' : 'Featured'}
+					⭐ {i18n.language === "ko" ? "추천" : "Featured"}
 				</div>
 			)}
 
 			<div className="project-header">
-				<div 
+				<div
 					className="project-category"
 					style={{ color: getCategoryColor(project.category) }}
 				>
-					<span className="category-icon">{getCategoryIcon(project.category)}</span>
+					<span className="category-icon">
+						{getCategoryIcon(project.category)}
+					</span>
 					<span className="category-text">
-						{project.category.charAt(0).toUpperCase() + project.category.slice(1)}
+						{project.category.charAt(0).toUpperCase() +
+							project.category.slice(1)}
 					</span>
 				</div>
 			</div>
@@ -159,9 +179,13 @@ const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) =>
 				<h3 className="project-title">
 					{project.title[i18n.language as keyof typeof project.title]}
 				</h3>
-				
+
 				<p className="project-description">
-					{project.description[i18n.language as keyof typeof project.description]}
+					{
+						project.description[
+							i18n.language as keyof typeof project.description
+						]
+					}
 				</p>
 
 				<div className="project-tech">
@@ -186,7 +210,7 @@ const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) =>
 					whileTap={{ scale: 0.95 }}
 				>
 					<Eye size={16} />
-					{i18n.language === 'ko' ? '자세히 보기' : 'View Details'}
+					{i18n.language === "ko" ? "자세히 보기" : "View Details"}
 				</motion.button>
 
 				{project.githubUrl && (
@@ -213,7 +237,7 @@ const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) =>
 						whileTap={{ scale: 0.95 }}
 					>
 						<ExternalLink size={16} />
-						{i18n.language === 'ko' ? '라이브' : 'Live'}
+						{i18n.language === "ko" ? "라이브" : "Live"}
 					</motion.a>
 				)}
 			</div>

@@ -12,8 +12,15 @@ const useScrollSpy = (sectionCount: number): UseScrollSpyReturn => {
 	);
 
 	useEffect(() => {
+		const scrollContainer = document.querySelector('.scroll-container') as HTMLElement;
+		
+		if (!scrollContainer) {
+			return;
+		}
+		
 		const handleScroll = () => {
-			const scrollPosition = window.scrollY + window.innerHeight / 2;
+			const scrollPosition = scrollContainer.scrollTop + 150;
+			let current = 0;
 
 			sectionRefs.current.forEach((section, index) => {
 				if (section) {
@@ -21,16 +28,20 @@ const useScrollSpy = (sectionCount: number): UseScrollSpyReturn => {
 					const sectionBottom = sectionTop + section.offsetHeight;
 
 					if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-						setCurrentSection(index);
+						current = index;
 					}
 				}
 			});
+
+			setCurrentSection(current);
 		};
 
-		window.addEventListener('scroll', handleScroll);
+		scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
 		handleScroll();
 
-		return () => window.removeEventListener('scroll', handleScroll);
+		return () => {
+			scrollContainer.removeEventListener('scroll', handleScroll);
+		};
 	}, [sectionCount]);
 
 	return {

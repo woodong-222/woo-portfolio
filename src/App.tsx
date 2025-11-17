@@ -15,7 +15,7 @@ import '@/utils/styles/globals.scss';
 const App = () => {
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { currentSection, sectionRefs } = useScrollSpy(6);
+	const { currentSection, sectionRefs } = useScrollSpy(4);
 
 	const handleSectionClick = (index: number) => {
 		const section = sectionRefs.current[index];
@@ -53,15 +53,13 @@ const App = () => {
 						<Hero />
 					</section>
 
-					<section ref={setSectionRef(1)} id="about-intro">
-						<About />
-					</section>
+					<About ref={setSectionRef(1)} />
 
-					<section ref={setSectionRef(4)} id="projects">
+					<section ref={setSectionRef(2)} id="projects">
 						<Projects onProjectClick={handleProjectClick} />
 					</section>
 
-					<section ref={setSectionRef(5)} id="thank-you">
+					<section ref={setSectionRef(3)} id="thank-you">
 						<ThankYou />
 					</section>
 				</main>

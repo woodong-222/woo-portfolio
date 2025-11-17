@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Moon, Sun, Menu, X, Globe } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Moon, Sun, Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { useTheme } from '@/utils/contexts/ThemeContext';
 import useResponsive from '@/utils/hooks/useResponsive';
 import './Header.scss';
@@ -14,13 +14,23 @@ interface HeaderProps {
 const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
 	const { theme, toggleTheme } = useTheme();
 	const { t, i18n } = useTranslation('common');
 	const { isMobile } = useResponsive();
 
 	const sections = [
 		{ key: 'home', label: t('navigation.home') },
-		{ key: 'about', label: t('navigation.about') },
+		{ 
+			key: 'about', 
+			label: t('navigation.about'),
+			hasDropdown: true,
+			subSections: [
+				{ id: 'about-intro', label: i18n.language === 'ko' ? '소개' : 'Introduction' },
+				{ id: 'tech-stack', label: i18n.language === 'ko' ? '기술' : 'Tech Stack' },
+				{ id: 'career', label: i18n.language === 'ko' ? '경력' : 'Career' },
+			]
+		},
 		{ key: 'projects', label: t('navigation.projects') },
 		{ key: 'contact', label: t('navigation.contact') },
 	];
@@ -41,6 +51,16 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 
 	const handleSectionClick = (index: number) => {
 		onSectionClick(index);
+		setIsMobileMenuOpen(false);
+		setAboutDropdownOpen(false);
+	};
+
+	const handleSubSectionClick = (id: string) => {
+		const element = document.getElementById(id);
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth' });
+		}
+		setAboutDropdownOpen(false);
 		setIsMobileMenuOpen(false);
 	};
 
@@ -64,15 +84,52 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 					<nav className="header__nav">
 						<div className="nav__sections">
 							{sections.map((section, index) => (
-								<button
+								<div 
 									key={section.key}
-									className={`nav__item ${
-										currentSection === index ? 'active' : ''
-									}`}
-									onClick={() => handleSectionClick(index)}
+									className="nav__item-wrapper"
+									onMouseEnter={() => section.hasDropdown && setAboutDropdownOpen(true)}
+									onMouseLeave={() => section.hasDropdown && setAboutDropdownOpen(false)}
 								>
-									{section.label}
-								</button>
+									<button
+										className={`nav__item ${
+											currentSection === index ? 'active' : ''
+										}`}
+										onClick={() => handleSectionClick(index)}
+									>
+										{section.label}
+										{section.hasDropdown && (
+											<ChevronDown size={16} className="dropdown-icon" />
+										)}
+									</button>
+									
+									{section.hasDropdown && (
+										<AnimatePresence>
+											{aboutDropdownOpen && (
+												<motion.div
+													className="nav__dropdown"
+													style={{
+														position: 'absolute',
+														left: '50%',
+													}}
+													initial={{ opacity: 0, x: '-50%', y: -10 }}
+													animate={{ opacity: 1, x: '-50%', y: 0 }}
+													exit={{ opacity: 0, x: '-50%', y: -10 }}
+													transition={{ duration: 0.2 }}
+												>
+													{section.subSections?.map((subSection) => (
+														<button
+															key={subSection.id}
+															className="dropdown__item"
+															onClick={() => handleSubSectionClick(subSection.id)}
+														>
+															{subSection.label}
+														</button>
+													))}
+												</motion.div>
+											)}
+										</AnimatePresence>
+									)}
+								</div>
 							))}
 						</div>
 					</nav>

@@ -26,6 +26,7 @@ body {
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  scroll-padding-top: 60px; // 헤더 실제 높이
   
   &::-webkit-scrollbar {
     width: 6px;
@@ -47,25 +48,17 @@ body {
 
 // Section base styles
 .section {
-  min-height: 100vh;
+  height: 100vh;
+  // overflow: hidden; // 일단 제거해서 테스트
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start; // 위에서부터 정렬
+  justify-content: center;
   position: relative;
-  
-  @include mobile-only {
-    min-height: 100vh;
-    padding: map.get($spacing, lg) map.get($spacing, sm);
-  }
-  
-  @include tablet-only {
-    padding: map.get($spacing, xl) map.get($spacing, md);
-  }
-  
-  @include desktop-only {
-    padding: map.get($spacing, 2xl) map.get($spacing, lg);
-  }
+  padding-top: 100px; // 헤더 높이 + 여유
+  padding-bottom: 40px; // 하단 여유
+  box-sizing: border-box;
 }
 
 // Typography

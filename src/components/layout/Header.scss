@@ -57,6 +57,11 @@
     gap: map.get($spacing, md);
   }
 
+  .nav__item-wrapper {
+    position: relative;
+    display: inline-flex;
+  }
+
   .nav__item {
     position: relative;
     background: none;
@@ -68,10 +73,21 @@
     border-radius: map.get($border-radius, lg);
     cursor: pointer;
     transition: $transition-base;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .dropdown-icon {
+      transition: transform 0.3s ease;
+    }
 
     &:hover {
       color: var(--text-primary);
       background: var(--bg-secondary);
+
+      .dropdown-icon {
+        transform: rotate(180deg);
+      }
     }
 
     &.active {
@@ -87,6 +103,37 @@
         height: 4px;
         background: var(--bg-accent);
         border-radius: 50%;
+      }
+    }
+  }
+
+  .nav__dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: map.get($spacing, md);
+    z-index: map.get($z-index, modal);
+    width: max-content;
+
+    .dropdown__item {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: map.get($font-sizes, sm);
+      font-weight: 500;
+      padding: map.get($spacing, xs) map.get($spacing, sm);
+      border-radius: map.get($border-radius, lg);
+      cursor: pointer;
+      transition: $transition-base;
+      white-space: nowrap;
+      flex-shrink: 0;
+
+      &:hover {
+        color: var(--text-primary);
+        background: var(--bg-secondary);
       }
     }
   }

@@ -1,22 +1,25 @@
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Code, Shield, Users, Lightbulb, Target } from 'lucide-react';
-import { createVariants } from '@/utils/types/motion';
-import './About.scss';
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Code, Shield, Users, Lightbulb, Target } from "lucide-react";
+import { createVariants } from "@/utils/types/motion";
+import { forwardRef } from "react";
+import "./About.scss";
 
-const About = () => {
+const About = forwardRef<HTMLElement>((props, ref) => {
 	return (
-		<>
+		<div ref={ref} className="about-wrapper">
 			<IntroductionSection />
 			<TechStackSection />
 			<CareerSection />
-		</>
+		</div>
 	);
-};
+});
+
+About.displayName = 'About';
 
 const IntroductionSection = () => {
-	const { t } = useTranslation('about');
+	const { t } = useTranslation("about");
 	const { ref, inView } = useInView({
 		threshold: 0.3,
 		triggerOnce: true,
@@ -40,7 +43,7 @@ const IntroductionSection = () => {
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut' as const,
+				ease: "easeOut" as const,
 			},
 		},
 	});
@@ -48,41 +51,41 @@ const IntroductionSection = () => {
 	const principles = [
 		{
 			icon: <Shield size={24} />,
-			text: t('introduction.items.0'),
-			color: '#6366f1'
+			text: t("introduction.items.0"),
+			color: "#6366f1",
 		},
 		{
 			icon: <Target size={24} />,
-			text: t('introduction.items.1'),
-			color: '#8b5cf6'
+			text: t("introduction.items.1"),
+			color: "#8b5cf6",
 		},
 		{
 			icon: <Users size={24} />,
-			text: t('introduction.items.2'),
-			color: '#3b82f6'
+			text: t("introduction.items.2"),
+			color: "#3b82f6",
 		},
 		{
 			icon: <Lightbulb size={24} />,
-			text: t('introduction.items.3'),
-			color: '#06b6d4'
+			text: t("introduction.items.3"),
+			color: "#06b6d4",
 		},
 		{
 			icon: <Code size={24} />,
-			text: t('introduction.items.4'),
-			color: '#10b981'
-		}
+			text: t("introduction.items.4"),
+			color: "#10b981",
+		},
 	];
 
 	return (
-		<section className="about-intro section" ref={ref}>
+		<section className="about-intro section" id="about-intro" ref={ref}>
 			<motion.div
 				className="about-intro__container container"
 				variants={containerVariants}
 				initial="hidden"
-				animate={inView ? 'visible' : 'hidden'}
+				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{t('introduction.title')}
+					{t("introduction.title")}
 				</motion.h2>
 
 				<div className="principles-grid">
@@ -94,13 +97,10 @@ const IntroductionSection = () => {
 							whileHover={{ scale: 1.02, y: -5 }}
 							transition={{ duration: 0.3 }}
 						>
-							<div 
-								className="principle-icon"
-								style={{ color: principle.color }}
-							>
+							<div className="principle-icon" style={{ color: principle.color }}>
 								{principle.icon}
 							</div>
-							<div 
+							<div
 								className="principle-text"
 								dangerouslySetInnerHTML={{ __html: principle.text }}
 							/>
@@ -113,7 +113,7 @@ const IntroductionSection = () => {
 };
 
 const TechStackSection = () => {
-	const { t } = useTranslation('about');
+	const { t } = useTranslation("about");
 	const { ref, inView } = useInView({
 		threshold: 0.3,
 		triggerOnce: true,
@@ -137,72 +137,74 @@ const TechStackSection = () => {
 			opacity: 1,
 			transition: {
 				duration: 0.6,
-				ease: 'easeOut' as const,
+				ease: "easeOut" as const,
 			},
 		},
 	});
 
 	const techCategories = [
 		{
-			title: t('techStack.categories.programming'),
-			items: t('techStack.skills.programming', { returnObjects: true }) as string[],
-			color: '#6366f1',
-			icon: '⚡'
+			title: t("techStack.categories.programming"),
+			items: t("techStack.skills.programming", {
+				returnObjects: true,
+			}) as string[],
+			color: "#6366f1",
+			icon: "⚡",
 		},
 		{
-			title: 'Frontend',
-			items: [t('techStack.skills.development.frontend')],
-			color: '#3b82f6',
-			icon: '🎨'
+			title: "Frontend",
+			items: [t("techStack.skills.development.frontend")],
+			color: "#3b82f6",
+			icon: "🎨",
 		},
 		{
-			title: 'Backend & DB',
-			items: [t('techStack.skills.development.backend')],
-			color: '#8b5cf6',
-			icon: '🔧'
+			title: "Backend & DB",
+			items: [t("techStack.skills.development.backend")],
+			color: "#8b5cf6",
+			icon: "🔧",
 		},
 		{
-			title: 'DevOps & Cloud',
-			items: [t('techStack.skills.development.devops')],
-			color: '#06b6d4',
-			icon: '☁️'
+			title: "DevOps & Cloud",
+			items: [t("techStack.skills.development.devops")],
+			color: "#06b6d4",
+			icon: "☁️",
 		},
 		{
-			title: t('techStack.categories.security'),
-			items: t('techStack.skills.security', { returnObjects: true }) as string[],
-			color: '#10b981',
-			icon: '🔐'
+			title: t("techStack.categories.security"),
+			items: t("techStack.skills.security", { returnObjects: true }) as string[],
+			color: "#10b981",
+			icon: "🔐",
 		},
 		{
-			title: 'OS',
-			items: [t('techStack.skills.other.os')],
-			color: '#f59e0b',
-			icon: '💻'
+			title: "OS",
+			items: [t("techStack.skills.other.os")],
+			color: "#f59e0b",
+			icon: "💻",
 		},
 		{
-			title: 'Collaboration',
-			items: [t('techStack.skills.other.collaboration')],
-			color: '#ef4444',
-			icon: '🤝'
+			title: "Collaboration",
+			items: [t("techStack.skills.other.collaboration")],
+			color: "#ef4444",
+			icon: "🤝",
 		},
 		{
-			title: 'Design',
-			items: [t('techStack.skills.other.design')],
-			color: '#ec4899',
-			icon: '🎭'
-		}
+			title: "Design",
+			items: [t("techStack.skills.other.design")],
+			color: "#ec4899",
+			icon: "🎭",
+		},
 	];
 
 	return (
-		<section className="tech-stack section" ref={ref}>
+		<section className="tech-stack section" id="tech-stack" ref={ref}>
 			<motion.div
 				className="tech-stack__container container"
 				variants={containerVariants}
 				initial="hidden"
-				animate={inView ? 'visible' : 'hidden'}
+				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{t('techStack.title')}
+					{t("techStack.title")}
 				</motion.h2>
 
 				<div className="tech-grid">
@@ -234,7 +236,7 @@ const TechStackSection = () => {
 };
 
 const CareerSection = () => {
-	const { t } = useTranslation('about');
+	const { t } = useTranslation("about");
 	const { ref, inView } = useInView({
 		threshold: 0.3,
 		triggerOnce: true,
@@ -258,26 +260,26 @@ const CareerSection = () => {
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut' as const,
+				ease: "easeOut" as const,
 			},
 		},
 	});
 
-	const timeline = t('career.timeline', { returnObjects: true }) as Array<{
+	const timeline = t("career.timeline", { returnObjects: true }) as Array<{
 		year: string;
 		items: string[];
 	}>;
 
 	return (
-		<section className="career section" ref={ref}>
+		<section className="career section" id="career" ref={ref}>
 			<motion.div
 				className="career__container container"
 				variants={containerVariants}
 				initial="hidden"
-				animate={inView ? 'visible' : 'hidden'}
+				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{t('career.title')}
+					{t("career.title")}
 				</motion.h2>
 
 				<div className="timeline">

@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react';
-import { useInView } from 'react-intersection-observer';
-import { createVariants } from '@/utils/types/motion';
-import './Hero.scss';
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Github, ExternalLink } from "lucide-react";
+import { useInView } from "react-intersection-observer";
+import { createVariants } from "@/utils/types/motion";
+import "./Hero.scss";
 
 const Hero = () => {
-	const { t } = useTranslation('hero');
+	const { t } = useTranslation("hero");
 	const { ref, inView } = useInView({
 		threshold: 0.3,
 		triggerOnce: true,
@@ -30,7 +30,7 @@ const Hero = () => {
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut' as const,
+				ease: "easeOut" as const,
 			},
 		},
 	});
@@ -42,7 +42,7 @@ const Hero = () => {
 			opacity: 1,
 			transition: {
 				duration: 1,
-				ease: 'easeOut' as const,
+				ease: "easeOut" as const,
 			},
 		},
 	});
@@ -53,23 +53,23 @@ const Hero = () => {
 				className="hero__container container"
 				variants={containerVariants}
 				initial="hidden"
-				animate={inView ? 'visible' : 'hidden'}
+				animate={inView ? "visible" : "hidden"}
 			>
 				<div className="hero__content">
 					<motion.div className="hero__text" variants={itemVariants}>
 						<motion.p className="hero__greeting" variants={itemVariants}>
-							{t('greeting')}
+							{t("greeting")}
 						</motion.p>
-						
+
 						<motion.h1 className="hero__title" variants={itemVariants}>
-							{t('title')}{' '}
-							<span className="hero__name text-gradient">{t('name')}</span>
+							{t("title")}{" "}
+							<span className="hero__name text-gradient">{t("name")}</span>
 							<br />
-							{t('subtitle')}
+							{t("subtitle")}
 						</motion.h1>
 
 						<motion.p className="hero__description" variants={itemVariants}>
-							{t('description')}
+							{t("description")}
 						</motion.p>
 
 						<motion.div className="hero__actions" variants={itemVariants}>
@@ -84,7 +84,7 @@ const Hero = () => {
 								<Github size={20} />
 								GitHub
 							</motion.a>
-							
+
 							<motion.a
 								href="https://velog.io/@woo2083/posts"
 								target="_blank"
@@ -100,7 +100,7 @@ const Hero = () => {
 
 						<motion.div className="hero__update" variants={itemVariants}>
 							<span className="update-text">
-								{t('lastUpdated')}: {new Date().toLocaleDateString()}
+								{t("lastUpdated")}: {new Date().toLocaleDateString()}
 							</span>
 						</motion.div>
 					</motion.div>
@@ -115,14 +115,14 @@ const Hero = () => {
 							<div className="image-content">
 								<div className="profile-ring">
 									<div className="profile-avatar">
-										<img 
-											src="/profile.jpeg" 
+										<img
+											src="/profile.jpeg"
 											alt="이동우 프로필 사진"
 											className="profile-photo"
 										/>
 									</div>
 								</div>
-								
+
 								<div className="floating-elements">
 									<div className="floating-item security">🔐</div>
 									<div className="floating-item code">💻</div>
@@ -134,7 +134,7 @@ const Hero = () => {
 					</motion.div>
 				</div>
 
-				<motion.div 
+				<motion.div
 					className="hero__scroll-indicator"
 					animate={{ y: [0, 10, 0] }}
 					transition={{ duration: 2, repeat: Infinity }}
