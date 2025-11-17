@@ -5,6 +5,12 @@
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   position: relative;
   overflow: hidden;
+
+  &.section {
+    height: 100vh;
+    padding-top: map.get($spacing, xl);
+    padding-bottom: map.get($spacing, lg);
+  }
   
   &__container {
     @include flex-center;
@@ -19,6 +25,12 @@
     z-index: 2;
     max-width: 800px;
     width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, xl);
+    padding-bottom: map.get($spacing, xl);
+    box-sizing: border-box;
   }
   
   .floating-elements {
@@ -56,7 +68,7 @@
   }
   
   &__main {
-    margin-bottom: map.get($spacing, 3xl);
+    margin-bottom: 0;
   }
   
   &__title {
@@ -81,8 +93,8 @@
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: map.get($border-radius, xl);
-    padding: map.get($spacing, 2xl);
-    margin-bottom: map.get($spacing, 2xl);
+    padding: map.get($spacing, xl);
+    margin-bottom: map.get($spacing, xl);
     transition: $transition-base;
     cursor: default;
     
@@ -116,7 +128,7 @@
   }
   
   .growth-visualization {
-    margin-bottom: map.get($spacing, 2xl);
+    margin-bottom: map.get($spacing, lg);
     
     .growth-path {
       display: flex;
@@ -199,8 +211,8 @@
   .social-links {
     display: flex;
     justify-content: center;
-    gap: map.get($spacing, lg);
-    margin-bottom: map.get($spacing, 3xl);
+    gap: map.get($spacing, md);
+    margin-bottom: map.get($spacing, md);
     
     @include mobile-only {
       flex-direction: column;
@@ -276,6 +288,9 @@
   }
   
   &__footer {
+    margin-top: auto;
+    padding-top: map.get($spacing, lg);
+    
     .copyright {
       font-size: map.get($font-sizes, sm);
       color: var(--text-muted);

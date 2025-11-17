@@ -77,7 +77,7 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 					whileHover={{ scale: 1.05 }}
 					whileTap={{ scale: 0.95 }}
 				>
-					<span className="logo-text">Dwoo</span>
+					<span className="logo-text">Woo</span>
 				</motion.div>
 
 				{!isMobile && (
