@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { MessageCircle, X, Send, User, Mail, MessageSquare } from 'lucide-react';
+import { createVariants } from '@/types/motion';
 import './FloatingConnect.scss';
 
 const FloatingConnect = () => {
@@ -52,14 +53,14 @@ const FloatingConnect = () => {
 		}
 	};
 
-	const buttonVariants = {
+	const buttonVariants = createVariants({
 		closed: { scale: 1 },
 		open: { scale: 0.9 },
 		hover: { scale: 1.1 },
 		tap: { scale: 0.95 },
-	};
+	});
 
-	const formVariants = {
+	const formVariants = createVariants({
 		hidden: { 
 			opacity: 0, 
 			scale: 0.8,
@@ -69,7 +70,7 @@ const FloatingConnect = () => {
 			opacity: 1, 
 			scale: 1,
 			transition: {
-				type: 'spring',
+				type: 'spring' as const,
 				duration: 0.4,
 				bounce: 0.3,
 			},
@@ -79,7 +80,7 @@ const FloatingConnect = () => {
 			scale: 0.8,
 			transition: { duration: 0.2 },
 		},
-	};
+	});
 
 	return (
 		<div className="floating-connect">

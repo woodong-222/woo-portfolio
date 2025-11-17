@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { X, Github, ExternalLink, Calendar, Users, Target } from 'lucide-react';
 import { Project } from '@/data/projects';
+import { createVariants } from '@/types/motion';
 import './ProjectModal.scss';
 
 interface ProjectModalProps {
@@ -60,13 +61,13 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 		}
 	};
 
-	const overlayVariants = {
+	const overlayVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
 		exit: { opacity: 0 }
-	};
+	});
 
-	const modalVariants = {
+	const modalVariants = createVariants({
 		hidden: { 
 			opacity: 0, 
 			scale: 0.8,
@@ -77,7 +78,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 			scale: 1,
 			y: 0,
 			transition: {
-				type: "spring",
+				type: "spring" as const,
 				duration: 0.5,
 				bounce: 0.3
 			}
@@ -90,7 +91,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 				duration: 0.3
 			}
 		}
-	};
+	});
 
 	if (!project) return null;
 

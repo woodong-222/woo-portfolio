@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Heart, Star, Rocket } from 'lucide-react';
+import { createVariants } from '@/types/motion';
 import './ThankYou.scss';
 
 const ThankYou = () => {
@@ -11,7 +12,7 @@ const ThankYou = () => {
 		triggerOnce: true,
 	});
 
-	const containerVariants = {
+	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -20,31 +21,31 @@ const ThankYou = () => {
 				staggerChildren: 0.2,
 			},
 		},
-	};
+	});
 
-	const itemVariants = {
+	const itemVariants = createVariants({
 		hidden: { y: 30, opacity: 0 },
 		visible: {
 			y: 0,
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
-	const floatingVariants = {
+	const floatingVariants = createVariants({
 		animate: {
 			y: [0, -10, 0],
 			rotate: [0, 5, 0],
 			transition: {
 				duration: 3,
 				repeat: Infinity,
-				ease: 'easeInOut',
+				ease: 'easeInOut' as const,
 			},
 		},
-	};
+	});
 
 	const currentYear = new Date().getFullYear();
 

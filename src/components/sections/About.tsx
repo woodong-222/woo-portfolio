@@ -1,12 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Code, Shield, Cloud, Users, Lightbulb, Target } from 'lucide-react';
+import { Code, Shield, Users, Lightbulb, Target } from 'lucide-react';
+import { createVariants } from '@/types/motion';
 import './About.scss';
 
 const About = () => {
-	const { t } = useTranslation('about');
-
 	return (
 		<>
 			<IntroductionSection />
@@ -23,7 +22,7 @@ const IntroductionSection = () => {
 		triggerOnce: true,
 	});
 
-	const containerVariants = {
+	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -32,19 +31,19 @@ const IntroductionSection = () => {
 				staggerChildren: 0.15,
 			},
 		},
-	};
+	});
 
-	const itemVariants = {
+	const itemVariants = createVariants({
 		hidden: { y: 30, opacity: 0 },
 		visible: {
 			y: 0,
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
 	const principles = [
 		{
@@ -120,7 +119,7 @@ const TechStackSection = () => {
 		triggerOnce: true,
 	});
 
-	const containerVariants = {
+	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -129,19 +128,19 @@ const TechStackSection = () => {
 				staggerChildren: 0.1,
 			},
 		},
-	};
+	});
 
-	const itemVariants = {
+	const itemVariants = createVariants({
 		hidden: { y: 20, opacity: 0 },
 		visible: {
 			y: 0,
 			opacity: 1,
 			transition: {
 				duration: 0.6,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
 	const techCategories = [
 		{
@@ -241,7 +240,7 @@ const CareerSection = () => {
 		triggerOnce: true,
 	});
 
-	const containerVariants = {
+	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -250,19 +249,19 @@ const CareerSection = () => {
 				staggerChildren: 0.2,
 			},
 		},
-	};
+	});
 
-	const itemVariants = {
+	const itemVariants = createVariants({
 		hidden: { x: -30, opacity: 0 },
 		visible: {
 			x: 0,
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
 	const timeline = t('career.timeline', { returnObjects: true }) as Array<{
 		year: string;
@@ -282,7 +281,7 @@ const CareerSection = () => {
 				</motion.h2>
 
 				<div className="timeline">
-					{timeline.map((period, index) => (
+					{timeline.map((period) => (
 						<motion.div
 							key={period.year}
 							className="timeline-item"

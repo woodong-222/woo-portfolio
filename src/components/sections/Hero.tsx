@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import { createVariants } from '@/types/motion';
 import './Hero.scss';
 
 const Hero = () => {
@@ -11,7 +12,7 @@ const Hero = () => {
 		triggerOnce: true,
 	});
 
-	const containerVariants = {
+	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -20,31 +21,31 @@ const Hero = () => {
 				staggerChildren: 0.2,
 			},
 		},
-	};
+	});
 
-	const itemVariants = {
+	const itemVariants = createVariants({
 		hidden: { y: 20, opacity: 0 },
 		visible: {
 			y: 0,
 			opacity: 1,
 			transition: {
 				duration: 0.8,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
-	const imageVariants = {
+	const imageVariants = createVariants({
 		hidden: { scale: 0.8, opacity: 0 },
 		visible: {
 			scale: 1,
 			opacity: 1,
 			transition: {
 				duration: 1,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
 	return (
 		<section className="hero section" ref={ref}>

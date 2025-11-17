@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Github, ExternalLink, Eye } from 'lucide-react';
 import { projects, Project } from '@/data/projects';
+import { createVariants } from '@/types/motion';
 import './Projects.scss';
 
 interface ProjectsProps {
@@ -11,14 +12,14 @@ interface ProjectsProps {
 }
 
 const Projects = ({ onProjectClick }: ProjectsProps) => {
-	const { t, i18n } = useTranslation();
+	const { i18n } = useTranslation();
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 	const { ref, inView } = useInView({
 		threshold: 0.2,
 		triggerOnce: true,
 	});
 
-	const containerVariants = {
+	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: {
 			opacity: 1,
@@ -27,19 +28,19 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 				staggerChildren: 0.1,
 			},
 		},
-	};
+	});
 
-	const itemVariants = {
+	const itemVariants = createVariants({
 		hidden: { y: 30, opacity: 0 },
 		visible: {
 			y: 0,
 			opacity: 1,
 			transition: {
 				duration: 0.6,
-				ease: 'easeOut',
+				ease: 'easeOut' as const,
 			},
 		},
-	};
+	});
 
 	const categories = [
 		{ key: 'all', label: i18n.language === 'ko' ? '전체' : 'All' },
@@ -52,15 +53,6 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 	const filteredProjects = projects.filter(project => 
 		selectedCategory === 'all' || project.category === selectedCategory
 	);
-
-	const getCategoryIcon = (category: string) => {
-		switch (category) {
-			case 'security': return '🔐';
-			case 'web': return '🌐';
-			case 'cloud': return '☁️';
-			default: return '💡';
-		}
-	};
 
 	return (
 		<section className="projects section" ref={ref}>
