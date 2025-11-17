@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Moon, Sun, Menu, X, Globe } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext';
-import useResponsive from '@/hooks/useResponsive';
+import { useTheme } from '@/utils/contexts/ThemeContext';
+import useResponsive from '@/utils/hooks/useResponsive';
 import './Header.scss';
 
 interface HeaderProps {

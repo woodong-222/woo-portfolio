@@ -10,3 +10,6 @@ export { default as ThankYou } from './sections/ThankYou';
 
 // Modal components
 export { default as ProjectModal } from './modals/ProjectModal';
+
+// Types
+export type { Project } from './sections/Projects/projects.data';

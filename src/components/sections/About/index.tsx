@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Code, Shield, Users, Lightbulb, Target } from 'lucide-react';
-import { createVariants } from '@/types/motion';
+import { createVariants } from '@/utils/types/motion';
 import './About.scss';
 
 const About = () => {

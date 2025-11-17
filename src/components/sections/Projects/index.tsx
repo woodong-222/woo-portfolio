@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Github, ExternalLink, Eye } from 'lucide-react';
-import { projects, Project } from '@/data/projects';
-import { createVariants } from '@/types/motion';
+import { projects, Project } from './projects.data';
+import { createVariants } from '@/utils/types/motion';
 import './Projects.scss';
 
 interface ProjectsProps {

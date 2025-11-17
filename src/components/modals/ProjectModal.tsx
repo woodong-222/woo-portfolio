@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { X, Github, ExternalLink, Calendar, Users, Target } from 'lucide-react';
-import { Project } from '@/data/projects';
-import { createVariants } from '@/types/motion';
+import { Project } from '@/components/sections/Projects/projects.data';
+import { createVariants } from '@/utils/types/motion';
 import './ProjectModal.scss';
 
 interface ProjectModalProps {

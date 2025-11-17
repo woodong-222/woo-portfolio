@@ -9,10 +9,6 @@
     "light": "Light Mode",
     "dark": "Dark Mode"
   },
-  "language": {
-    "ko": "한국어",
-    "en": "English"
-  },
   "buttons": {
     "viewMore": "View More",
     "viewProject": "View Project",

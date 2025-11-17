@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '@/styles/variables.scss' as *;
+@use '@/utils/styles/variables.scss' as *;
 
 .hero {
   @include flex-center;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ThemeProvider } from '@/context/ThemeContext';
+import { ThemeProvider } from '@/utils/contexts/ThemeContext';
 import Header from '@/components/layout/Header';
 import FloatingConnect from '@/components/layout/FloatingConnect';
 import Hero from '@/components/sections/Hero';
@@ -7,10 +7,10 @@ import About from '@/components/sections/About';
 import Projects from '@/components/sections/Projects';
 import ThankYou from '@/components/sections/ThankYou';
 import ProjectModal from '@/components/modals/ProjectModal';
-import useScrollSpy from '@/hooks/useScrollSpy';
-import { Project } from '@/data/projects';
-import '@/i18n';
-import '@/styles/globals.scss';
+import useScrollSpy from '@/utils/hooks/useScrollSpy';
+import { Project } from '@/components/sections/Projects/projects.data';
+import '@/utils/i18n';
+import '@/utils/styles/globals.scss';
 
 const App = () => {
 	const [selectedProject, setSelectedProject] = useState<Project | null>(null);

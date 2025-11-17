@@ -11,27 +11,7 @@
     ]
   },
   "techStack": {
-    "title": "Tech Stack",
-    "categories": {
-      "programming": "Programming Language",
-      "development": "Development",
-      "security": "Security",
-      "other": "Other"
-    },
-    "skills": {
-      "programming": ["Python", "C", "C++", "Java", "PHP"],
-      "development": {
-        "frontend": "React, Vue",
-        "backend": "FastAPI, Spring, MySQL, Redis",
-        "devops": "Jenkins, Github Actions, AWS, Docker, Git, Nginx"
-      },
-      "security": ["Cloud-Security", "Web-Hacking"],
-      "other": {
-        "os": "Windows, Linux, MacOS",
-        "collaboration": "Slack, Notion",
-        "design": "Figma, PhotoShop, Premiere Pro"
-      }
-    }
+    "title": "Tech Stack"
   },
   "career": {
     "title": "Career",

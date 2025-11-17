@@ -1,0 +1,22 @@
+{
+  "categories": {
+    "programming": "Programming Language",
+    "development": "Development",
+    "security": "Security",
+    "other": "Other"
+  },
+  "skills": {
+    "programming": ["Python", "C", "C++", "Java"],
+    "development": {
+      "frontend": "React",
+      "backend": "FastAPI, PostgreSQL, MySQL",
+      "devops": "Jenkins, Github Actions, AWS, Docker, Git, Nginx"
+    },
+    "security": ["Cloud-Security", "Web-Hacking"],
+    "other": {
+      "os": "Windows, Linux, MacOS",
+      "collaboration": "Slack, Notion",
+      "design": "Figma, PhotoShop, Premiere Pro"
+    }
+  }
+}

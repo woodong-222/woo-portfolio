@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { MessageCircle, X, Send, User, Mail, MessageSquare } from 'lucide-react';
-import { createVariants } from '@/types/motion';
+import emailjs from '@emailjs/browser';
+import { createVariants } from '@/utils/types/motion';
 import './FloatingConnect.scss';
 
 const FloatingConnect = () => {
@@ -28,10 +29,42 @@ const FloatingConnect = () => {
 		e.preventDefault();
 		setIsSubmitting(true);
 
-		// 실제 이메일 전송 로직 (EmailJS, Formspree 등)
-		// 여기서는 시뮬레이션
 		try {
-			await new Promise(resolve => setTimeout(resolve, 1000));
+			// EmailJS 설정 확인
+			const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+			const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+			// 환경변수가 설정되지 않은 경우 경고
+			if (!serviceId || !templateId || !publicKey) {
+				console.warn('EmailJS configuration is missing. Please check your .env file.');
+				// 시뮬레이션 모드
+				await new Promise(resolve => setTimeout(resolve, 1000));
+				setSubmitStatus('success');
+				setFormData({ name: '', email: '', message: '' });
+				
+				setTimeout(() => {
+					setIsOpen(false);
+					setSubmitStatus('idle');
+				}, 2000);
+				return;
+			}
+
+			// 실제 이메일 전송
+			const templateParams = {
+				from_name: formData.name,
+				from_email: formData.email,
+				message: formData.message,
+				to_email: 'ehddn2083@gmail.com', // 받을 이메일 주소
+			};
+
+			await emailjs.send(
+				serviceId,
+				templateId,
+				templateParams,
+				publicKey
+			);
+
 			setSubmitStatus('success');
 			setFormData({ name: '', email: '', message: '' });
 			
@@ -40,6 +73,7 @@ const FloatingConnect = () => {
 				setSubmitStatus('idle');
 			}, 2000);
 		} catch (error) {
+			console.error('Email send error:', error);
 			setSubmitStatus('error');
 		} finally {
 			setIsSubmitting(false);

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { createVariants } from '@/types/motion';
+import { createVariants } from '@/utils/types/motion';
 import './Hero.scss';
 
 const Hero = () => {

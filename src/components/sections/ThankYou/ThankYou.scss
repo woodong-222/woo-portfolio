@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '@/styles/variables.scss' as *;
+@use '@/utils/styles/variables.scss' as *;
 
 .thank-you {
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
