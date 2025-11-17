@@ -1,0 +1,284 @@
+@use 'sass:map';
+@use '@/styles/variables.scss' as *;
+
+// Common About Styles
+.section-title {
+  text-align: center;
+  font-size: map.get($font-sizes, 4xl);
+  font-weight: 800;
+  margin-bottom: map.get($spacing, 3xl);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+    margin-bottom: map.get($spacing, xl);
+  }
+  
+  @include tablet-only {
+    font-size: map.get($font-sizes, 3xl);
+    margin-bottom: map.get($spacing, 2xl);
+  }
+}
+
+// Introduction Section
+.about-intro {
+  background: var(--bg-primary);
+  
+  &__container {
+    max-width: 1000px;
+  }
+  
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: map.get($spacing, lg);
+    
+    @include tablet-only {
+      grid-template-columns: repeat(2, 1fr);
+      gap: map.get($spacing, xl);
+    }
+    
+    @include desktop-only {
+      grid-template-columns: repeat(2, 1fr);
+      gap: map.get($spacing, 2xl);
+    }
+  }
+  
+  .principle-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: map.get($border-radius, xl);
+    padding: map.get($spacing, xl);
+    transition: $transition-base;
+    cursor: pointer;
+    
+    &:hover {
+      box-shadow: 0 12px 40px var(--shadow);
+      border-color: var(--bg-accent);
+    }
+    
+    .principle-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--bg-primary);
+      border-radius: map.get($border-radius, lg);
+      margin-bottom: map.get($spacing, md);
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    
+    .principle-text {
+      font-size: map.get($font-sizes, base);
+      line-height: 1.6;
+      color: var(--text-secondary);
+      
+      @include desktop-only {
+        font-size: map.get($font-sizes, lg);
+      }
+      
+      // Bold text styling
+      strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Tech Stack Section
+.tech-stack {
+  background: var(--bg-secondary);
+  
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: map.get($spacing, lg);
+    
+    @include tablet-only {
+      grid-template-columns: repeat(2, 1fr);
+      gap: map.get($spacing, xl);
+    }
+    
+    @include desktop-only {
+      grid-template-columns: repeat(3, 1fr);
+      gap: map.get($spacing, xl);
+    }
+  }
+  
+  .tech-category {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: map.get($border-radius, xl);
+    padding: map.get($spacing, xl);
+    transition: $transition-base;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px var(--shadow);
+    }
+    
+    .tech-header {
+      display: flex;
+      align-items: center;
+      gap: map.get($spacing, sm);
+      margin-bottom: map.get($spacing, md);
+      
+      .tech-icon {
+        font-size: map.get($font-sizes, xl);
+      }
+      
+      .tech-title {
+        font-size: map.get($font-sizes, lg);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+      }
+    }
+    
+    .tech-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: map.get($spacing, xs);
+      
+      .tech-item {
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        padding: map.get($spacing, xs) map.get($spacing, sm);
+        border-radius: map.get($border-radius, full);
+        font-size: map.get($font-sizes, sm);
+        border: 1px solid var(--border-color);
+        transition: $transition-fast;
+        
+        &:hover {
+          background: var(--bg-accent);
+          color: white;
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+}
+
+// Career Section
+.career {
+  background: var(--bg-primary);
+  
+  &__container {
+    max-width: 800px;
+  }
+  
+  .timeline {
+    position: relative;
+    
+    // Timeline line
+    &::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border-color);
+      
+      @include desktop-only {
+        left: 30px;
+      }
+    }
+  }
+  
+  .timeline-item {
+    position: relative;
+    display: flex;
+    margin-bottom: map.get($spacing, 2xl);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .timeline-marker {
+      position: relative;
+      flex-shrink: 0;
+      width: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      @include desktop-only {
+        width: 60px;
+      }
+      
+      .timeline-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--bg-accent);
+        border-radius: 50%;
+        border: 3px solid var(--bg-primary);
+        box-shadow: 0 0 0 3px var(--border-color);
+        z-index: 2;
+        
+        @include desktop-only {
+          width: 16px;
+          height: 16px;
+        }
+      }
+      
+      .timeline-year {
+        margin-top: map.get($spacing, sm);
+        font-size: map.get($font-sizes, sm);
+        font-weight: 700;
+        color: var(--bg-accent);
+        background: var(--bg-secondary);
+        padding: map.get($spacing, xs) map.get($spacing, sm);
+        border-radius: map.get($border-radius, full);
+        border: 1px solid var(--border-color);
+        white-space: nowrap;
+        
+        @include desktop-only {
+          font-size: map.get($font-sizes, base);
+        }
+      }
+    }
+    
+    .timeline-content {
+      flex: 1;
+      margin-left: map.get($spacing, md);
+      margin-top: -6px;
+      
+      @include desktop-only {
+        margin-left: map.get($spacing, lg);
+      }
+      
+      .timeline-achievement {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: map.get($border-radius, lg);
+        padding: map.get($spacing, md);
+        margin-bottom: map.get($spacing, sm);
+        font-size: map.get($font-sizes, base);
+        line-height: 1.5;
+        color: var(--text-secondary);
+        transition: $transition-base;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        &:hover {
+          background: var(--bg-accent);
+          color: white;
+          transform: translateX(4px);
+        }
+        
+        @include desktop-only {
+          font-size: map.get($font-sizes, lg);
+          padding: map.get($spacing, lg);
+        }
+      }
+    }
+  }
+}

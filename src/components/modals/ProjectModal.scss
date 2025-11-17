@@ -1,0 +1,345 @@
+@use '@/styles/variables.scss' as *;
+@use 'sass:map';
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: map.get($z-index, modal-backdrop);
+  @include flex-center;
+}
+
+.modal-container {
+  position: fixed;
+  inset: 0;
+  z-index: map.get($z-index, modal);
+  @include flex-center;
+  padding: map.get($spacing, sm);
+  pointer-events: none;
+
+  @include tablet-up {
+    padding: map.get($spacing, lg);
+  }
+}
+
+.project-modal {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: map.get($border-radius, xl);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 80px var(--shadow);
+  pointer-events: all;
+
+  @include mobile-only {
+    max-height: 95vh;
+    margin: map.get($spacing, sm);
+  }
+
+  .modal-header {
+    @include flex-between;
+    padding: map.get($spacing, lg) map.get($spacing, lg) 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: map.get($spacing, lg);
+
+    .project-meta {
+      display: flex;
+      align-items: center;
+      gap: map.get($spacing, md);
+      flex-wrap: wrap;
+
+      .project-category {
+        display: flex;
+        align-items: center;
+        gap: map.get($spacing, xs);
+        font-size: map.get($font-sizes, sm);
+        font-weight: 600;
+
+        .category-icon {
+          font-size: map.get($font-sizes, lg);
+        }
+
+        .category-text {
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .featured-badge {
+        background: var(--gradient-primary);
+        color: white;
+        padding: map.get($spacing, xs) map.get($spacing, sm);
+        border-radius: map.get($border-radius, full);
+        font-size: map.get($font-sizes, xs);
+        font-weight: 600;
+      }
+    }
+
+    .close-btn {
+      @include flex-center;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: map.get($border-radius, lg);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: $transition-base;
+
+      &:hover {
+        background: var(--bg-accent);
+        color: white;
+        border-color: var(--bg-accent);
+      }
+    }
+  }
+
+  .modal-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: map.get($spacing, lg);
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 3px;
+
+      &:hover {
+        background: var(--text-secondary);
+      }
+    }
+
+    .project-title {
+      margin-bottom: map.get($spacing, xl);
+
+      h2 {
+        font-size: map.get($font-sizes, 3xl);
+        font-weight: 700;
+        color: var(--text-primary);
+        line-height: 1.2;
+        margin-bottom: 0;
+
+        @include mobile-only {
+          font-size: map.get($font-sizes, 2xl);
+        }
+      }
+    }
+
+    .project-image-placeholder {
+      width: 100%;
+      height: 240px;
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border-color);
+      border-radius: map.get($border-radius, lg);
+      @include flex-center;
+      flex-direction: column;
+      margin-bottom: map.get($spacing, xl);
+      transition: $transition-base;
+
+      &:hover {
+        border-color: var(--bg-accent);
+        background: rgba(var(--bg-accent), 0.05);
+      }
+
+      .placeholder-content {
+        @include flex-center;
+        flex-direction: column;
+        gap: map.get($spacing, sm);
+
+        .placeholder-icon {
+          font-size: map.get($font-sizes, 4xl);
+          opacity: 0.3;
+        }
+
+        .placeholder-text {
+          color: var(--text-muted);
+          font-size: map.get($font-sizes, sm);
+          margin: 0;
+        }
+      }
+
+      @include tablet-up {
+        height: 300px;
+      }
+    }
+
+    .project-description {
+      margin-bottom: map.get($spacing, 2xl);
+
+      p {
+        font-size: map.get($font-sizes, base);
+        line-height: 1.7;
+        color: var(--text-secondary);
+        margin-bottom: 0;
+
+        @include desktop-only {
+          font-size: map.get($font-sizes, lg);
+        }
+      }
+    }
+
+    .project-details {
+      display: grid;
+      gap: map.get($spacing, lg);
+      margin-bottom: map.get($spacing, 2xl);
+
+      @include desktop-only {
+        grid-template-columns: repeat(2, 1fr);
+        gap: map.get($spacing, xl);
+      }
+
+      .detail-section {
+        .detail-header {
+          display: flex;
+          align-items: center;
+          gap: map.get($spacing, sm);
+          margin-bottom: map.get($spacing, sm);
+
+          h4 {
+            font-size: map.get($font-sizes, lg);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+          }
+
+          svg {
+            color: var(--bg-accent);
+          }
+        }
+
+        .feature-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            position: relative;
+            padding-left: map.get($spacing, md);
+            margin-bottom: map.get($spacing, xs);
+            color: var(--text-secondary);
+            font-size: map.get($font-sizes, base);
+
+            &::before {
+              content: '✓';
+              position: absolute;
+              left: 0;
+              color: var(--bg-accent);
+              font-weight: 600;
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .detail-info {
+          color: var(--text-secondary);
+          font-size: map.get($font-sizes, base);
+          margin: 0;
+        }
+      }
+    }
+
+    .tech-stack-detailed {
+      margin-bottom: map.get($spacing, 2xl);
+
+      h4 {
+        font-size: map.get($font-sizes, lg);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: map.get($spacing, md);
+      }
+
+      .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: map.get($spacing, xs);
+
+        .tech-tag {
+          background: var(--bg-secondary);
+          color: var(--text-secondary);
+          padding: map.get($spacing, sm) map.get($spacing, md);
+          border-radius: map.get($border-radius, lg);
+          font-size: map.get($font-sizes, sm);
+          font-weight: 500;
+          border: 1px solid var(--border-color);
+          transition: $transition-base;
+          cursor: pointer;
+
+          &:hover {
+            background: var(--bg-accent);
+            color: white;
+            border-color: var(--bg-accent);
+          }
+        }
+      }
+    }
+
+    .project-actions {
+      display: flex;
+      gap: map.get($spacing, sm);
+      flex-wrap: wrap;
+
+      @include mobile-only {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        @include flex-center;
+        gap: map.get($spacing, sm);
+        padding: map.get($spacing, md) map.get($spacing, lg);
+        border-radius: map.get($border-radius, lg);
+        font-size: map.get($font-sizes, base);
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: $transition-base;
+        flex: 1;
+        min-width: 150px;
+
+        @include mobile-only {
+          min-width: unset;
+        }
+
+        &.primary {
+          background: var(--bg-accent);
+          color: white;
+
+          &:hover {
+            background: var(--bg-accent);
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow);
+          }
+        }
+
+        &.secondary {
+          background: var(--bg-secondary);
+          color: var(--text-secondary);
+          border: 1px solid var(--border-color);
+
+          &:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-color: var(--bg-accent);
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}

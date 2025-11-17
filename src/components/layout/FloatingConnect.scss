@@ -1,0 +1,273 @@
+@use 'sass:map';
+@use '@/styles/variables.scss' as *;
+
+.floating-connect {
+  position: fixed;
+  bottom: map.get($spacing, lg);
+  right: map.get($spacing, lg);
+  z-index: map.get($z-index, fixed);
+
+  @include mobile-only {
+    bottom: map.get($spacing, md);
+    right: map.get($spacing, md);
+  }
+
+  .connect-form-container {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 350px;
+    max-width: calc(100vw - 2rem);
+
+    @include mobile-only {
+      width: 300px;
+      bottom: 70px;
+    }
+
+    .connect-form {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: map.get($border-radius, xl);
+      box-shadow: 0 20px 60px var(--shadow);
+      overflow: hidden;
+
+      .form-header {
+        @include flex-between;
+        padding: map.get($spacing, lg);
+        border-bottom: 1px solid var(--border-color);
+        background: var(--bg-secondary);
+
+        h3 {
+          font-size: map.get($font-sizes, lg);
+          font-weight: 600;
+          color: var(--text-primary);
+          margin: 0;
+        }
+
+        .close-btn {
+          @include flex-center;
+          width: 32px;
+          height: 32px;
+          background: var(--bg-primary);
+          border: 1px solid var(--border-color);
+          border-radius: map.get($border-radius, base);
+          color: var(--text-secondary);
+          cursor: pointer;
+          transition: $transition-base;
+
+          &:hover {
+            background: var(--bg-accent);
+            color: white;
+            border-color: var(--bg-accent);
+          }
+        }
+      }
+
+      .contact-form {
+        padding: map.get($spacing, lg);
+
+        .form-group {
+          margin-bottom: map.get($spacing, md);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        .input-wrapper,
+        .textarea-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+
+          .input-icon,
+          .textarea-icon {
+            position: absolute;
+            left: map.get($spacing, sm);
+            color: var(--text-muted);
+            z-index: 2;
+          }
+
+          .textarea-icon {
+            top: map.get($spacing, sm);
+          }
+
+          input,
+          textarea {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: map.get($border-radius, lg);
+            padding: map.get($spacing, sm) map.get($spacing, sm) map.get($spacing, sm) 40px;
+            font-size: map.get($font-sizes, sm);
+            color: var(--text-primary);
+            transition: $transition-base;
+            resize: none;
+
+            &::placeholder {
+              color: var(--text-muted);
+            }
+
+            &:focus {
+              outline: none;
+              border-color: var(--bg-accent);
+              background: var(--bg-primary);
+              box-shadow: 0 0 0 3px rgba(var(--bg-accent), 0.1);
+            }
+
+            &:disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+          }
+
+          textarea {
+            padding-top: map.get($spacing, sm);
+            line-height: 1.4;
+            min-height: 80px;
+          }
+        }
+
+        .submit-btn {
+          width: 100%;
+          @include flex-center;
+          gap: map.get($spacing, xs);
+          background: var(--bg-accent);
+          color: white;
+          border: none;
+          border-radius: map.get($border-radius, lg);
+          padding: map.get($spacing, sm);
+          font-size: map.get($font-sizes, sm);
+          font-weight: 500;
+          cursor: pointer;
+          transition: $transition-base;
+
+          &:hover:not(:disabled) {
+            background: var(--bg-accent);
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px var(--shadow);
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+
+          .loading-text {
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+          }
+        }
+
+        .error-message {
+          background: #fee2e2;
+          color: #dc2626;
+          padding: map.get($spacing, sm);
+          border-radius: map.get($border-radius, base);
+          margin-bottom: map.get($spacing, sm);
+          font-size: map.get($font-sizes, sm);
+
+          [data-theme="dark"] & {
+            background: rgba(220, 38, 38, 0.1);
+            color: #fca5a5;
+          }
+
+          p {
+            margin: 0;
+          }
+        }
+      }
+
+      .success-message {
+        padding: map.get($spacing, xl);
+        text-align: center;
+
+        .success-icon {
+          font-size: map.get($font-sizes, 3xl);
+          margin-bottom: map.get($spacing, sm);
+        }
+
+        p {
+          color: var(--text-primary);
+          font-size: map.get($font-sizes, base);
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .floating-btn {
+    @include flex-center;
+    width: 60px;
+    height: 60px;
+    background: var(--bg-accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 8px 30px var(--shadow);
+    transition: $transition-base;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    &:hover::before {
+      transform: translateX(100%);
+    }
+
+    &.open {
+      background: var(--text-secondary);
+      transform: rotate(90deg);
+    }
+
+    @include mobile-only {
+      width: 50px;
+      height: 50px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    // Pulsing effect for attention
+    &:not(.open)::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 2px solid var(--bg-accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: pulse-ring 2s infinite;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}

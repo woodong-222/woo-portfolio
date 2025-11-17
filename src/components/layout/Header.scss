@@ -1,0 +1,174 @@
+@use '@/styles/variables.scss' as *;
+@use 'sass:map';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: map.get($z-index, fixed);
+  padding: map.get($spacing, sm) 0;
+  background: var(--bg-primary);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: $transition-base;
+
+  &.scrolled {
+    background: rgba(var(--bg-primary), 0.8);
+    border-bottom-color: var(--border-color);
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+
+  &__container {
+    @include flex-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 map.get($spacing, sm);
+
+    @include tablet-up {
+      padding: 0 map.get($spacing, md);
+    }
+
+    @include desktop-up {
+      padding: 0 map.get($spacing, lg);
+    }
+  }
+
+  &__logo {
+    .logo-text {
+      font-size: map.get($font-sizes, xl);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      cursor: pointer;
+    }
+  }
+
+  &__nav {
+    @include mobile-only {
+      display: none;
+    }
+  }
+
+  .nav__sections {
+    display: flex;
+    gap: map.get($spacing, md);
+  }
+
+  .nav__item {
+    position: relative;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: map.get($font-sizes, base);
+    font-weight: 500;
+    padding: map.get($spacing, xs) map.get($spacing, sm);
+    border-radius: map.get($border-radius, lg);
+    cursor: pointer;
+    transition: $transition-base;
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+
+    &.active {
+      color: var(--bg-accent);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        background: var(--bg-accent);
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: map.get($spacing, xs);
+  }
+
+  .control-btn {
+    @include flex-center;
+    gap: map.get($spacing, xs);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: map.get($spacing, xs);
+    border-radius: map.get($border-radius, lg);
+    cursor: pointer;
+    transition: $transition-base;
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--bg-accent);
+      color: white;
+    }
+
+    .btn-text {
+      @include mobile-only {
+        display: none;
+      }
+      
+      @include tablet-up {
+        font-size: map.get($font-sizes, sm);
+        font-weight: 500;
+      }
+    }
+  }
+
+  .mobile-menu-btn {
+    @include tablet-up {
+      display: none;
+    }
+  }
+}
+
+.mobile-menu {
+  overflow: hidden;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+
+  @include tablet-up {
+    display: none;
+  }
+
+  .mobile-nav {
+    padding: map.get($spacing, sm);
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, xs);
+
+    &__item {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: map.get($font-sizes, base);
+      font-weight: 500;
+      padding: map.get($spacing, sm);
+      border-radius: map.get($border-radius, lg);
+      cursor: pointer;
+      transition: $transition-base;
+      text-align: left;
+
+      &:hover {
+        color: var(--text-primary);
+        background: var(--bg-secondary);
+      }
+
+      &.active {
+        color: var(--bg-accent);
+        background: rgba(var(--bg-accent), 0.1);
+      }
+    }
+  }
+}

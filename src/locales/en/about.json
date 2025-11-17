@@ -1,0 +1,61 @@
+{
+  "title": "About Me",
+  "introduction": {
+    "title": "Introduction",
+    "items": [
+      "I value finding the **optimal balance between user experience and security**, strengthening security while considering user convenience.",
+      "I believe that most opinion conflicts arise from differences in methodology, so I **decide on methods at the end** after understanding the other party's intentions and background to naturally determine solutions.",
+      "I enjoy working as a team and strive to **clearly set team direction and goals** to help all team members move consistently and minimize confusion due to lack of goal orientation.",
+      "When dealing with web and cloud issues, I approach them through **creative methods** to find new solutions without being bound by existing approaches.",
+      "I am interested in learning new security techniques and tools, and I aim to continuously develop and grow myself to fit the latest environment."
+    ]
+  },
+  "techStack": {
+    "title": "Tech Stack",
+    "categories": {
+      "programming": "Programming Language",
+      "development": "Development",
+      "security": "Security",
+      "other": "Other"
+    },
+    "skills": {
+      "programming": ["Python", "C", "C++", "Java", "PHP"],
+      "development": {
+        "frontend": "React, Vue",
+        "backend": "FastAPI, Spring, MySQL, Redis",
+        "devops": "Jenkins, Github Actions, AWS, Docker, Git, Nginx"
+      },
+      "security": ["Cloud-Security", "Web-Hacking"],
+      "other": {
+        "os": "Windows, Linux, MacOS",
+        "collaboration": "Slack, Notion",
+        "design": "Figma, PhotoShop, Premiere Pro"
+      }
+    }
+  },
+  "career": {
+    "title": "Career",
+    "timeline": [
+      {
+        "year": "2020",
+        "items": ["Enrolled in Computer Engineering, Korea University of Technology and Education"]
+      },
+      {
+        "year": "2024",
+        "items": [
+          "Completed WHS 2nd Generation Next-Generation Security Leader Training",
+          "KOREATECH Data Fighter Excellence Award, Presidential Award",
+          "Teaching Assistant for C Programming & Creative Engineering Design"
+        ]
+      },
+      {
+        "year": "2025",
+        "items": [
+          "Teaching Assistant for Operating Systems & Computational Thinking",
+          "BCSD Security Track Leader and Instructor",
+          "BoB 14th Security Product Development Track Student"
+        ]
+      }
+    ]
+  }
+}

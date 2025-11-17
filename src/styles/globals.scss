@@ -1,0 +1,257 @@
+@use 'sass:map';
+@use './variables.scss' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: $font-family-primary;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+// Scroll container
+.scroll-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: map.get($border-radius, full);
+    
+    &:hover {
+      background: var(--text-secondary);
+    }
+  }
+}
+
+// Section base styles
+.section {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  @include mobile-only {
+    min-height: 100vh;
+    padding: map.get($spacing, lg) map.get($spacing, sm);
+  }
+  
+  @include tablet-only {
+    padding: map.get($spacing, xl) map.get($spacing, md);
+  }
+  
+  @include desktop-only {
+    padding: map.get($spacing, 2xl) map.get($spacing, lg);
+  }
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: map.get($spacing, sm);
+}
+
+h1 {
+  font-size: map.get($font-sizes, 5xl);
+  
+  @include mobile-only {
+    font-size: map.get($font-sizes, 3xl);
+  }
+  
+  @include tablet-only {
+    font-size: map.get($font-sizes, 4xl);
+  }
+}
+
+h2 {
+  font-size: map.get($font-sizes, 4xl);
+  
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+  }
+  
+  @include tablet-only {
+    font-size: map.get($font-sizes, 3xl);
+  }
+}
+
+h3 {
+  font-size: map.get($font-sizes, 2xl);
+  
+  @include mobile-only {
+    font-size: map.get($font-sizes, xl);
+  }
+}
+
+p {
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: map.get($spacing, sm);
+}
+
+// Button base styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: map.get($spacing, xs);
+  padding: map.get($spacing, sm) map.get($spacing, md);
+  border: none;
+  border-radius: map.get($border-radius, lg);
+  font-size: map.get($font-sizes, base);
+  font-weight: 500;
+  text-decoration: none;
+  transition: $transition-base;
+  cursor: pointer;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  &.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--shadow);
+    }
+  }
+  
+  &.btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    
+    &:hover:not(:disabled) {
+      background: var(--bg-accent);
+      color: white;
+    }
+  }
+  
+  &.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    
+    &:hover:not(:disabled) {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+  }
+}
+
+// Card styles
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: map.get($border-radius, xl);
+  padding: map.get($spacing, lg);
+  transition: $transition-base;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--shadow);
+  }
+}
+
+// Animation classes
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(30px);
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Utilities
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 map.get($spacing, sm);
+  
+  @include tablet-up {
+    padding: 0 map.get($spacing, md);
+  }
+  
+  @include desktop-up {
+    padding: 0 map.get($spacing, lg);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

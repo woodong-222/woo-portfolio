@@ -1,0 +1,299 @@
+@use 'sass:map';
+@use '@/styles/variables.scss' as *;
+
+.thank-you {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &__container {
+    @include flex-center;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    position: relative;
+  }
+  
+  &__content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .floating-elements {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    
+    .floating-item {
+      position: absolute;
+      color: var(--bg-accent);
+      opacity: 0.3;
+      
+      &.heart {
+        top: 15%;
+        right: 10%;
+        color: #ef4444;
+      }
+      
+      &.star {
+        top: 30%;
+        left: 15%;
+        color: #fbbf24;
+      }
+      
+      &.rocket {
+        bottom: 30%;
+        right: 20%;
+        color: var(--bg-accent);
+      }
+      
+      @include mobile-only {
+        display: none;
+      }
+    }
+  }
+  
+  &__main {
+    margin-bottom: map.get($spacing, 3xl);
+  }
+  
+  &__title {
+    font-size: map.get($font-sizes, 4xl);
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: map.get($spacing, xl);
+    
+    @include mobile-only {
+      font-size: map.get($font-sizes, 3xl);
+    }
+    
+    @include desktop-only {
+      font-size: map.get($font-sizes, 5xl);
+    }
+  }
+  
+  &__message {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: map.get($border-radius, xl);
+    padding: map.get($spacing, 2xl);
+    margin-bottom: map.get($spacing, 2xl);
+    transition: $transition-base;
+    cursor: default;
+    
+    &:hover {
+      box-shadow: 0 12px 40px var(--shadow);
+      border-color: var(--bg-accent);
+    }
+    
+    .message-text {
+      font-size: map.get($font-sizes, xl);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: map.get($spacing, md);
+      line-height: 1.4;
+      
+      @include desktop-only {
+        font-size: map.get($font-sizes, 2xl);
+      }
+    }
+    
+    .description-text {
+      font-size: map.get($font-sizes, base);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0;
+      
+      @include desktop-only {
+        font-size: map.get($font-sizes, lg);
+      }
+    }
+  }
+  
+  .growth-visualization {
+    margin-bottom: map.get($spacing, 2xl);
+    
+    .growth-path {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: map.get($spacing, md);
+      gap: map.get($spacing, sm);
+      
+      .growth-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: map.get($spacing, xs);
+        
+        .step-dot {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: var(--bg-accent);
+          box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 6px var(--border-color);
+          
+          @include desktop-only {
+            width: 20px;
+            height: 20px;
+          }
+        }
+        
+        .step-label {
+          font-size: map.get($font-sizes, sm);
+          font-weight: 600;
+          color: var(--text-secondary);
+          
+          @include desktop-only {
+            font-size: map.get($font-sizes, base);
+          }
+        }
+        
+        &.current .step-dot {
+          background: var(--bg-accent);
+        }
+        
+        &.future .step-dot {
+          background: var(--text-muted);
+        }
+      }
+      
+      .growth-line {
+        position: relative;
+        height: 2px;
+        width: 120px;
+        background: var(--border-color);
+        margin: 0 map.get($spacing, sm);
+        
+        .growth-progress {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          background: var(--gradient-primary);
+          border-radius: 1px;
+        }
+        
+        @include desktop-only {
+          width: 160px;
+        }
+      }
+    }
+    
+    .growth-text {
+      font-size: map.get($font-sizes, sm);
+      color: var(--text-muted);
+      font-style: italic;
+      
+      @include desktop-only {
+        font-size: map.get($font-sizes, base);
+      }
+    }
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: map.get($spacing, lg);
+    margin-bottom: map.get($spacing, 3xl);
+    
+    @include mobile-only {
+      flex-direction: column;
+      align-items: center;
+      gap: map.get($spacing, md);
+    }
+    
+    .social-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: map.get($spacing, xs);
+      padding: map.get($spacing, lg);
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: map.get($border-radius, xl);
+      text-decoration: none;
+      color: var(--text-secondary);
+      transition: $transition-base;
+      cursor: pointer;
+      
+      &:hover {
+        border-color: var(--bg-accent);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        box-shadow: 0 8px 30px var(--shadow);
+      }
+      
+      .social-icon {
+        font-size: map.get($font-sizes, 2xl);
+        margin-bottom: map.get($spacing, xs);
+      }
+      
+      span {
+        font-size: map.get($font-sizes, sm);
+        font-weight: 500;
+        
+        @include desktop-only {
+          font-size: map.get($font-sizes, base);
+        }
+      }
+      
+      &.github {
+        &:hover {
+          border-color: #333;
+        }
+      }
+      
+      &.blog {
+        &:hover {
+          border-color: #20c997;
+        }
+      }
+      
+      &.contact {
+        &:hover {
+          border-color: var(--bg-accent);
+        }
+      }
+      
+      @include mobile-only {
+        flex-direction: row;
+        padding: map.get($spacing, md) map.get($spacing, lg);
+        width: 200px;
+        justify-content: center;
+        
+        .social-icon {
+          margin-bottom: 0;
+          margin-right: map.get($spacing, sm);
+        }
+      }
+    }
+  }
+  
+  &__footer {
+    .copyright {
+      font-size: map.get($font-sizes, sm);
+      color: var(--text-muted);
+      margin-bottom: map.get($spacing, md);
+    }
+    
+    .footer-decoration {
+      @include flex-center;
+      gap: map.get($spacing, sm);
+      
+      .decoration-line {
+        height: 1px;
+        background: var(--border-color);
+      }
+      
+      .decoration-heart {
+        font-size: map.get($font-sizes, base);
+      }
+    }
+  }
+}

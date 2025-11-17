@@ -1,0 +1,229 @@
+@use 'sass:map';
+@use '@/styles/variables.scss' as *;
+
+.projects {
+  background: var(--bg-secondary);
+  
+  &__container {
+    max-width: 1200px;
+  }
+  
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: map.get($spacing, sm);
+    margin-bottom: map.get($spacing, 3xl);
+    
+    .category-btn {
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: map.get($spacing, sm) map.get($spacing, lg);
+      border-radius: map.get($border-radius, full);
+      font-size: map.get($font-sizes, sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: $transition-base;
+      
+      &:hover {
+        border-color: var(--bg-accent);
+        color: var(--text-primary);
+      }
+      
+      &.active {
+        background: var(--bg-accent);
+        border-color: var(--bg-accent);
+        color: white;
+      }
+      
+      @include desktop-only {
+        font-size: map.get($font-sizes, base);
+        padding: map.get($spacing, sm) map.get($spacing, xl);
+      }
+    }
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: map.get($spacing, xl);
+    
+    @include tablet-only {
+      grid-template-columns: repeat(2, 1fr);
+      gap: map.get($spacing, 2xl);
+    }
+    
+    @include desktop-only {
+      grid-template-columns: repeat(3, 1fr);
+      gap: map.get($spacing, 2xl);
+    }
+  }
+  
+  .no-projects {
+    text-align: center;
+    padding: map.get($spacing, 3xl);
+    color: var(--text-muted);
+    font-size: map.get($font-sizes, lg);
+  }
+}
+
+.project-card {
+  position: relative;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: map.get($border-radius, xl);
+  overflow: hidden;
+  transition: $transition-base;
+  
+  &:hover {
+    box-shadow: 0 20px 60px var(--shadow);
+    border-color: var(--bg-accent);
+  }
+  
+  .featured-badge {
+    position: absolute;
+    top: map.get($spacing, sm);
+    right: map.get($spacing, sm);
+    background: var(--gradient-primary);
+    color: white;
+    padding: map.get($spacing, xs) map.get($spacing, sm);
+    border-radius: map.get($border-radius, full);
+    font-size: map.get($font-sizes, xs);
+    font-weight: 600;
+    z-index: 2;
+  }
+  
+  .project-header {
+    padding: map.get($spacing, lg) map.get($spacing, lg) 0;
+    
+    .project-category {
+      display: flex;
+      align-items: center;
+      gap: map.get($spacing, xs);
+      font-size: map.get($font-sizes, sm);
+      font-weight: 600;
+      
+      .category-icon {
+        font-size: map.get($font-sizes, base);
+      }
+      
+      .category-text {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+  
+  .project-content {
+    padding: map.get($spacing, sm) map.get($spacing, lg) map.get($spacing, lg);
+    
+    .project-title {
+      font-size: map.get($font-sizes, xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: map.get($spacing, sm);
+      line-height: 1.3;
+      
+      @include desktop-only {
+        font-size: map.get($font-sizes, 2xl);
+      }
+    }
+    
+    .project-description {
+      color: var(--text-secondary);
+      font-size: map.get($font-sizes, base);
+      line-height: 1.6;
+      margin-bottom: map.get($spacing, lg);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: map.get($spacing, xs);
+      margin-bottom: map.get($spacing, lg);
+      
+      .tech-tag {
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        padding: map.get($spacing, xs) map.get($spacing, sm);
+        border-radius: map.get($border-radius, full);
+        font-size: map.get($font-sizes, xs);
+        border: 1px solid var(--border-color);
+        transition: $transition-fast;
+        
+        &:hover {
+          background: var(--bg-accent);
+          color: white;
+        }
+      }
+      
+      .tech-more {
+        background: var(--bg-accent);
+        color: white;
+        padding: map.get($spacing, xs) map.get($spacing, sm);
+        border-radius: map.get($border-radius, full);
+        font-size: map.get($font-sizes, xs);
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: map.get($spacing, xs);
+    padding: 0 map.get($spacing, lg) map.get($spacing, lg);
+    border-top: 1px solid var(--border-color);
+    padding-top: map.get($spacing, lg);
+    
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: map.get($spacing, xs);
+      padding: map.get($spacing, xs) map.get($spacing, sm);
+      border-radius: map.get($border-radius, lg);
+      font-size: map.get($font-sizes, sm);
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: $transition-base;
+      flex: 1;
+      justify-content: center;
+      min-width: 100px;
+      
+      &.primary {
+        background: var(--bg-accent);
+        color: white;
+        
+        &:hover {
+          background: var(--bg-accent);
+          opacity: 0.9;
+          transform: translateY(-1px);
+        }
+      }
+      
+      &.secondary {
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+        
+        &:hover {
+          background: var(--bg-primary);
+          color: var(--text-primary);
+          border-color: var(--bg-accent);
+        }
+      }
+      
+      @include mobile-only {
+        flex: 1;
+        min-width: unset;
+      }
+    }
+  }
+}
