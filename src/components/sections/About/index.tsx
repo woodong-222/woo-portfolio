@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { Code, Shield, Users, Lightbulb, Target } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
 import { forwardRef } from "react";
+import { getSkillIcon } from "./skillIcons";
 import "./About.scss";
 
 const About = forwardRef<HTMLDivElement>((_, ref) => {
@@ -142,57 +143,91 @@ const TechStackSection = () => {
 		},
 	});
 
-	const techCategories = [
+	type TechCategory = {
+		key: string;
+		title: string;
+		items: string[];
+		color: string;
+		icon: string;
+	};
+
+	const resolveSkills = (path: string): string[] => {
+		const translated = t(path, { returnObjects: true }) as unknown;
+		if (Array.isArray(translated)) {
+			return translated as string[];
+		}
+		if (typeof translated === "string") {
+			return translated
+				.split(",")
+				.map((item) => item.trim())
+				.filter(Boolean);
+		}
+		return [];
+	};
+
+	const techCategories: TechCategory[] = [
 		{
+			key: "programming",
 			title: t("techStack.categories.programming"),
-			items: t("techStack.skills.programming", {
-				returnObjects: true,
-			}) as string[],
+			items: resolveSkills("techStack.skills.programming"),
 			color: "#6366f1",
 			icon: "⚡",
 		},
 		{
-			title: "Frontend",
-			items: [t("techStack.skills.development.frontend")],
+			key: "frontend",
+			title: t("techStack.categories.frontend"),
+			items: resolveSkills("techStack.skills.frontend"),
 			color: "#3b82f6",
 			icon: "🎨",
 		},
 		{
-			title: "Backend & DB",
-			items: [t("techStack.skills.development.backend")],
+			key: "backend",
+			title: t("techStack.categories.backend"),
+			items: resolveSkills("techStack.skills.backend"),
 			color: "#8b5cf6",
 			icon: "🔧",
 		},
 		{
-			title: "DevOps & Cloud",
-			items: [t("techStack.skills.development.devops")],
+			key: "devops",
+			title: t("techStack.categories.devops"),
+			items: resolveSkills("techStack.skills.devops"),
 			color: "#06b6d4",
 			icon: "☁️",
 		},
 		{
+			key: "security",
 			title: t("techStack.categories.security"),
-			items: t("techStack.skills.security", { returnObjects: true }) as string[],
+			items: resolveSkills("techStack.skills.security"),
 			color: "#10b981",
 			icon: "🔐",
 		},
 		{
-			title: "OS",
-			items: [t("techStack.skills.other.os")],
+			key: "os",
+			title: t("techStack.categories.os"),
+			items: resolveSkills("techStack.skills.os"),
 			color: "#f59e0b",
 			icon: "💻",
 		},
 		{
-			title: "Collaboration",
-			items: [t("techStack.skills.other.collaboration")],
+			key: "collaboration",
+			title: t("techStack.categories.collaboration"),
+			items: resolveSkills("techStack.skills.collaboration"),
 			color: "#ef4444",
 			icon: "🤝",
 		},
 		{
-			title: "Design",
-			items: [t("techStack.skills.other.design")],
+			key: "design",
+			title: t("techStack.categories.design"),
+			items: resolveSkills("techStack.skills.design"),
 			color: "#ec4899",
 			icon: "🎭",
 		},
+	];
+
+	const splitIndex = Math.ceil(techCategories.length / 2);
+	const columnGroups = [
+		techCategories.slice(0, splitIndex),
+		techCategories.slice(splitIndex),
 	];
 
 	return (
@@ -207,27 +242,37 @@ const TechStackSection = () => {
 					{t("techStack.title")}
 				</motion.h2>
 
-				<div className="tech-grid">
-					{techCategories.map((category, index) => (
-						<motion.div
-							key={index}
-							className="tech-category"
-							variants={itemVariants}
-							whileHover={{ scale: 1.02 }}
-							transition={{ duration: 0.3 }}
-						>
-							<div className="tech-header">
-								<span className="tech-icon">{category.icon}</span>
-								<h3 className="tech-title">{category.title}</h3>
-							</div>
-							<div className="tech-items">
-								{category.items.map((item, itemIndex) => (
-									<span key={itemIndex} className="tech-item">
-										{item}
-									</span>
-								))}
-							</div>
-						</motion.div>
+				<div className="tech-columns">
+					{columnGroups.map((column, columnIndex) => (
+						<div key={`column-${columnIndex}`} className="tech-column">
+							{column.map((category) => (
+								<motion.div
+									key={category.key}
+									className="tech-card"
+									variants={itemVariants}
+									whileHover={{ translateY: -4 }}
+									transition={{ duration: 0.3 }}
+								>
+									<div className="tech-card__header">
+										<span
+											className="tech-card__icon"
+											style={{ color: category.color }}
+										>
+											{category.icon}
+										</span>
+										<h3>{category.title}</h3>
+									</div>
+									<div className="tech-card__skills">
+										{category.items.map((item) => (
+											<TechSkillItem
+												key={`${category.key}-${item}`}
+												label={item}
+											/>
+										))}
+									</div>
+								</motion.div>
+							))}
+						</div>
 					))}
 				</div>
 			</motion.div>
@@ -311,3 +356,30 @@ const CareerSection = () => {
 };
 
 export default About;
+
+type TechSkillItemProps = {
+	label: string;
+};
+
+const TechSkillItem = ({ label }: TechSkillItemProps) => {
+	const iconMeta = getSkillIcon(label);
+
+	return (
+		<div className="tech-item" title={label}>
+			<span
+				className={`tech-item__icon${!iconMeta ? " tech-item__icon--fallback" : ""}`}
+				style={iconMeta?.bg ? { backgroundColor: iconMeta.bg } : undefined}
+				aria-hidden="true"
+			>
+				{iconMeta?.src ? (
+					<img src={iconMeta.src} alt={`${label} logo`} loading="lazy" />
+				) : iconMeta?.icon ? (
+					iconMeta.icon
+				) : (
+					label.charAt(0)
+				)}
+			</span>
+			<span className="tech-item__label">{label}</span>
+		</div>
+	);
+};

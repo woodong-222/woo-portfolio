@@ -11,7 +11,17 @@
     ]
   },
   "techStack": {
-    "title": "Tech Stack"
+    "title": "Tech Stack",
+    "categories": {
+      "programming": "Programming Languages",
+      "frontend": "Frontend",
+      "backend": "Backend & DB",
+      "devops": "DevOps & Cloud",
+      "security": "Security",
+      "os": "Operating Systems",
+      "collaboration": "Collaboration",
+      "design": "Design"
+    }
   },
   "career": {
     "title": "Career",

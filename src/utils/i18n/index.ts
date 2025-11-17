@@ -22,13 +22,13 @@ const resources = {
 	ko: {
 		common: { ...koCommon, ...language },
 		hero: koHero,
-		about: { ...koAbout, techStack: { ...koAbout.techStack, ...techStack } },
+		about: { ...koAbout, techStack: { ...techStack, ...koAbout.techStack } },
 		thankyou: koThankYou,
 	},
 	en: {
 		common: { ...enCommon, ...language },
 		hero: enHero,
-		about: { ...enAbout, techStack: { ...enAbout.techStack, ...techStack } },
+		about: { ...enAbout, techStack: { ...techStack, ...enAbout.techStack } },
 		thankyou: enThankYou,
 	},
 };
