@@ -6,7 +6,7 @@ import { createVariants } from "@/utils/types/motion";
 import { forwardRef } from "react";
 import "./About.scss";
 
-const About = forwardRef<HTMLElement>((props, ref) => {
+const About = forwardRef<HTMLDivElement>((_, ref) => {
 	return (
 		<div ref={ref} className="about-wrapper">
 			<IntroductionSection />
