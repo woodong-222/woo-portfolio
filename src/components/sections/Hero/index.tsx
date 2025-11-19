@@ -6,7 +6,7 @@ import { Github, ExternalLink, Mail, ArrowDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "./Hero.scss";
 
-const Hero = forwardRef<HTMLElement>((props, ref) => {
+const Hero = forwardRef<HTMLElement>((_props, ref) => {
 	const { t, i18n } = useTranslation("hero");
 	
 	// 마우스 위치 추적
@@ -39,7 +39,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 		visible: {
 			y: 0,
 			opacity: 1,
-			transition: { duration: 0.8, ease: "easeOut" },
+			transition: { duration: 0.8 },
 		},
 	};
 
@@ -49,7 +49,6 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 			transition: {
 				duration: 3,
 				repeat: Infinity,
-				ease: "easeInOut",
 			},
 		},
 	};
@@ -73,7 +72,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 						y: [0, -50, 0],
 						rotate: [0, 90, 0],
 					}}
-					transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+					transition={{ duration: 20, repeat: Infinity }}
 					style={{
 						transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
 					}}
@@ -85,7 +84,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 						y: [0, 60, 0],
 						rotate: [0, -90, 0],
 					}}
-					transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+					transition={{ duration: 15, repeat: Infinity }}
 					style={{
 						transform: `translate(${mousePosition.x * -20}px, ${mousePosition.y * -20}px)`,
 					}}
@@ -97,7 +96,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 						y: [0, -30, 0],
 						scale: [1, 1.2, 1],
 					}}
-					transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+					transition={{ duration: 18, repeat: Infinity }}
 					style={{
 						transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 15}px)`,
 					}}
