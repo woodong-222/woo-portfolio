@@ -1,8 +1,25 @@
 {
-  "greeting": "Hello",
-  "title": "One person who changes the world",
+  "typing": {
+    "security": "Security Specialist and",
+    "fullstack": "Full-Stack Developer and",
+    "solver": "Problem Solver and",
+    "innovator": "Innovation Seeker"
+  },
   "name": "Dongwoo Lee",
-  "subtitle": "Introduction",
-  "description": "A university student aiming to become an information security specialist and security product developer, building deep knowledge in various fields such as security product development, cloud security, web development and security.",
-  "lastUpdated": "Last Updated"
+  "nameEnd": "",
+  "subtitle": "Creating Safe and Beautiful Web",
+  "highlight": "Security · Performance · UX",
+  "buttons": {
+    "projects": "💼 View Projects",
+    "contact": "Contact Me"
+  },
+  "skills": {
+    "security": "Security",
+    "fullstack": "Full-Stack",
+    "cloud": "Cloud",
+    "uiux": "UI/UX",
+    "performance": "Optimization"
+  },
+  "scroll": "Scroll",
+  "profileAlt": "Dongwoo Lee Profile"
 }

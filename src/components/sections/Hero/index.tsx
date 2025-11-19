@@ -1,11 +1,28 @@
-import { forwardRef } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import Tilt from "react-parallax-tilt";
 import { Github, ExternalLink, Mail, ArrowDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "./Hero.scss";
 
 const Hero = forwardRef<HTMLElement>((props, ref) => {
+	const { t, i18n } = useTranslation("hero");
+	
+	// 마우스 위치 추적
+	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+	useEffect(() => {
+		const handleMouseMove = (e: MouseEvent) => {
+			// 화면 중앙을 기준으로 -1 ~ 1 범위로 정규화
+			const x = (e.clientX / window.innerWidth - 0.5) * 2;
+			const y = (e.clientY / window.innerHeight - 0.5) * 2;
+			setMousePosition({ x, y });
+		};
+
+		window.addEventListener("mousemove", handleMouseMove);
+		return () => window.removeEventListener("mousemove", handleMouseMove);
+	}, []);
 	const containerVariants = {
 		hidden: { opacity: 0 },
 		visible: {
@@ -38,16 +55,16 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 	};
 
 	const skills = [
-		{ icon: "🔐", text: "보안", color: "#10b981" },
-		{ icon: "💻", text: "풀스택", color: "#6366f1" },
-		{ icon: "☁️", text: "클라우드", color: "#06b6d4" },
-		{ icon: "🎨", text: "UI/UX", color: "#ec4899" },
-		{ icon: "⚡", text: "성능최적화", color: "#8b5cf6" },
+		{ icon: "🔐", text: t("skills.security"), color: "#10b981" },
+		{ icon: "💻", text: t("skills.fullstack"), color: "#6366f1" },
+		{ icon: "☁️", text: t("skills.cloud"), color: "#06b6d4" },
+		{ icon: "🎨", text: t("skills.uiux"), color: "#ec4899" },
+		{ icon: "⚡", text: t("skills.performance"), color: "#8b5cf6" },
 	];
 
 	return (
 		<section ref={ref} className="hero-new" id="hero">
-			{/* Floating Background Shapes */}
+			{/* Floating Background Shapes with Parallax */}
 			<div className="floating-shapes">
 				<motion.div
 					className="shape shape-1"
@@ -57,6 +74,9 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 						rotate: [0, 90, 0],
 					}}
 					transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+					style={{
+						transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
+					}}
 				/>
 				<motion.div
 					className="shape shape-2"
@@ -66,6 +86,9 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 						rotate: [0, -90, 0],
 					}}
 					transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+					style={{
+						transform: `translate(${mousePosition.x * -20}px, ${mousePosition.y * -20}px)`,
+					}}
 				/>
 				<motion.div
 					className="shape shape-3"
@@ -75,6 +98,9 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 						scale: [1, 1.2, 1],
 					}}
 					transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+					style={{
+						transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 15}px)`,
+					}}
 				/>
 			</div>
 
@@ -87,20 +113,17 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 				>
 					{/* Left Side - Text Content */}
 					<div className="hero-new__text">
-						<motion.div className="greeting" variants={itemVariants}>
-							👋 안녕하세요,
-						</motion.div>
-
 						<motion.h1 className="hero-new__title" variants={itemVariants}>
 							<TypeAnimation
+								key={i18n.language}
 								sequence={[
-									"보안 전문가이자",
+									t("typing.security"),
 									2000,
-									"풀스택 개발자이자",
+									t("typing.fullstack"),
 									2000,
-									"문제 해결사이자",
+									t("typing.solver"),
 									2000,
-									"혁신을 추구하는",
+									t("typing.innovator"),
 									2000,
 								]}
 								wrapper="span"
@@ -109,14 +132,14 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 								className="typing-text"
 							/>
 							<br />
-							<span className="gradient-text">이동우</span>입니다
+							<span className="gradient-text">{t("name")}</span>{t("nameEnd")}
 						</motion.h1>
 
 						<motion.p className="hero-new__subtitle" variants={itemVariants}>
-							안전하고 아름다운 웹을 만듭니다
+							{t("subtitle")}
 							<br />
 							<span className="highlight-text">
-								Security · Performance · UX
+								{t("highlight")}
 							</span>
 						</motion.p>
 
@@ -128,7 +151,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 								whileTap={{ scale: 0.95 }}
 							>
 								<span className="btn-content">
-									💼 프로젝트 보기
+									{t("buttons.projects")}
 								</span>
 								<span className="btn-ripple" />
 							</motion.a>
@@ -141,7 +164,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 							>
 								<span className="btn-content">
 									<Mail size={18} />
-									연락하기
+									{t("buttons.contact")}
 								</span>
 								<span className="btn-ripple" />
 							</motion.a>
@@ -207,56 +230,12 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 								<div className="image-glow" />
 								<img
 									src="/profile.jpeg"
-									alt="이동우 프로필"
+									alt={t("profileAlt")}
 									className="profile-image"
 								/>
 								<div className="image-border" />
 							</div>
 						</Tilt>
-
-						{/* Floating Icons */}
-						<div className="floating-icons">
-							<motion.div
-								className="icon-float icon-1"
-								animate={{
-									y: [0, -15, 0],
-									rotate: [0, 10, 0],
-								}}
-								transition={{ duration: 3, repeat: Infinity }}
-							>
-								🔐
-							</motion.div>
-							<motion.div
-								className="icon-float icon-2"
-								animate={{
-									y: [0, -20, 0],
-									rotate: [0, -10, 0],
-								}}
-								transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
-							>
-								💻
-							</motion.div>
-							<motion.div
-								className="icon-float icon-3"
-								animate={{
-									y: [0, -18, 0],
-									rotate: [0, 15, 0],
-								}}
-								transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
-							>
-								🌐
-							</motion.div>
-							<motion.div
-								className="icon-float icon-4"
-								animate={{
-									y: [0, -22, 0],
-									rotate: [0, -15, 0],
-								}}
-								transition={{ duration: 4.5, repeat: Infinity, delay: 1.5 }}
-							>
-								☁️
-							</motion.div>
-						</div>
 					</motion.div>
 				</motion.div>
 
@@ -273,7 +252,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
 					>
 						<ArrowDown size={24} />
 					</motion.div>
-					<span>Scroll</span>
+					<span>{t("scroll")}</span>
 				</motion.div>
 			</div>
 		</section>
