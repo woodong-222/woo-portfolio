@@ -49,9 +49,7 @@ const App = () => {
 				/>
 
 				<main className="scroll-container">
-					<section ref={setSectionRef(0)} id="hero">
-						<Hero />
-					</section>
+					<Hero ref={setSectionRef(0)} />
 
 					<About ref={setSectionRef(1)} />
 

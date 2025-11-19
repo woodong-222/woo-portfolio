@@ -4,11 +4,11 @@
 .thank-you {
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
 
   &.section {
-    height: 100vh;
-    padding-top: map.get($spacing, xl);
+    min-height: 100vh;
+    padding-top: map.get($spacing, lg);
     padding-bottom: map.get($spacing, lg);
   }
   
@@ -25,11 +25,10 @@
     z-index: 2;
     max-width: 800px;
     width: 100%;
-    min-height: 100%;
     display: flex;
     flex-direction: column;
-    gap: map.get($spacing, xl);
-    padding-bottom: map.get($spacing, xl);
+    gap: map.get($spacing, md);
+    padding-bottom: map.get($spacing, md);
     box-sizing: border-box;
   }
   
@@ -78,7 +77,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: map.get($spacing, xl);
+    margin-bottom: map.get($spacing, md);
     
     @include mobile-only {
       font-size: map.get($font-sizes, 3xl);
@@ -93,8 +92,8 @@
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: map.get($border-radius, xl);
-    padding: map.get($spacing, xl);
-    margin-bottom: map.get($spacing, xl);
+    padding: map.get($spacing, lg);
+    margin-bottom: map.get($spacing, md);
     transition: $transition-base;
     cursor: default;
     
@@ -128,7 +127,7 @@
   }
   
   .growth-visualization {
-    margin-bottom: map.get($spacing, lg);
+    margin-bottom: map.get($spacing, sm);
     
     .growth-path {
       display: flex;
@@ -225,7 +224,7 @@
       flex-direction: column;
       align-items: center;
       gap: map.get($spacing, xs);
-      padding: map.get($spacing, lg);
+      padding: map.get($spacing, md);
       background: var(--bg-secondary);
       border: 2px solid var(--border-color);
       border-radius: map.get($border-radius, xl);
@@ -242,8 +241,8 @@
       }
       
       .social-icon {
-        font-size: map.get($font-sizes, 2xl);
-        margin-bottom: map.get($spacing, xs);
+        font-size: map.get($font-sizes, xl);
+        margin-bottom: 0;
       }
       
       span {
@@ -288,13 +287,12 @@
   }
   
   &__footer {
-    margin-top: auto;
-    padding-top: map.get($spacing, lg);
+    padding-top: map.get($spacing, sm);
     
     .copyright {
       font-size: map.get($font-sizes, sm);
       color: var(--text-muted);
-      margin-bottom: map.get($spacing, md);
+      margin-bottom: map.get($spacing, sm);
     }
     
     .footer-decoration {

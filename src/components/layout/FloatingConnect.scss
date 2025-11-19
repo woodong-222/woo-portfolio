@@ -240,7 +240,6 @@
       }
     }
 
-    // Pulsing effect for attention
     &:not(.open)::after {
       content: '';
       position: absolute;

@@ -49,15 +49,14 @@ body {
 // Section base styles
 .section {
   height: 100vh;
-  // overflow: hidden; // 일단 제거해서 테스트
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
-  align-items: flex-start; // 위에서부터 정렬
+  align-items: flex-start;
   justify-content: center;
   position: relative;
-  padding-top: 100px; // 헤더 높이 + 여유
-  padding-bottom: 40px; // 하단 여유
+  padding-top: 100px;
+  padding-bottom: 40px;
   box-sizing: border-box;
 }
 
