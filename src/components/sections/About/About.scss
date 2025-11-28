@@ -7,7 +7,7 @@
   font-size: map.get($font-sizes, 4xl);
   font-weight: 800;
   margin-bottom: map.get($spacing, 3xl);
-  background: var(--gradient-primary);
+  background: linear-gradient(to right, #6b73ff, #00c4ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -25,7 +25,7 @@
 
 // Introduction Section
 .about-intro {
-  background: var(--bg-primary);
+  background: #ffffff;
   
   &__container {
     max-width: 1000px;
@@ -48,16 +48,16 @@
   }
   
   .principle-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: #f7f9fc;
+    border: 1px solid #e0e0e0;
     border-radius: map.get($border-radius, xl);
     padding: map.get($spacing, xl);
-    transition: $transition-base;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
     
     &:hover {
-      box-shadow: 0 12px 40px var(--shadow);
-      border-color: var(--bg-accent);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      border-color: #6b73ff;
     }
     
     .principle-icon {
@@ -66,16 +66,16 @@
       justify-content: center;
       width: 48px;
       height: 48px;
-      background: var(--bg-primary);
+      background: #ffffff;
       border-radius: map.get($border-radius, lg);
       margin-bottom: map.get($spacing, md);
-      box-shadow: 0 4px 20px var(--shadow);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
     
     .principle-text {
       font-size: map.get($font-sizes, base);
       line-height: 1.6;
-      color: var(--text-secondary);
+      color: #555555;
       
       @include desktop-only {
         font-size: map.get($font-sizes, lg);
@@ -83,7 +83,7 @@
       
       // Bold text styling
       strong {
-        color: var(--text-primary);
+        color: #111111;
         font-weight: 600;
       }
     }
@@ -92,7 +92,7 @@
 
 // Tech Stack Section
 .tech-stack {
-  background: var(--bg-secondary);
+  background: #f7f9fc;
   position: relative;
   overflow: visible;
   
@@ -133,18 +133,18 @@
   
   .tech-card {
     flex: 1;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: map.get($border-radius, xl);
     padding: map.get($spacing, lg);
     display: flex;
     flex-direction: column;
     gap: map.get($spacing, md);
     min-height: 0;
-    transition: $transition-base;
+    transition: all 0.3s ease-in-out;
     
     &:hover {
-      box-shadow: 0 12px 30px var(--shadow);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     }
     
     &__header {
@@ -155,7 +155,7 @@
       h3 {
         margin: 0;
         font-size: map.get($font-sizes, lg);
-        color: var(--text-primary);
+        color: #111111;
       }
     }
     
@@ -171,19 +171,19 @@
   }
   
   .tech-item {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: #f7f9fc;
+    border: 1px solid #e0e0e0;
     border-radius: map.get($border-radius, lg);
     padding: map.get($spacing, xs) map.get($spacing, sm);
     display: flex;
     align-items: center;
     gap: map.get($spacing, xs);
-    transition: $transition-fast;
+    transition: all 0.2s ease-in-out;
     
     &:hover {
       transform: translateY(-2px);
-      border-color: var(--bg-accent);
-      box-shadow: 0 8px 24px var(--shadow);
+      border-color: #6b73ff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     }
     
     &__icon {
@@ -193,7 +193,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-accent);
+      background: #6b73ff;
       color: white;
       flex-shrink: 0;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
@@ -205,13 +205,13 @@
       }
       
       &--fallback {
-        background: var(--bg-accent);
+        background: #6b73ff;
       }
     }
     
     &__label {
       font-size: map.get($font-sizes, sm);
-      color: var(--text-secondary);
+      color: #555555;
       font-weight: 500;
     }
   }
@@ -219,7 +219,7 @@
 
 // Career Section
 .career {
-  background: var(--bg-primary);
+  background: #ffffff;
   
   &__container {
     max-width: 800px;
@@ -236,7 +236,7 @@
       top: 0;
       bottom: 0;
       width: 2px;
-      background: var(--border-color);
+      background: #e0e0e0;
       
       @include desktop-only {
         left: 30px;
@@ -268,10 +268,10 @@
       .timeline-dot {
         width: 12px;
         height: 12px;
-        background: var(--bg-accent);
+        background: #6b73ff;
         border-radius: 50%;
-        border: 3px solid var(--bg-primary);
-        box-shadow: 0 0 0 3px var(--border-color);
+        border: 3px solid #ffffff;
+        box-shadow: 0 0 0 3px #e0e0e0;
         z-index: 2;
         
         @include desktop-only {
@@ -284,11 +284,11 @@
         margin-top: map.get($spacing, sm);
         font-size: map.get($font-sizes, sm);
         font-weight: 700;
-        color: var(--bg-accent);
-        background: var(--bg-secondary);
+        color: #6b73ff;
+        background: #f7f9fc;
         padding: map.get($spacing, xs) map.get($spacing, sm);
         border-radius: map.get($border-radius, full);
-        border: 1px solid var(--border-color);
+        border: 1px solid #e0e0e0;
         white-space: nowrap;
         
         @include desktop-only {
@@ -307,22 +307,22 @@
       }
       
       .timeline-achievement {
-        background: var(--bg-secondary);
-        border: 1px solid var(--border-color);
+        background: #f7f9fc;
+        border: 1px solid #e0e0e0;
         border-radius: map.get($border-radius, lg);
         padding: map.get($spacing, md);
         margin-bottom: map.get($spacing, sm);
         font-size: map.get($font-sizes, base);
         line-height: 1.5;
-        color: var(--text-secondary);
-        transition: $transition-base;
+        color: #555555;
+        transition: all 0.3s ease-in-out;
         
         &:last-child {
           margin-bottom: 0;
         }
         
         &:hover {
-          background: var(--bg-accent);
+          background: #6b73ff;
           color: white;
           transform: translateX(4px);
         }

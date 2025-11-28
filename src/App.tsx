@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { ThemeProvider } from '@/utils/contexts/ThemeContext';
 import Header from '@/components/layout/Header';
 import FloatingConnect from '@/components/layout/FloatingConnect';
 import Hero from '@/components/sections/Hero';
@@ -41,36 +40,34 @@ const App = () => {
 	};
 
 	return (
-		<ThemeProvider>
-			<div className="app">
-				<Header 
-					currentSection={currentSection} 
-					onSectionClick={handleSectionClick} 
-				/>
+		<div className="app">
+			<Header 
+				currentSection={currentSection} 
+				onSectionClick={handleSectionClick} 
+			/>
 
-				<main className="scroll-container">
-					<Hero ref={setSectionRef(0)} />
+			<main className="scroll-container">
+				<Hero ref={setSectionRef(0)} />
 
-					<About ref={setSectionRef(1)} />
+				<About ref={setSectionRef(1)} />
 
-					<section ref={setSectionRef(2)} id="projects">
-						<Projects onProjectClick={handleProjectClick} />
-					</section>
+				<section ref={setSectionRef(2)} id="projects">
+					<Projects onProjectClick={handleProjectClick} />
+				</section>
 
-					<section ref={setSectionRef(3)} id="thank-you">
-						<ThankYou />
-					</section>
-				</main>
+				<section ref={setSectionRef(3)} id="thank-you">
+					<ThankYou />
+				</section>
+			</main>
 
-				<FloatingConnect />
+			<FloatingConnect />
 
-				<ProjectModal
-					project={selectedProject}
-					isOpen={isModalOpen}
-					onClose={handleCloseModal}
-				/>
-			</div>
-		</ThemeProvider>
+			<ProjectModal
+				project={selectedProject}
+				isOpen={isModalOpen}
+				onClose={handleCloseModal}
+			/>
+		</div>
 	);
 };
 

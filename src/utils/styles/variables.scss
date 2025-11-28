@@ -23,21 +23,6 @@ $desktop-min: 1024px;
   --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
 }
 
-// Colors - Dark Theme
-
-[data-theme="dark"] {
-  --bg-primary: #0f1419;
-  --bg-secondary: #1a202c;
-  --bg-accent: #6366f1;
-  --text-primary: #ffffff;
-  --text-secondary: #a0aec0;
-  --text-muted: #718096;
-  --border-color: #2d3748;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-}
-
 // Spacing
 $spacing: (
   xs: 0.5rem,

@@ -2,7 +2,7 @@
 @use '@/utils/styles/variables.scss' as *;
 
 .projects {
-  background: var(--bg-secondary);
+  background: #f7f9fc;
   
   &__container {
     max-width: 1200px;
@@ -16,24 +16,24 @@
     margin-bottom: map.get($spacing, 3xl);
     
     .category-btn {
-      background: var(--bg-primary);
-      border: 2px solid var(--border-color);
-      color: var(--text-secondary);
+      background: #ffffff;
+      border: 2px solid #e0e0e0;
+      color: #555555;
       padding: map.get($spacing, sm) map.get($spacing, lg);
       border-radius: map.get($border-radius, full);
       font-size: map.get($font-sizes, sm);
       font-weight: 500;
       cursor: pointer;
-      transition: $transition-base;
+      transition: all 0.3s ease-in-out;
       
       &:hover {
-        border-color: var(--bg-accent);
-        color: var(--text-primary);
+        border-color: #6b73ff;
+        color: #111111;
       }
       
       &.active {
-        background: var(--bg-accent);
-        border-color: var(--bg-accent);
+        background: #6b73ff;
+        border-color: #6b73ff;
         color: white;
       }
       
@@ -63,29 +63,29 @@
   .no-projects {
     text-align: center;
     padding: map.get($spacing, 3xl);
-    color: var(--text-muted);
+    color: #a0a0a0;
     font-size: map.get($font-sizes, lg);
   }
 }
 
 .project-card {
   position: relative;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
   border-radius: map.get($border-radius, xl);
   //overflow: hidden;
-  transition: $transition-base;
+  transition: all 0.3s ease-in-out;
   
   &:hover {
-    box-shadow: 0 20px 60px var(--shadow);
-    border-color: var(--bg-accent);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    border-color: #6b73ff;
   }
   
   .featured-badge {
     position: absolute;
     top: map.get($spacing, sm);
     right: map.get($spacing, sm);
-    background: var(--gradient-primary);
+    background: linear-gradient(to right, #6b73ff, #00c4ff);
     color: white;
     padding: map.get($spacing, xs) map.get($spacing, sm);
     border-radius: map.get($border-radius, full);
@@ -121,7 +121,7 @@
     .project-title {
       font-size: map.get($font-sizes, xl);
       font-weight: 700;
-      color: var(--text-primary);
+      color: #111111;
       margin-bottom: map.get($spacing, sm);
       line-height: 1.3;
       
@@ -131,7 +131,7 @@
     }
     
     .project-description {
-      color: var(--text-secondary);
+      color: #555555;
       font-size: map.get($font-sizes, base);
       line-height: 1.6;
       margin-bottom: map.get($spacing, lg);
@@ -148,22 +148,22 @@
       margin-bottom: map.get($spacing, lg);
       
       .tech-tag {
-        background: var(--bg-secondary);
-        color: var(--text-secondary);
+        background: #f7f9fc;
+        color: #555555;
         padding: map.get($spacing, xs) map.get($spacing, sm);
         border-radius: map.get($border-radius, full);
         font-size: map.get($font-sizes, xs);
-        border: 1px solid var(--border-color);
-        transition: $transition-fast;
+        border: 1px solid #e0e0e0;
+        transition: all 0.2s ease-in-out;
         
         &:hover {
-          background: var(--bg-accent);
+          background: #6b73ff;
           color: white;
         }
       }
       
       .tech-more {
-        background: var(--bg-accent);
+        background: #6b73ff;
         color: white;
         padding: map.get($spacing, xs) map.get($spacing, sm);
         border-radius: map.get($border-radius, full);
@@ -178,7 +178,7 @@
     flex-wrap: wrap;
     gap: map.get($spacing, xs);
     padding: 0 map.get($spacing, lg) map.get($spacing, lg);
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid #e0e0e0;
     padding-top: map.get($spacing, lg);
     
     .action-btn {
@@ -192,31 +192,31 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: $transition-base;
+      transition: all 0.3s ease-in-out;
       flex: 1;
       justify-content: center;
       min-width: 100px;
       
       &.primary {
-        background: var(--bg-accent);
+        background: #6b73ff;
         color: white;
         
         &:hover {
-          background: var(--bg-accent);
+          background: #6b73ff;
           opacity: 0.9;
           transform: translateY(-1px);
         }
       }
       
       &.secondary {
-        background: var(--bg-secondary);
-        color: var(--text-secondary);
-        border: 1px solid var(--border-color);
+        background: #f7f9fc;
+        color: #555555;
+        border: 1px solid #e0e0e0;
         
         &:hover {
-          background: var(--bg-primary);
-          color: var(--text-primary);
-          border-color: var(--bg-accent);
+          background: #ffffff;
+          color: #111111;
+          border-color: #6b73ff;
         }
       }
       

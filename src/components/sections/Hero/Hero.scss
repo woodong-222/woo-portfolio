@@ -17,11 +17,6 @@
   scroll-snap-align: start;
   scroll-snap-stop: always;
 
-  // 다크모드
-  [data-theme="dark"] & {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-  }
-
   @include mobile-only {
     height: 100vh;
     max-height: 100vh;
@@ -49,11 +44,6 @@
         background: linear-gradient(135deg, #667eea, #764ba2);
         top: -200px;
         right: -100px;
-
-        [data-theme="dark"] & {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          opacity: 0.2;
-        }
       }
 
       &.shape-2 {
@@ -62,11 +52,6 @@
         background: linear-gradient(135deg, #f093fb, #f5576c);
         bottom: -150px;
         left: -100px;
-
-        [data-theme="dark"] & {
-          background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-          opacity: 0.2;
-        }
       }
 
       &.shape-3 {
@@ -76,11 +61,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-
-        [data-theme="dark"] & {
-          background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-          opacity: 0.2;
-        }
       }
 
       @include mobile-only {
@@ -134,10 +114,6 @@
       display: inline-block;
       animation: wave 2s infinite;
 
-      [data-theme="dark"] & {
-        color: #9ca3af;
-      }
-
       @include mobile-only {
         font-size: map.get($font-sizes, base);
       }
@@ -150,10 +126,6 @@
     line-height: 1.2;
     margin-bottom: map.get($spacing, lg);
     color: #1a1a1a;
-
-    [data-theme="dark"] & {
-      color: #f3f4f6;
-    }
 
     .typing-text {
       display: inline-block;
@@ -188,19 +160,12 @@
     line-height: 1.6;
     margin-bottom: map.get($spacing, xl);
 
-    [data-theme="dark"] & {
-      color: #9ca3af;
-    }
-
     .highlight-text {
       color: #9333ea;
       font-weight: 600;
       font-size: map.get($font-sizes, base);
       letter-spacing: 1px;
 
-      [data-theme="dark"] & {
-        color: #a78bfa;
-      }
     }
 
     @include mobile-only {
@@ -281,24 +246,14 @@
       border: 2px solid rgba(102, 126, 234, 0.2);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 
-      [data-theme="dark"] & {
-        background: rgba(30, 30, 30, 0.8);
-        color: #f3f4f6;
-        border-color: rgba(102, 126, 234, 0.3);
-      }
-
       &:hover {
         border-color: #667eea;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         transform: translateY(-2px);
-
-        [data-theme="dark"] & {
-          box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
-        }
       }
     }
   }
-
+  
   &__skills {
     display: flex;
     flex-wrap: wrap;
@@ -320,11 +275,6 @@
       transition: all 0.3s ease;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
-      [data-theme="dark"] & {
-        background: rgba(30, 30, 30, 0.8);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      }
-
       .skill-icon {
         font-size: map.get($font-sizes, lg);
         display: inline-block;
@@ -333,23 +283,15 @@
 
       .skill-text {
         color: #1a1a1a;
-
-        [data-theme="dark"] & {
-          color: #f3f4f6;
-        }
       }
 
       &:hover {
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         transform: translateY(-3px);
-
-        [data-theme="dark"] & {
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
       }
     }
   }
-
+  
   &__social {
     display: flex;
     gap: map.get($spacing, sm);
@@ -367,13 +309,6 @@
       color: #1a1a1a;
       transition: all 0.3s ease;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-      [data-theme="dark"] & {
-        background: rgba(30, 30, 30, 0.8);
-        color: #f3f4f6;
-        border-color: rgba(102, 126, 234, 0.3);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      }
 
       &:hover {
         border-color: #667eea;
@@ -409,13 +344,6 @@
       box-shadow: 
         0 0 0 5px white,
         0 20px 60px rgba(0, 0, 0, 0.15);
-
-      [data-theme="dark"] & {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(244, 93, 108, 0.2));
-        box-shadow: 
-          0 0 0 5px rgba(30, 30, 30, 1),
-          0 20px 60px rgba(0, 0, 0, 0.5);
-      }
 
       @include mobile-only {
         width: 300px;
@@ -506,10 +434,6 @@
     font-size: map.get($font-sizes, sm);
     font-weight: 500;
     z-index: 10;
-
-    [data-theme="dark"] & {
-      color: #9ca3af;
-    }
 
     @include mobile-only {
       bottom: 20px;

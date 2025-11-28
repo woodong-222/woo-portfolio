@@ -5,12 +5,8 @@
     "projects": "프로젝트",
     "contact": "연락처"
   },
-  "theme": {
-    "light": "라이트 모드",
-    "dark": "다크 모드"
-  },
   "buttons": {
-    "viewMore": "자세히 보기",
+    "viewMore": "더보기",
     "viewProject": "프로젝트 보기",
     "contact": "연락하기",
     "close": "닫기",
@@ -24,7 +20,7 @@
     "email": "이메일",
     "message": "메시지",
     "placeholder": {
-      "name": "성함을 입력해주세요",
+      "name": "이름을 입력해주세요",
       "email": "이메일을 입력해주세요",
       "message": "메시지를 입력해주세요"
     },

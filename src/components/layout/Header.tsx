@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun, Menu, X, Globe, ChevronDown } from 'lucide-react';
-import { useTheme } from '@/utils/contexts/ThemeContext';
+import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import useResponsive from '@/utils/hooks/useResponsive';
 import './Header.scss';
 
@@ -15,7 +14,6 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
-	const { theme, toggleTheme } = useTheme();
 	const { t, i18n } = useTranslation('common');
 	const { isMobile } = useResponsive();
 
@@ -147,16 +145,6 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 						<span className="btn-text">
 							{i18n.language.toUpperCase()}
 						</span>
-					</motion.button>
-
-					<motion.button
-						className="control-btn"
-						onClick={toggleTheme}
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
-						title={theme === 'light' ? t('theme.dark') : t('theme.light')}
-					>
-						{theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
 					</motion.button>
 
 					{isMobile && (

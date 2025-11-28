@@ -169,11 +169,6 @@
           margin-bottom: map.get($spacing, sm);
           font-size: map.get($font-sizes, sm);
 
-          [data-theme="dark"] & {
-            background: rgba(220, 38, 38, 0.1);
-            color: #fca5a5;
-          }
-
           p {
             margin: 0;
           }
