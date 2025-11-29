@@ -1,49 +1,29 @@
-import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Heart, Star, Rocket } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { createVariants } from "@/utils/types/motion";
 import "./ThankYou.scss";
 
 const ThankYou = () => {
-	const { t, i18n } = useTranslation("thankyou");
-	const { ref, inView } = useInView({
-		threshold: 0.3,
-		triggerOnce: true,
-	});
+	const { i18n } = useTranslation();
+	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				delayChildren: 0.3,
-				staggerChildren: 0.2,
-			},
-		},
+		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.2 } },
 	});
 
 	const itemVariants = createVariants({
 		hidden: { y: 30, opacity: 0 },
-		visible: {
-			y: 0,
-			opacity: 1,
-			transition: {
-				duration: 0.8,
-				ease: "easeOut" as const,
-			},
-		},
+		visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
 	});
 
 	const floatingVariants = createVariants({
 		animate: {
 			y: [0, -10, 0],
 			rotate: [0, 5, 0],
-			transition: {
-				duration: 3,
-				repeat: Infinity,
-				ease: "easeInOut" as const,
-			},
+			transition: { duration: 3, repeat: Infinity, ease: "easeInOut" as const },
 		},
 	});
 
@@ -59,11 +39,7 @@ const ThankYou = () => {
 			>
 				<div className="thank-you__content">
 					<motion.div className="floating-elements">
-						<motion.div
-							className="floating-item heart"
-							variants={floatingVariants}
-							animate="animate"
-						>
+						<motion.div className="floating-item heart" variants={floatingVariants} animate="animate">
 							<Heart size={24} fill="currentColor" />
 						</motion.div>
 						<motion.div
@@ -85,7 +61,9 @@ const ThankYou = () => {
 					</motion.div>
 
 					<motion.div className="thank-you__main" variants={itemVariants}>
-						<h2 className="thank-you__title">{t("title")}</h2>
+						<h2 className="thank-you__title">
+							{i18n.language === "ko" ? "봐주셔서 감사합니다." : "Thank you for visiting."}
+						</h2>
 
 						<motion.div
 							className="thank-you__message"
@@ -93,20 +71,18 @@ const ThankYou = () => {
 							whileHover={{ scale: 1.02 }}
 							transition={{ duration: 0.3 }}
 						>
-							<p className="message-text">{t("message")}</p>
-							<p className="description-text">{t("description")}</p>
+							<p className="message-text">
+								{i18n.language === "ko"
+									? "보안 담당자 및 보안 제품 개발자로 성장해나가는 제 모습을 지켜봐주세요."
+									: "Please watch my journey as I grow into a security lead and product developer."}
+							</p>
 						</motion.div>
 
-						<motion.div
-							className="growth-visualization"
-							variants={itemVariants}
-						>
+						<motion.div className="growth-visualization" variants={itemVariants}>
 							<div className="growth-path">
 								<div className="growth-step current">
 									<div className="step-dot"></div>
-									<span className="step-label">
-										{i18n.language === "ko" ? "현재" : "Now"}
-									</span>
+									<span className="step-label">{i18n.language === "ko" ? "현재" : "Now"}</span>
 								</div>
 								<div className="growth-line">
 									<motion.div
@@ -118,14 +94,12 @@ const ThankYou = () => {
 								</div>
 								<div className="growth-step future">
 									<div className="step-dot"></div>
-									<span className="step-label">
-										{i18n.language === "ko" ? "미래" : "Future"}
-									</span>
+									<span className="step-label">{i18n.language === "ko" ? "미래" : "Future"}</span>
 								</div>
 							</div>
 							<p className="growth-text">
 								{i18n.language === "ko"
-									? "보안 전문가로의 여정이 계속됩니다"
+									? "보안 담당자 및 보안 제품 개발자로 성장 중입니다."
 									: "The journey to become a security expert continues"}
 							</p>
 						</motion.div>
@@ -140,7 +114,7 @@ const ThankYou = () => {
 							whileHover={{ scale: 1.1, rotate: 5 }}
 							whileTap={{ scale: 0.95 }}
 						>
-							<div className="social-icon">🐱</div>
+							<div className="social-icon">GH</div>
 							<span>GitHub</span>
 						</motion.a>
 
@@ -152,7 +126,7 @@ const ThankYou = () => {
 							whileHover={{ scale: 1.1, rotate: -5 }}
 							whileTap={{ scale: 0.95 }}
 						>
-							<div className="social-icon">📝</div>
+							<div className="social-icon">BL</div>
 							<span>Blog</span>
 						</motion.a>
 
@@ -161,13 +135,13 @@ const ThankYou = () => {
 							whileHover={{ scale: 1.1, rotate: 3 }}
 							whileTap={{ scale: 0.95 }}
 						>
-							<div className="social-icon">💬</div>
+							<div className="social-icon">✉</div>
 							<span>{i18n.language === "ko" ? "연락하기" : "Contact"}</span>
 						</motion.div>
 					</motion.div>
 
 					<motion.footer className="thank-you__footer" variants={itemVariants}>
-						<p className="copyright">{t("copyright", { year: currentYear })}</p>
+						<p className="copyright">Copyright © {currentYear} Woo. all rights reserved.</p>
 					</motion.footer>
 				</div>
 			</motion.div>

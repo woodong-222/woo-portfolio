@@ -16,12 +16,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 	const { i18n } = useTranslation();
 
 	useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'unset';
-		}
-
+		document.body.style.overflow = isOpen ? 'hidden' : 'unset';
 		return () => {
 			document.body.style.overflow = 'unset';
 		};
@@ -29,28 +24,11 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 
 	useEffect(() => {
 		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') {
-				onClose();
-			}
+			if (e.key === 'Escape') onClose();
 		};
-
-		if (isOpen) {
-			document.addEventListener('keydown', handleEscape);
-		}
-
-		return () => {
-			document.removeEventListener('keydown', handleEscape);
-		};
+		if (isOpen) document.addEventListener('keydown', handleEscape);
+		return () => document.removeEventListener('keydown', handleEscape);
 	}, [isOpen, onClose]);
-
-	const getCategoryIcon = (category: string) => {
-		switch (category) {
-			case 'security': return '🔐';
-			case 'web': return '🌐';
-			case 'cloud': return '☁️';
-			default: return '💡';
-		}
-	};
 
 	const getCategoryColor = (category: string) => {
 		switch (category) {
@@ -64,33 +42,18 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 	const overlayVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
-		exit: { opacity: 0 }
+		exit: { opacity: 0 },
 	});
 
 	const modalVariants = createVariants({
-		hidden: { 
-			opacity: 0, 
-			scale: 0.8,
-			y: 50 
-		},
-		visible: { 
-			opacity: 1, 
+		hidden: { opacity: 0, scale: 0.8, y: 50 },
+		visible: {
+			opacity: 1,
 			scale: 1,
 			y: 0,
-			transition: {
-				type: "spring" as const,
-				duration: 0.5,
-				bounce: 0.3
-			}
+			transition: { type: 'spring' as const, duration: 0.5, bounce: 0.3 },
 		},
-		exit: { 
-			opacity: 0, 
-			scale: 0.8,
-			y: 50,
-			transition: {
-				duration: 0.3
-			}
-		}
+		exit: { opacity: 0, scale: 0.8, y: 50, transition: { duration: 0.3 } },
 	});
 
 	if (!project) return null;
@@ -118,24 +81,21 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 						>
 							<div className="modal-header">
 								<div className="project-meta">
-									<div 
+									<div
 										className="project-category"
 										style={{ color: getCategoryColor(project.category) }}
 									>
-										<span className="category-icon">
-											{getCategoryIcon(project.category)}
-										</span>
 										<span className="category-text">
 											{project.category.charAt(0).toUpperCase() + project.category.slice(1)}
 										</span>
 									</div>
 									{project.featured && (
 										<div className="featured-badge">
-											⭐ {i18n.language === 'ko' ? '추천 프로젝트' : 'Featured Project'}
+											★ {i18n.language === 'ko' ? '추천 프로젝트' : 'Featured Project'}
 										</div>
 									)}
 								</div>
-								
+
 								<motion.button
 									className="close-btn"
 									onClick={onClose}
@@ -153,11 +113,9 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 
 								<div className="project-image-placeholder">
 									<div className="placeholder-content">
-										<div className="placeholder-icon">
-											{getCategoryIcon(project.category)}
-										</div>
+										<div className="placeholder-icon">★</div>
 										<p className="placeholder-text">
-											{i18n.language === 'ko' ? '프로젝트 이미지' : 'Project Image'}
+											{i18n.language === 'ko' ? '프로젝트' : 'Project'}
 										</p>
 									</div>
 								</div>
@@ -170,39 +128,34 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 									<div className="detail-section">
 										<div className="detail-header">
 											<Target size={20} />
-											<h4>{i18n.language === 'ko' ? '주요 기능' : 'Key Features'}</h4>
+											<h4>{i18n.language === 'ko' ? '개요' : 'Overview'}</h4>
 										</div>
-										<ul className="feature-list">
-											<li>{i18n.language === 'ko' ? '사용자 친화적인 인터페이스' : 'User-friendly interface'}</li>
-											<li>{i18n.language === 'ko' ? '반응형 디자인 적용' : 'Responsive design implementation'}</li>
-											<li>{i18n.language === 'ko' ? '최신 보안 표준 준수' : 'Latest security standards compliance'}</li>
-											<li>{i18n.language === 'ko' ? '성능 최적화' : 'Performance optimization'}</li>
-										</ul>
+										<p className="detail-info">
+											{project.description[i18n.language as keyof typeof project.description]}
+										</p>
 									</div>
 
 									<div className="detail-section">
 										<div className="detail-header">
 											<Calendar size={20} />
-											<h4>{i18n.language === 'ko' ? '개발 기간' : 'Development Period'}</h4>
+											<h4>{i18n.language === 'ko' ? '기간' : 'Period'}</h4>
 										</div>
-										<p className="detail-info">
-											{i18n.language === 'ko' ? '2024년 3월 - 2024년 6월 (3개월)' : 'March 2024 - June 2024 (3 months)'}
-										</p>
+										<p className="detail-info">{project.period}</p>
 									</div>
 
 									<div className="detail-section">
 										<div className="detail-header">
 											<Users size={20} />
-											<h4>{i18n.language === 'ko' ? '팀 구성' : 'Team Composition'}</h4>
+											<h4>{i18n.language === 'ko' ? '구성' : 'Team'}</h4>
 										</div>
 										<p className="detail-info">
-											{i18n.language === 'ko' ? '개인 프로젝트 (1인)' : 'Individual Project (1 person)'}
+											{i18n.language === 'ko' ? '개인 또는 팀 프로젝트' : 'Solo or team project'}
 										</p>
 									</div>
 								</div>
 
 								<div className="tech-stack-detailed">
-									<h4>{i18n.language === 'ko' ? '사용 기술' : 'Technologies Used'}</h4>
+									<h4>{i18n.language === 'ko' ? '기술 스택' : 'Technologies Used'}</h4>
 									<div className="tech-tags">
 										{project.technologies.map((tech, index) => (
 											<motion.span
@@ -242,7 +195,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 											whileTap={{ scale: 0.95 }}
 										>
 											<ExternalLink size={20} />
-											{i18n.language === 'ko' ? '라이브 데모' : 'Live Demo'}
+											{i18n.language === 'ko' ? '라이브 보기' : 'Live Demo'}
 										</motion.a>
 									)}
 								</div>

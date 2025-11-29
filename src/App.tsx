@@ -4,8 +4,8 @@ import FloatingConnect from '@/components/layout/FloatingConnect';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Projects from '@/components/sections/Projects';
-import ThankYou from '@/components/sections/ThankYou';
 import ProjectModal from '@/components/modals/ProjectModal';
+import Contact from '@/components/sections/Contact';
 import useScrollSpy from '@/utils/hooks/useScrollSpy';
 import { Project } from '@/components/sections/Projects/projects.data';
 import '@/utils/i18n';
@@ -55,8 +55,8 @@ const App = () => {
 					<Projects onProjectClick={handleProjectClick} />
 				</section>
 
-				<section ref={setSectionRef(3)} id="thank-you">
-					<ThankYou />
+				<section ref={setSectionRef(3)} id="contact">
+					<Contact />
 				</section>
 			</main>
 

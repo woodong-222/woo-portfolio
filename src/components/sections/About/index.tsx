@@ -1,11 +1,19 @@
-import { useTranslation } from "react-i18next";
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Code, Shield, Users, Lightbulb, Target } from "lucide-react";
+import { Shield, Target, Users, Lightbulb } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
-import { forwardRef } from "react";
 import { getSkillIcon } from "./skillIcons";
 import "./About.scss";
+
+type TechCategory = {
+	key: string;
+	title: string;
+	color: string;
+	icon: string;
+	items?: string[];
+	groups?: { label: string; items: string[] }[];
+};
 
 const About = forwardRef<HTMLDivElement>((_, ref) => {
 	return (
@@ -17,63 +25,45 @@ const About = forwardRef<HTMLDivElement>((_, ref) => {
 	);
 });
 
-About.displayName = 'About';
+About.displayName = "About";
 
 const IntroductionSection = () => {
-	const { t } = useTranslation("about");
-	const { ref, inView } = useInView({
-		threshold: 0.3,
-		triggerOnce: true,
-	});
+	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				delayChildren: 0.3,
-				staggerChildren: 0.15,
-			},
-		},
+		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.15 } },
 	});
 
 	const itemVariants = createVariants({
 		hidden: { y: 30, opacity: 0 },
-		visible: {
-			y: 0,
-			opacity: 1,
-			transition: {
-				duration: 0.8,
-				ease: "easeOut" as const,
-			},
-		},
+		visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
 	});
 
 	const principles = [
 		{
 			icon: <Shield size={24} />,
-			text: t("introduction.items.0"),
+			title: "Balance",
+			text: "사용자 경험과 보안의 균형을 위해 보안을 강화하면서도 사용자의 편리함을 고려해 최적의 밸런스를 맞춥니다.",
 			color: "#6366f1",
 		},
 		{
 			icon: <Target size={24} />,
-			text: t("introduction.items.1"),
+			title: "Communication",
+			text: "방법론의 차이를 이해하고 의도와 배경을 파악해 간극을 좁힌 뒤, 방법은 마지막에 결정합니다.",
 			color: "#8b5cf6",
 		},
 		{
 			icon: <Users size={24} />,
-			text: t("introduction.items.2"),
+			title: "Teamwork",
+			text: "팀의 방향성과 목표를 명확히 설정해 모두가 일관되게 움직이도록 돕고 혼란을 최소화합니다.",
 			color: "#3b82f6",
 		},
 		{
 			icon: <Lightbulb size={24} />,
-			text: t("introduction.items.3"),
+			title: "Growth",
+			text: "기존 방식에 얽매이지 않는 창의적 접근으로 문제를 해결하며, 새로운 기술을 끊임없이 학습합니다.",
 			color: "#06b6d4",
-		},
-		{
-			icon: <Code size={24} />,
-			text: t("introduction.items.4"),
-			color: "#10b981",
 		},
 	];
 
@@ -86,7 +76,7 @@ const IntroductionSection = () => {
 				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{t("introduction.title")}
+					About Me
 				</motion.h2>
 
 				<div className="principles-grid">
@@ -101,10 +91,10 @@ const IntroductionSection = () => {
 							<div className="principle-icon" style={{ color: principle.color }}>
 								{principle.icon}
 							</div>
-							<div
-								className="principle-text"
-								dangerouslySetInnerHTML={{ __html: principle.text }}
-							/>
+							<div className="principle-content">
+								<p className="principle-title">{principle.title}</p>
+								<p className="principle-text">{principle.text}</p>
+							</div>
 						</motion.div>
 					))}
 				</div>
@@ -114,121 +104,59 @@ const IntroductionSection = () => {
 };
 
 const TechStackSection = () => {
-	const { t } = useTranslation("about");
-	const { ref, inView } = useInView({
-		threshold: 0.3,
-		triggerOnce: true,
-	});
+	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				delayChildren: 0.2,
-				staggerChildren: 0.1,
-			},
-		},
+		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.1 } },
 	});
 
 	const itemVariants = createVariants({
 		hidden: { y: 20, opacity: 0 },
-		visible: {
-			y: 0,
-			opacity: 1,
-			transition: {
-				duration: 0.6,
-				ease: "easeOut" as const,
-			},
-		},
+		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
 	});
-
-	type TechCategory = {
-		key: string;
-		title: string;
-		items: string[];
-		color: string;
-		icon: string;
-	};
-
-	const resolveSkills = (path: string): string[] => {
-		const translated = t(path, { returnObjects: true }) as unknown;
-		if (Array.isArray(translated)) {
-			return translated as string[];
-		}
-		if (typeof translated === "string") {
-			return translated
-				.split(",")
-				.map((item) => item.trim())
-				.filter(Boolean);
-		}
-		return [];
-	};
 
 	const techCategories: TechCategory[] = [
 		{
-			key: "programming",
-			title: t("techStack.categories.programming"),
-			items: resolveSkills("techStack.skills.programming"),
+			key: "language",
+			title: "Languages",
+			items: ["Python", "C", "C++", "Java", "JavaScript"],
 			color: "#6366f1",
-			icon: "⚡",
+			icon: "λ",
 		},
 		{
-			key: "frontend",
-			title: t("techStack.categories.frontend"),
-			items: resolveSkills("techStack.skills.frontend"),
-			color: "#3b82f6",
-			icon: "🎨",
-		},
-		{
-			key: "backend",
-			title: t("techStack.categories.backend"),
-			items: resolveSkills("techStack.skills.backend"),
-			color: "#8b5cf6",
-			icon: "🔧",
-		},
-		{
-			key: "devops",
-			title: t("techStack.categories.devops"),
-			items: resolveSkills("techStack.skills.devops"),
+			key: "development",
+			title: "Development",
+			groups: [
+				{ label: "Frontend", items: ["React"] },
+				{ label: "Backend & DB", items: ["FastAPI", "PostgreSQL", "MySQL"] },
+				{ label: "DevOps & Cloud", items: ["Jenkins", "AWS", "Docker", "Git", "Nginx", "Vercel"] },
+			],
 			color: "#06b6d4",
-			icon: "☁️",
+			icon: "</>",
 		},
 		{
 			key: "security",
-			title: t("techStack.categories.security"),
-			items: resolveSkills("techStack.skills.security"),
+			title: "Security",
+			items: ["Cloud", "Web"],
 			color: "#10b981",
-			icon: "🔐",
+			icon: "🔒",
 		},
 		{
-			key: "os",
-			title: t("techStack.categories.os"),
-			items: resolveSkills("techStack.skills.os"),
-			color: "#f59e0b",
-			icon: "💻",
-		},
-		{
-			key: "collaboration",
-			title: t("techStack.categories.collaboration"),
-			items: resolveSkills("techStack.skills.collaboration"),
-			color: "#ef4444",
-			icon: "🤝",
-		},
-		{
-			key: "design",
-			title: t("techStack.categories.design"),
-			items: resolveSkills("techStack.skills.design"),
-			color: "#ec4899",
-			icon: "🎭",
+			key: "other",
+			title: "Other",
+			groups: [
+				{ label: "OS", items: ["Windows OS", "Linux OS", "MacOS"] },
+				{ label: "Collaboration", items: ["Slack", "Notion"] },
+				{ label: "Design", items: ["Figma", "Photoshop", "Premiere"] },
+			],
+			color: "#8b5cf6",
+			icon: "★",
 		},
 	];
 
 	const splitIndex = Math.ceil(techCategories.length / 2);
-	const columnGroups = [
-		techCategories.slice(0, splitIndex),
-		techCategories.slice(splitIndex),
-	];
+	const columnGroups = [techCategories.slice(0, splitIndex), techCategories.slice(splitIndex)];
 
 	return (
 		<section className="tech-stack section" id="tech-stack" ref={ref}>
@@ -239,7 +167,7 @@ const TechStackSection = () => {
 				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{t("techStack.title")}
+					기술 스택
 				</motion.h2>
 
 				<div className="tech-columns">
@@ -254,22 +182,31 @@ const TechStackSection = () => {
 									transition={{ duration: 0.3 }}
 								>
 									<div className="tech-card__header">
-										<span
-											className="tech-card__icon"
-											style={{ color: category.color }}
-										>
+										<span className="tech-card__icon" style={{ color: category.color }}>
 											{category.icon}
 										</span>
-										<h3>{category.title}</h3>
+										<span className="tech-card__title">{category.title}</span>
 									</div>
-									<div className="tech-card__skills">
-										{category.items.map((item) => (
-											<TechSkillItem
-												key={`${category.key}-${item}`}
-												label={item}
-											/>
-										))}
-									</div>
+									{category.groups ? (
+										<div className="tech-groups">
+											{category.groups.map((group) => (
+												<div key={`${category.key}-${group.label}`} className="tech-group">
+													<p className="tech-group__label">{group.label}</p>
+													<div className="tech-grid">
+														{group.items.map((item) => (
+															<TechSkillItem key={`${category.key}-${group.label}-${item}`} label={item} />
+														))}
+													</div>
+												</div>
+											))}
+										</div>
+									) : (
+										<div className="tech-grid">
+											{category.items?.map((item) => (
+												<TechSkillItem key={`${category.key}-${item}`} label={item} />
+											))}
+										</div>
+									)}
 								</motion.div>
 							))}
 						</div>
@@ -281,39 +218,41 @@ const TechStackSection = () => {
 };
 
 const CareerSection = () => {
-	const { t } = useTranslation("about");
-	const { ref, inView } = useInView({
-		threshold: 0.3,
-		triggerOnce: true,
-	});
+	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				delayChildren: 0.3,
-				staggerChildren: 0.2,
-			},
-		},
+		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.2 } },
 	});
 
 	const itemVariants = createVariants({
 		hidden: { x: -30, opacity: 0 },
-		visible: {
-			x: 0,
-			opacity: 1,
-			transition: {
-				duration: 0.8,
-				ease: "easeOut" as const,
-			},
-		},
+		visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
 	});
 
-	const timeline = t("career.timeline", { returnObjects: true }) as Array<{
-		year: string;
-		items: string[];
-	}>;
+	const timeline = [
+		{
+			year: "2025.07 ~ 2025.12",
+			items: [
+				"Best of the Best 14기 보안제품개발 트랙 수강",
+				"네트워크, 시스템, 클라우드 등 다양한 보안 환경 경험 및 알려지지 않은 URL의 악성 행위 탐지 프로젝트 진행",
+			],
+		},
+		{
+			year: "2024.03 ~ 2024.09",
+			items: [
+				"차세대 보안리더 양성교육, WHS 2기 수료",
+				"보안 기초 설립 및 클라우드 환경에서의 DevSecOps 보안 위협 방어 프로젝트 진행",
+			],
+		},
+		{
+			year: "2020.03 ~ 2026.08",
+			items: [
+				"한국기술교육대학교 컴퓨터공학부 재학",
+				"2024 컴퓨터공학부 학생회 학회장",
+			],
+		},
+	];
 
 	return (
 		<section className="career section" id="career" ref={ref}>
@@ -324,7 +263,7 @@ const CareerSection = () => {
 				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					{t("career.title")}
+					경력 & 교육
 				</motion.h2>
 
 				<div className="timeline">

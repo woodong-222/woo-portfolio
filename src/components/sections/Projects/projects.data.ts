@@ -1,5 +1,6 @@
 export interface Project {
 	id: string;
+	period: string;
 	title: {
 		ko: string;
 		en: string;
@@ -23,17 +24,18 @@ export interface Project {
 export const projects: Project[] = [
 	{
 		id: '1',
+		period: '2025.09 ~ 2025.12',
 		title: {
-			ko: '보안 취약점 스캐너',
-			en: 'Security Vulnerability Scanner',
+			ko: 'MON47 - 알려지지 않은 URL 분석 및 악성 행위 탐지 시스템',
+			en: 'MON47 - Unknown URL Analysis & Malicious Behavior Detection',
 		},
 		description: {
-			ko: '웹 애플리케이션의 보안 취약점을 자동으로 탐지하는 도구',
-			en: 'Automated tool for detecting security vulnerabilities in web applications',
+			ko: '알려지지 않은 URL의 악성 행위를 탐지하고 분석하는 보안 제품 개발',
+			en: 'Security product to detect and analyze malicious behavior in unknown URLs',
 		},
 		detailedDescription: {
-			ko: '웹 애플리케이션에서 발생할 수 있는 다양한 보안 취약점을 자동으로 탐지하고 분석합니다. SQL Injection, XSS, CSRF 등 주요 취약점을 식별하고 상세 리포트를 제공합니다.',
-			en: 'An automated tool that detects and analyzes various security vulnerabilities in web applications. It identifies major vulnerabilities such as SQL Injection, XSS, CSRF and provides detailed reports.',
+			ko: '네트워크/시스템/클라우드 환경에서 알려지지 않은 URL의 악성 행위를 탐지하고 분석하는 시스템. (상세 내용 추후 추가)',
+			en: 'Detects malicious behaviors of unknown URLs across network/system/cloud environments. (Details to be added)',
 		},
 		technologies: ['Python', 'FastAPI', 'SQLAlchemy', 'React', 'Docker'],
 		githubUrl: 'https://github.com/woodong-222',
@@ -42,36 +44,78 @@ export const projects: Project[] = [
 	},
 	{
 		id: '2',
+		period: '2024.09 ~ 2025.06',
 		title: {
-			ko: '클라우드 보안 모니터링 시스템',
-			en: 'Cloud Security Monitoring System',
+			ko: 'Winectio n - 농인을 위한 양방향 수어 변환 화상채팅',
+			en: 'Winectio n - Sign Language Conversion Video Chat',
 		},
 		description: {
-			ko: 'AWS 인프라 보안 상태를 실시간으로 모니터링하는 시스템',
-			en: 'Real-time monitoring system for AWS infrastructure security status',
+			ko: '농인을 위한 양방향 수어 변환 화상 채팅 플랫폼',
+			en: 'Bidirectional sign-language conversion video chat platform',
 		},
 		detailedDescription: {
-			ko: 'AWS 클라우드 환경의 보안 상태를 실시간으로 모니터링하고 이상 징후를 탐지합니다. CloudTrail, GuardDuty 등 AWS 서비스와 연동하여 종합적인 보안 모니터링을 제공합니다.',
-			en: 'A system that monitors the security status of AWS cloud environment in real-time and detects anomalies. It provides comprehensive security monitoring by integrating with AWS services such as CloudTrail and GuardDuty.',
+			ko: '농인과 비농인 간 양방향 수어/자막/음성 변환을 제공하는 화상채팅 서비스. (상세 내용 추후 추가)',
+			en: 'Video chat service enabling bidirectional sign-language/subtitle/voice conversion. (Details to be added)',
 		},
-		technologies: ['Python', 'AWS', 'Lambda', 'CloudWatch', 'React', 'Redis'],
+		technologies: ['Python', 'AWS', 'Lambda', 'React', 'Redis'],
 		githubUrl: 'https://github.com/woodong-222',
 		featured: true,
-		category: 'cloud',
+		category: 'other',
 	},
 	{
 		id: '3',
+		period: '2024.05 ~ 2024.07',
 		title: {
-			ko: '포트폴리오 웹사이트',
+			ko: 'WHSCA - Dead Code 제거 및 실시간 데이터 기반 SCA',
+			en: 'WHSCA - Dead Code Removal & Real-time SCA',
+		},
+		description: {
+			ko: '서버 단위 실시간 데이터 기반 SCA와 Dead Code 제거 도구',
+			en: 'Server-side real-time SCA with dead code elimination tooling',
+		},
+		detailedDescription: {
+			ko: '실시간 종속성 분석과 사용되지 않는 코드 제거를 결합한 SCA 솔루션. (상세 내용 추후 추가)',
+			en: 'Real-time dependency analysis plus unused code removal for SCA. (Details to be added)',
+		},
+		technologies: ['Python', 'FastAPI', 'PostgreSQL', 'React'],
+		githubUrl: 'https://github.com/woodong-222',
+		featured: false,
+		category: 'security',
+	},
+	{
+		id: '4',
+		period: '2025.06',
+		title: {
+			ko: 'Pokeface - AI 얼굴 인식 포켓몬 도감',
+			en: 'Pokeface - AI Face Recognition Pokédex',
+		},
+		description: {
+			ko: 'AI 얼굴 인식으로 포켓몬을 매칭하는 웹 서비스',
+			en: 'Web service matching faces to Pokémon using AI recognition',
+		},
+		detailedDescription: {
+			ko: 'AI 얼굴 분석을 통해 유사한 포켓몬을 추천하는 재미형 서비스. (상세 내용 추후 추가)',
+			en: 'Fun app recommending Pokémon based on AI face analysis. (Details to be added)',
+		},
+		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
+		githubUrl: 'https://github.com/woodong-222',
+		featured: false,
+		category: 'web',
+	},
+	{
+		id: '5',
+		period: '2025.11',
+		title: {
+			ko: 'Portfolio - 나를 소개하기 위한 포트폴리오 웹 페이지',
 			en: 'Portfolio Website',
 		},
 		description: {
-			ko: '반응형 디자인과 다국어 지원을 갖춘 개인 포트폴리오',
+			ko: '다국어 지원과 반응형 디자인을 갖춘 개인 포트폴리오',
 			en: 'Personal portfolio with responsive design and multi-language support',
 		},
 		detailedDescription: {
-			ko: '현재 보고 있는 포트폴리오 웹사이트입니다. React와 TypeScript로 제작했고, 반응형 디자인과 다국어 지원을 제공합니다.',
-			en: 'This is the portfolio website you are currently viewing. Built with React and TypeScript, it includes features such as responsive design and multi-language support.',
+			ko: '지금 보고 있는 포트폴리오 웹사이트. React/TypeScript 기반, 다국어·반응형 지원. (상세 내용 추후 추가)',
+			en: 'This portfolio site built with React/TS, supporting i18n and responsive design. (Details to be added)',
 		},
 		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
 		githubUrl: 'https://github.com/woodong-222',

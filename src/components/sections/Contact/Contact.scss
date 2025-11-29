@@ -1,0 +1,68 @@
+@use 'sass:map';
+@use '@/utils/styles/variables.scss' as *;
+
+.contact {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 70%, #f8fafc 100%);
+
+  .contact__container {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, lg);
+  }
+
+  .contact__card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: map.get($border-radius, xl);
+    padding: map.get($spacing, xl);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, sm);
+
+    @include mobile-only {
+      padding: map.get($spacing, lg);
+    }
+  }
+
+  .contact__lead {
+    font-size: map.get($font-sizes, lg);
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .contact__desc {
+    font-size: map.get($font-sizes, base);
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .contact__cta {
+    align-self: flex-start;
+    margin-top: map.get($spacing, sm);
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    box-shadow: 0 12px 24px rgba(99, 102, 241, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+    }
+  }
+
+  .contact__footer {
+    margin-top: map.get($spacing, lg);
+    font-size: map.get($font-sizes, sm);
+    color: #6b7280;
+    text-align: center;
+  }
+}

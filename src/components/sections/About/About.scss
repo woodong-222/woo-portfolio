@@ -26,6 +26,8 @@
 // Introduction Section
 .about-intro {
   background: #ffffff;
+  min-height: auto;
+  padding: map.get($spacing, 2xl) 0;
   
   &__container {
     max-width: 1000px;
@@ -93,126 +95,131 @@
 // Tech Stack Section
 .tech-stack {
   background: #f7f9fc;
+  min-height: auto;
+  padding: map.get($spacing, 2xl) 0;
   position: relative;
-  overflow: visible;
-  
-  &.section {
-    height: 100vh;
-    padding-top: map.get($spacing, xl);
-    padding-bottom: map.get($spacing, xl);
-  }
-  
+  overflow: hidden;
+
   &__container {
     max-width: 1100px;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: map.get($spacing, lg);
+    gap: map.get($spacing, xl);
   }
-  
+
   .section-title {
-    margin-bottom: 0;
+    margin-bottom: map.get($spacing, md);
   }
-  
+
   .tech-columns {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: map.get($spacing, lg);
-    
-    @include mobile-only {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .tech-column {
     display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, md);
+    flex-wrap: wrap;
+    gap: map.get($spacing, lg);
   }
-  
+
   .tech-card {
-    flex: 1;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
+    flex: 1 1 320px;
+    background: linear-gradient(145deg, #ffffff 0%, #f5f7fb 100%);
+    border: 1px solid rgba(15, 23, 42, 0.05);
     border-radius: map.get($border-radius, xl);
     padding: map.get($spacing, lg);
     display: flex;
     flex-direction: column;
     gap: map.get($spacing, md);
     min-height: 0;
-    transition: all 0.3s ease-in-out;
-    
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
     &:hover {
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
     }
-    
+
     &__header {
       display: flex;
       align-items: center;
       gap: map.get($spacing, sm);
-      
+
       h3 {
         margin: 0;
-        font-size: map.get($font-sizes, lg);
-        color: #111111;
+        font-size: map.get($font-sizes, xl);
+        color: #0f172a;
       }
     }
-    
+
     &__icon {
       font-size: map.get($font-sizes, 2xl);
     }
-    
-    &__skills {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: map.get($spacing, xs);
-    }
   }
-  
+
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: map.get($spacing, xs);
+  }
+
   .tech-item {
-    background: #f7f9fc;
-    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    border: 1px solid rgba(15, 23, 42, 0.06);
     border-radius: map.get($border-radius, lg);
     padding: map.get($spacing, xs) map.get($spacing, sm);
     display: flex;
     align-items: center;
     gap: map.get($spacing, xs);
     transition: all 0.2s ease-in-out;
-    
+
     &:hover {
       transform: translateY(-2px);
-      border-color: #6b73ff;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      border-color: #6366f1;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.12);
     }
-    
+
     &__icon {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: map.get($border-radius, full);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: #6b73ff;
+      background: #6366f1;
       color: white;
       flex-shrink: 0;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-      
+
       img {
         width: 18px;
         height: 18px;
         object-fit: contain;
       }
-      
+
       &--fallback {
-        background: #6b73ff;
+        background: #6366f1;
       }
     }
-    
+
     &__label {
+      font-size: 12px;
+      color: #0f172a;
+      font-weight: 600;
+    }
+  }
+
+  .tech-groups {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, sm);
+  }
+
+  .tech-group {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, xs);
+
+    &__label {
+      margin: 0;
       font-size: map.get($font-sizes, sm);
-      color: #555555;
-      font-weight: 500;
+      font-weight: 700;
+      color: #0f172a;
     }
   }
 }
@@ -220,6 +227,8 @@
 // Career Section
 .career {
   background: #ffffff;
+  min-height: auto;
+  padding: map.get($spacing, 2xl) 0;
   
   &__container {
     max-width: 800px;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Github, ExternalLink, Eye } from "lucide-react";
+import { Github, ExternalLink, Eye, Calendar } from "lucide-react";
 import { projects, Project } from "./projects.data";
 import { createVariants } from "@/utils/types/motion";
 import "./Projects.scss";
@@ -14,32 +14,16 @@ interface ProjectsProps {
 const Projects = ({ onProjectClick }: ProjectsProps) => {
 	const { i18n } = useTranslation();
 	const [selectedCategory, setSelectedCategory] = useState<string>("all");
-	const { ref, inView } = useInView({
-		threshold: 0.2,
-		triggerOnce: true,
-	});
+	const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				delayChildren: 0.3,
-				staggerChildren: 0.1,
-			},
-		},
+		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.1 } },
 	});
 
 	const itemVariants = createVariants({
 		hidden: { y: 30, opacity: 0 },
-		visible: {
-			y: 0,
-			opacity: 1,
-			transition: {
-				duration: 0.6,
-				ease: "easeOut" as const,
-			},
-		},
+		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
 	});
 
 	const categories = [
@@ -51,8 +35,7 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 	];
 
 	const filteredProjects = projects.filter(
-		(project) =>
-			selectedCategory === "all" || project.category === selectedCategory,
+		(project) => selectedCategory === "all" || project.category === selectedCategory,
 	);
 
 	return (
@@ -67,46 +50,44 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 					{i18n.language === "ko" ? "프로젝트" : "Projects"}
 				</motion.h2>
 
-					<motion.div className="category-filters" variants={itemVariants}>
-						{categories.map((category) => (
-							<motion.button
-								key={category.key}
-								className={`category-btn ${
-									selectedCategory === category.key ? "active" : ""
-								}`}
-								onClick={() => setSelectedCategory(category.key)}
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-							>
-								{category.label}
-							</motion.button>
-						))}
-					</motion.div>
-
-					<motion.div className="projects-grid" variants={containerVariants}>
-						{filteredProjects.map((project) => (
-							<ProjectCard
-								key={project.id}
-								project={project}
-								onProjectClick={onProjectClick}
-								variants={itemVariants}
-							/>
-						))}
-					</motion.div>
-
-					{filteredProjects.length === 0 && (
-						<motion.div className="no-projects" variants={itemVariants}>
-							<p>
-								{i18n.language === "ko"
-									? "해당 카테고리의 프로젝트가 없습니다."
-									: "No projects found in this category."}
-							</p>
-						</motion.div>
-					)}
+				<motion.div className="category-filters" variants={itemVariants}>
+					{categories.map((category) => (
+						<motion.button
+							key={category.key}
+							className={`category-btn ${selectedCategory === category.key ? "active" : ""}`}
+							onClick={() => setSelectedCategory(category.key)}
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.95 }}
+						>
+							{category.label}
+						</motion.button>
+					))}
 				</motion.div>
-			</section>
-		);
-	};
+
+				<motion.div className="projects-grid" variants={containerVariants}>
+					{filteredProjects.map((project) => (
+						<ProjectCard
+							key={project.id}
+							project={project}
+							onProjectClick={onProjectClick}
+							variants={itemVariants}
+						/>
+					))}
+				</motion.div>
+
+				{filteredProjects.length === 0 && (
+					<motion.div className="no-projects" variants={itemVariants}>
+						<p>
+							{i18n.language === "ko"
+								? "해당 카테고리에 프로젝트가 없습니다."
+								: "No projects found in this category."}
+						</p>
+					</motion.div>
+				)}
+			</motion.div>
+		</section>
+	);
+};
 
 interface ProjectCardProps {
 	project: Project;
@@ -114,24 +95,17 @@ interface ProjectCardProps {
 	variants: any;
 }
 
-const ProjectCard = ({
-	project,
-	onProjectClick,
-	variants,
-}: ProjectCardProps) => {
+const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) => {
 	const { i18n } = useTranslation();
 
-	const getCategoryIcon = (category: string) => {
-		switch (category) {
-			case "security":
-				return "🔐";
-			case "web":
-				return "🌐";
-			case "cloud":
-				return "☁️";
-			default:
-				return "💡";
+	const getCategoryLabel = (category: string) => {
+		if (i18n.language === "ko") {
+			if (category === "security") return "보안";
+			if (category === "web") return "웹";
+			if (category === "cloud") return "클라우드";
+			return "기타";
 		}
+		return category.charAt(0).toUpperCase() + category.slice(1);
 	};
 
 	const getCategoryColor = (category: string) => {
@@ -156,22 +130,17 @@ const ProjectCard = ({
 		>
 			{project.featured && (
 				<div className="featured-badge">
-					⭐ {i18n.language === "ko" ? "추천" : "Featured"}
+					★ {i18n.language === "ko" ? "추천" : "Featured"}
 				</div>
 			)}
 
 			<div className="project-header">
-				<div
-					className="project-category"
-					style={{ color: getCategoryColor(project.category) }}
-				>
-					<span className="category-icon">
-						{getCategoryIcon(project.category)}
-					</span>
-					<span className="category-text">
-						{project.category.charAt(0).toUpperCase() +
-							project.category.slice(1)}
-					</span>
+				<div className="project-category" style={{ color: getCategoryColor(project.category) }}>
+					<span className="category-text">{getCategoryLabel(project.category)}</span>
+				</div>
+				<div className="project-period">
+					<Calendar size={14} />
+					<span>{project.period}</span>
 				</div>
 			</div>
 
@@ -181,22 +150,18 @@ const ProjectCard = ({
 				</h3>
 
 				<p className="project-description">
-					{
-						project.description[
-							i18n.language as keyof typeof project.description
-						]
-					}
+					{project.description[i18n.language as keyof typeof project.description]}
 				</p>
 
 				<div className="project-tech">
-					{project.technologies.slice(0, 4).map((tech, index) => (
+					{project.technologies.slice(0, 5).map((tech, index) => (
 						<span key={index} className="tech-tag">
 							{tech}
 						</span>
 					))}
-					{project.technologies.length > 4 && (
+					{project.technologies.length > 5 && (
 						<span className="tech-more">
-							+{project.technologies.length - 4}
+							+{project.technologies.length - 5}
 						</span>
 					)}
 				</div>
