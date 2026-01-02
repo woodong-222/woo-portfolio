@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Globe, ShieldCheck } from "lucide-react";
+import { Globe, ShieldCheck, Cloud } from "lucide-react";
 
 type SkillIconConfig = {
 	src?: string;
@@ -8,50 +8,60 @@ type SkillIconConfig = {
 };
 
 const devicon = (path: string) =>
-	`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${path}`;
+	`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${path}`;
 
 const skillIconMap: Record<string, SkillIconConfig> = {
-	Python: { src: devicon("python/python-original.svg"), bg: "#1d4ed8" },
-	C: { src: devicon("c/c-original.svg"), bg: "#0f172a" },
-	"C++": { src: devicon("cplusplus/cplusplus-original.svg"), bg: "#0f172a" },
-	Java: { src: devicon("java/java-original.svg"), bg: "#f97316" },
-	JavaScript: {
-		src: devicon("javascript/javascript-original.svg"),
-		bg: "#facc15",
-	},
-	React: { src: devicon("react/react-original.svg"), bg: "#06b6d4" },
-	FastAPI: { src: devicon("fastapi/fastapi-original.svg"), bg: "#0f766e" },
-	PostgreSQL: {
-		src: devicon("postgresql/postgresql-original.svg"),
-		bg: "#1d4ed8",
-	},
-	MySQL: { src: devicon("mysql/mysql-original.svg"), bg: "#0d9488" },
-	Jenkins: { src: devicon("jenkins/jenkins-original.svg"), bg: "#991b1b" },
-	AWS: {
-		src: devicon(
-			"amazonwebservices/amazonwebservices-original.svg",
-		),
-		bg: "#ea580c",
-	},
-	Docker: { src: devicon("docker/docker-original.svg"), bg: "#0ea5e9" },
-	Git: { src: devicon("git/git-original.svg"), bg: "#ef4444" },
-	Nginx: { src: devicon("nginx/nginx-original.svg"), bg: "#10b981" },
-	"Cloud-Security": { icon: <ShieldCheck size={16} />, bg: "#0f766e" },
-	"Web-Hacking": { icon: <Globe size={16} />, bg: "#312e81" },
-	"Windows OS": {
-		src: devicon("windows8/windows8-original.svg"),
-		bg: "#047857",
-	},
-	"Linux OS": { src: devicon("linux/linux-original.svg"), bg: "#facc15" },
-	"Mac OS": { src: devicon("apple/apple-original.svg"), bg: "#0f172a" },
-	Slack: { src: devicon("slack/slack-original.svg"), bg: "#7c3aed" },
-	Notion: { src: devicon("notion/notion-original.svg"), bg: "#1f2937" },
-	Figma: { src: devicon("figma/figma-original.svg"), bg: "#ec4899" },
-	Photoshop: { src: devicon("photoshop/photoshop-plain.svg"), bg: "#2563eb" },
-	"Premiere Pro": {
-		src: devicon("premierepro/premierepro-original.svg"),
-		bg: "#7c3aed",
-	},
+	// Languages
+	Python: { src: devicon("python/python-original.svg"), bg: "#ffffff" },
+	C: { src: devicon("c/c-original.svg"), bg: "#ffffff" },
+	"C++": { src: devicon("cplusplus/cplusplus-original.svg"), bg: "#ffffff" },
+	Java: { src: devicon("java/java-original.svg"), bg: "#ffffff" },
+	JavaScript: { src: devicon("javascript/javascript-original.svg"), bg: "#F7DF1E" },
+	TypeScript: { src: devicon("typescript/typescript-original.svg"), bg: "#3178C6" },
+
+	// Frontend
+	React: { src: devicon("react/react-original.svg"), bg: "#ffffff" },
+	"Next.js": { src: devicon("nextjs/nextjs-original.svg"), bg: "#ffffff" },
+	Vue: { src: devicon("vuejs/vuejs-original.svg"), bg: "#ffffff" },
+
+	// Backend & DB
+	FastAPI: { src: devicon("fastapi/fastapi-original.svg"), bg: "#ffffff" },
+	PostgreSQL: { src: devicon("postgresql/postgresql-original.svg"), bg: "#ffffff" },
+	MySQL: { src: devicon("mysql/mysql-original.svg"), bg: "#ffffff" },
+	MongoDB: { src: devicon("mongodb/mongodb-original.svg"), bg: "#ffffff" },
+	Redis: { src: devicon("redis/redis-original.svg"), bg: "#ffffff" },
+
+	// DevOps & Cloud
+	Jenkins: { src: devicon("jenkins/jenkins-original.svg"), bg: "#ffffff" },
+	AWS: { src: devicon("amazonwebservices/amazonwebservices-original-wordmark.svg"), bg: "#ffffff" },
+	Docker: { src: devicon("docker/docker-original.svg"), bg: "#ffffff" },
+	Git: { src: devicon("git/git-original.svg"), bg: "#ffffff" },
+	Nginx: { src: devicon("nginx/nginx-original.svg"), bg: "#ffffff" },
+	Vercel: { src: devicon("vercel/vercel-original.svg"), bg: "#ffffff" },
+	Kubernetes: { src: devicon("kubernetes/kubernetes-original.svg"), bg: "#ffffff" },
+
+	// Security
+	Cloud: { icon: <Cloud size={24} />, bg: "#0EA5E9" },
+	Web: { icon: <Globe size={24} />, bg: "#6366F1" },
+	"Cloud-Security": { icon: <ShieldCheck size={24} />, bg: "#059669" },
+	"Web-Hacking": { icon: <Globe size={24} />, bg: "#4F46E5" },
+
+	// OS
+	"Windows OS": { src: devicon("windows11/windows11-original.svg"), bg: "#ffffff" },
+	"Linux OS": { src: devicon("linux/linux-original.svg"), bg: "#ffffff" },
+	MacOS: { src: devicon("apple/apple-original.svg"), bg: "#ffffff" },
+	"Mac OS": { src: devicon("apple/apple-original.svg"), bg: "#ffffff" },
+
+	// Collaboration
+	Slack: { src: devicon("slack/slack-original.svg"), bg: "#ffffff" },
+	Notion: { src: devicon("notion/notion-original.svg"), bg: "#ffffff" },
+	Jira: { src: devicon("jira/jira-original.svg"), bg: "#ffffff" },
+
+	// Design
+	Figma: { src: devicon("figma/figma-original.svg"), bg: "#ffffff" },
+	Photoshop: { src: devicon("photoshop/photoshop-original.svg"), bg: "#ffffff" },
+	Premiere: { src: devicon("premierepro/premierepro-original.svg"), bg: "#ffffff" },
+	"Premiere Pro": { src: devicon("premierepro/premierepro-original.svg"), bg: "#ffffff" },
 };
 
 export const getSkillIcon = (skill: string): SkillIconConfig | undefined =>

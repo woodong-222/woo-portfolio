@@ -1,16 +1,17 @@
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Shield, Target, Users, Lightbulb } from "lucide-react";
+import { Shield, Target, Users, Lightbulb, Code2, Server, ShieldCheck, Palette } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
 import { getSkillIcon } from "./skillIcons";
+import { ScrollIndicator } from "@/components/common";
 import "./About.scss";
 
 type TechCategory = {
 	key: string;
 	title: string;
 	color: string;
-	icon: string;
+	icon: React.ReactNode;
 	items?: string[];
 	groups?: { label: string; items: string[] }[];
 };
@@ -26,6 +27,7 @@ const About = forwardRef<HTMLDivElement>((_, ref) => {
 });
 
 About.displayName = "About";
+
 
 const IntroductionSection = () => {
 	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
@@ -99,30 +101,32 @@ const IntroductionSection = () => {
 					))}
 				</div>
 			</motion.div>
+			<ScrollIndicator />
 		</section>
 	);
 };
 
+
 const TechStackSection = () => {
-	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
+	const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.1 } },
+		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.08 } },
 	});
 
 	const itemVariants = createVariants({
 		hidden: { y: 20, opacity: 0 },
-		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
+		visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" as const } },
 	});
 
 	const techCategories: TechCategory[] = [
 		{
 			key: "language",
 			title: "Languages",
-			items: ["Python", "C", "C++", "Java", "JavaScript"],
+			items: ["Python", "C", "C++", "Java", "JavaScript", "TypeScript"],
 			color: "#6366f1",
-			icon: "λ",
+			icon: <Code2 size={20} />,
 		},
 		{
 			key: "development",
@@ -133,14 +137,14 @@ const TechStackSection = () => {
 				{ label: "DevOps & Cloud", items: ["Jenkins", "AWS", "Docker", "Git", "Nginx", "Vercel"] },
 			],
 			color: "#06b6d4",
-			icon: "</>",
+			icon: <Server size={20} />,
 		},
 		{
 			key: "security",
 			title: "Security",
 			items: ["Cloud", "Web"],
 			color: "#10b981",
-			icon: "🔒",
+			icon: <ShieldCheck size={20} />,
 		},
 		{
 			key: "other",
@@ -151,12 +155,9 @@ const TechStackSection = () => {
 				{ label: "Design", items: ["Figma", "Photoshop", "Premiere"] },
 			],
 			color: "#8b5cf6",
-			icon: "★",
+			icon: <Palette size={20} />,
 		},
 	];
-
-	const splitIndex = Math.ceil(techCategories.length / 2);
-	const columnGroups = [techCategories.slice(0, splitIndex), techCategories.slice(splitIndex)];
 
 	return (
 		<section className="tech-stack section" id="tech-stack" ref={ref}>
@@ -167,55 +168,52 @@ const TechStackSection = () => {
 				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					기술 스택
+					Tech Stack
 				</motion.h2>
 
-				<div className="tech-columns">
-					{columnGroups.map((column, columnIndex) => (
-						<div key={`column-${columnIndex}`} className="tech-column">
-							{column.map((category) => (
-								<motion.div
-									key={category.key}
-									className="tech-card"
-									variants={itemVariants}
-									whileHover={{ translateY: -4 }}
-									transition={{ duration: 0.3 }}
-								>
-									<div className="tech-card__header">
-										<span className="tech-card__icon" style={{ color: category.color }}>
-											{category.icon}
-										</span>
-										<span className="tech-card__title">{category.title}</span>
+				<div className="tech-grid-container">
+					{techCategories.map((category) => (
+						<motion.div
+							key={category.key}
+							className="tech-category"
+							variants={itemVariants}
+						>
+							<div className="tech-category__header" style={{ borderColor: category.color }}>
+								<span className="tech-category__icon" style={{ backgroundColor: category.color }}>
+									{category.icon}
+								</span>
+								<h3 className="tech-category__title">{category.title}</h3>
+							</div>
+							
+							<div className="tech-category__content">
+								{category.groups ? (
+									category.groups.map((group) => (
+										<div key={`${category.key}-${group.label}`} className="tech-subgroup">
+											<span className="tech-subgroup__label">{group.label}</span>
+											<div className="tech-skills">
+												{group.items.map((item) => (
+													<TechSkillItem key={`${category.key}-${group.label}-${item}`} label={item} />
+												))}
+											</div>
+										</div>
+									))
+								) : (
+									<div className="tech-skills">
+										{category.items?.map((item) => (
+											<TechSkillItem key={`${category.key}-${item}`} label={item} />
+										))}
 									</div>
-									{category.groups ? (
-										<div className="tech-groups">
-											{category.groups.map((group) => (
-												<div key={`${category.key}-${group.label}`} className="tech-group">
-													<p className="tech-group__label">{group.label}</p>
-													<div className="tech-grid">
-														{group.items.map((item) => (
-															<TechSkillItem key={`${category.key}-${group.label}-${item}`} label={item} />
-														))}
-													</div>
-												</div>
-											))}
-										</div>
-									) : (
-										<div className="tech-grid">
-											{category.items?.map((item) => (
-												<TechSkillItem key={`${category.key}-${item}`} label={item} />
-											))}
-										</div>
-									)}
-								</motion.div>
-							))}
-						</div>
+								)}
+							</div>
+						</motion.div>
 					))}
 				</div>
 			</motion.div>
+			<ScrollIndicator />
 		</section>
 	);
 };
+
 
 const CareerSection = () => {
 	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
@@ -290,11 +288,13 @@ const CareerSection = () => {
 					))}
 				</div>
 			</motion.div>
+			<ScrollIndicator />
 		</section>
 	);
 };
 
 export default About;
+
 
 type TechSkillItemProps = {
 	label: string;
@@ -304,21 +304,25 @@ const TechSkillItem = ({ label }: TechSkillItemProps) => {
 	const iconMeta = getSkillIcon(label);
 
 	return (
-		<div className="tech-item" title={label}>
-			<span
-				className={`tech-item__icon${!iconMeta ? " tech-item__icon--fallback" : ""}`}
+		<motion.div 
+			className="tech-skill" 
+			title={label}
+			whileHover={{ scale: 1.05, y: -3 }}
+			transition={{ duration: 0.2 }}
+		>
+			<div
+				className={`tech-skill__icon${!iconMeta ? " tech-skill__icon--fallback" : ""}`}
 				style={iconMeta?.bg ? { backgroundColor: iconMeta.bg } : undefined}
-				aria-hidden="true"
 			>
 				{iconMeta?.src ? (
 					<img src={iconMeta.src} alt={`${label} logo`} loading="lazy" />
 				) : iconMeta?.icon ? (
 					iconMeta.icon
 				) : (
-					label.charAt(0)
+					<span className="fallback-text">{label.charAt(0)}</span>
 				)}
-			</span>
-			<span className="tech-item__label">{label}</span>
-		</div>
+			</div>
+			<span className="tech-skill__label">{label}</span>
+		</motion.div>
 	);
 };

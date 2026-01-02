@@ -48,16 +48,21 @@ body {
 
 // Section base styles
 .section {
-  height: 100vh;
+  min-height: 100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   position: relative;
-  padding-top: 100px;
+  padding-top: 40px;
   padding-bottom: 40px;
   box-sizing: border-box;
+}
+
+// Full height section (for Hero, etc.)
+.section--full {
+  height: 100vh;
 }
 
 // Typography

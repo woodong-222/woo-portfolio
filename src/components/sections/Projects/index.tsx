@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { Github, ExternalLink, Eye, Calendar } from "lucide-react";
 import { projects, Project } from "./projects.data";
 import { createVariants } from "@/utils/types/motion";
+import { ScrollIndicator } from "@/components/common";
 import "./Projects.scss";
 
 interface ProjectsProps {
@@ -85,6 +86,7 @@ const Projects = ({ onProjectClick }: ProjectsProps) => {
 					</motion.div>
 				)}
 			</motion.div>
+			<ScrollIndicator />
 		</section>
 	);
 };
