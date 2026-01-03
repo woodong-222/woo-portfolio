@@ -10,11 +10,11 @@ const TITLE_HEIGHT = 140;
 const CARD_OFFSET = 12;
 
 const CARD_THEMES = [
-	{ bg: 'rgba(107, 61, 61, 0.8)', glow: '#10b981', border: '#10b981' },
-	{ bg: 'rgba(30, 58, 95, 0.8)', glow: '#3b82f6', border: '#3b82f6' },
-	{ bg: 'rgba(74, 90, 61, 0.8)', glow: '#f59e0b', border: '#f59e0b' },
-	{ bg: 'rgba(90, 74, 61, 0.8)', glow: '#eab308', border: '#eab308' },
-	{ bg: 'rgba(74, 61, 90, 0.8)', glow: '#8b5cf6', border: '#8b5cf6' },
+	{ bg: 'rgba(107, 61, 61, 0.5)', glow: '#10b981', border: '#10b981' },
+	{ bg: 'rgba(30, 58, 95, 0.5)', glow: '#3b82f6', border: '#3b82f6' },
+	{ bg: 'rgba(74, 90, 61, 0.5)', glow: '#f59e0b', border: '#f59e0b' },
+	{ bg: 'rgba(90, 74, 61, 0.5)', glow: '#eab308', border: '#eab308' },
+	{ bg: 'rgba(74, 61, 90, 0.5)', glow: '#8b5cf6', border: '#8b5cf6' },
 ];
 
 const Projects = () => {
