@@ -1,230 +1,261 @@
 @use 'sass:map';
 @use '@/utils/styles/variables.scss' as *;
 
-.projects {
-  background: #f7f9fc;
-  padding: 40px 0 120px !important;
-  
-  &__container {
-    max-width: 1200px;
-  }
-  
-  .category-filters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: map.get($spacing, sm);
-    margin-bottom: map.get($spacing, 3xl);
-    
-    .category-btn {
-      background: #ffffff;
-      border: 2px solid #e0e0e0;
-      color: #555555;
-      padding: map.get($spacing, sm) map.get($spacing, lg);
-      border-radius: map.get($border-radius, full);
-      font-size: map.get($font-sizes, sm);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      
-      &:hover {
-        border-color: #6b73ff;
-        color: #111111;
-      }
-      
-      &.active {
-        background: #6b73ff;
-        border-color: #6b73ff;
-        color: white;
-      }
-      
-      @include desktop-only {
-        font-size: map.get($font-sizes, base);
-        padding: map.get($spacing, sm) map.get($spacing, xl);
-      }
-    }
-  }
-  
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: map.get($spacing, xl);
-    
-    @include tablet-only {
-      grid-template-columns: repeat(2, 1fr);
-      gap: map.get($spacing, 2xl);
-    }
-    
-    @include desktop-only {
-      grid-template-columns: repeat(3, 1fr);
-      gap: map.get($spacing, 2xl);
-    }
-  }
-  
-  .no-projects {
-    text-align: center;
-    padding: map.get($spacing, 3xl);
-    color: #a0a0a0;
-    font-size: map.get($font-sizes, lg);
-  }
+.projects-stack {
+	position: relative;
+	min-height: 100vh;
+	background: #0f0f1a;
+
+	&__header {
+		position: sticky;
+		top: 70px;
+		z-index: 100;
+		text-align: center;
+		padding: 40px 20px;
+		background: #0f0f1a;
+		height: 140px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.section-title {
+			font-size: clamp(2.5rem, 5vw, 4rem);
+			font-weight: 700;
+			font-style: italic;
+			background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+	}
+
+	&__cards {
+		position: relative;
+		// padding-bottom 제거 - 각 카드의 margin-bottom이 스크롤 공간 제공
+	}
 }
 
+// 프로젝트 카드 - sticky로 겹침
 .project-card {
-  position: relative;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: map.get($border-radius, xl);
-  //overflow: hidden;
-  transition: all 0.3s ease-in-out;
-  
-  &:hover {
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-    border-color: #6b73ff;
-  }
-  
-  .featured-badge {
-    position: absolute;
-    top: map.get($spacing, sm);
-    right: map.get($spacing, sm);
-    background: linear-gradient(to right, #6b73ff, #00c4ff);
-    color: white;
-    padding: map.get($spacing, xs) map.get($spacing, sm);
-    border-radius: map.get($border-radius, full);
-    font-size: map.get($font-sizes, xs);
-    font-weight: 600;
-    z-index: 2;
-  }
-  
-  .project-header {
-    padding: map.get($spacing, lg) map.get($spacing, lg) 0;
-    
-    .project-category {
-      display: flex;
-      align-items: center;
-      gap: map.get($spacing, xs);
-      font-size: map.get($font-sizes, sm);
-      font-weight: 600;
-      
-      .category-icon {
-        font-size: map.get($font-sizes, base);
-      }
-      
-      .category-text {
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-    }
-  }
-  
-  .project-content {
-    padding: map.get($spacing, sm) map.get($spacing, lg) map.get($spacing, lg);
-    
-    .project-title {
-      font-size: map.get($font-sizes, xl);
-      font-weight: 700;
-      color: #111111;
-      margin-bottom: map.get($spacing, sm);
-      line-height: 1.3;
-      
-      @include desktop-only {
-        font-size: map.get($font-sizes, 2xl);
-      }
-    }
-    
-    .project-description {
-      color: #555555;
-      font-size: map.get($font-sizes, base);
-      line-height: 1.6;
-      margin-bottom: map.get($spacing, lg);
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      //overflow: hidden;
-    }
-    
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: map.get($spacing, xs);
-      margin-bottom: map.get($spacing, lg);
-      
-      .tech-tag {
-        background: #f7f9fc;
-        color: #555555;
-        padding: map.get($spacing, xs) map.get($spacing, sm);
-        border-radius: map.get($border-radius, full);
-        font-size: map.get($font-sizes, xs);
-        border: 1px solid #e0e0e0;
-        transition: all 0.2s ease-in-out;
-        
-        &:hover {
-          background: #6b73ff;
-          color: white;
-        }
-      }
-      
-      .tech-more {
-        background: #6b73ff;
-        color: white;
-        padding: map.get($spacing, xs) map.get($spacing, sm);
-        border-radius: map.get($border-radius, full);
-        font-size: map.get($font-sizes, xs);
-        font-weight: 500;
-      }
-    }
-  }
-  
-  .project-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: map.get($spacing, xs);
-    padding: 0 map.get($spacing, lg) map.get($spacing, lg);
-    border-top: 1px solid #e0e0e0;
-    padding-top: map.get($spacing, lg);
-    
-    .action-btn {
-      display: flex;
-      align-items: center;
-      gap: map.get($spacing, xs);
-      padding: map.get($spacing, xs) map.get($spacing, sm);
-      border-radius: map.get($border-radius, lg);
-      font-size: map.get($font-sizes, sm);
-      font-weight: 500;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      flex: 1;
-      justify-content: center;
-      min-width: 100px;
-      
-      &.primary {
-        background: #6b73ff;
-        color: white;
-        
-        &:hover {
-          background: #6b73ff;
-          opacity: 0.9;
-          transform: translateY(-1px);
-        }
-      }
-      
-      &.secondary {
-        background: #f7f9fc;
-        color: #555555;
-        border: 1px solid #e0e0e0;
-        
-        &:hover {
-          background: #ffffff;
-          color: #111111;
-          border-color: #6b73ff;
-        }
-      }
-      
-      @include mobile-only {
-        flex: 1;
-        min-width: unset;
-      }
-    }
-  }
+	position: sticky;
+	margin: 0 40px 70vh 40px;
+	padding: 28px 40px;
+	min-height: 280px;
+	border-radius: 24px;
+	
+	// 테두리만 (glow 제거)
+	border: 2px solid var(--border-color);
+	box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5);
+
+	&--last {
+		margin-bottom: 70vh; // 마지막 카드도 스크롤 공간 필요!
+	}
+
+	@include tablet-only {
+		margin: 0 24px 60vh 24px; // margin-bottom 복원
+		padding: 24px;
+		min-height: 250px;
+	}
+
+	@include mobile-only {
+		margin: 0 16px 50vh 16px; // margin-bottom 복원
+		padding: 20px 16px;
+		min-height: auto;
+		border-radius: 16px;
+	}
+
+	&__inner {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 30px;
+		align-items: center;
+		max-width: 1200px;
+		margin: 0 auto;
+
+		@include tablet-only {
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+
+		@include mobile-only {
+			grid-template-columns: 1fr;
+			gap: 16px;
+		}
+	}
+
+	&__content {
+		color: #fff;
+
+		.project-period {
+			font-size: 12px;
+			font-weight: 400;
+			color: rgba(255, 255, 255, 0.6);
+			margin-bottom: 8px;
+		}
+
+		.project-title {
+			font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+			font-weight: 700;
+			margin-bottom: 12px;
+			line-height: 1.3;
+			padding-bottom: 10px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.project-description {
+			margin-bottom: 12px;
+
+			p {
+				font-size: 13px;
+				line-height: 1.6;
+				color: rgba(255, 255, 255, 0.8);
+				margin-bottom: 4px;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		.project-tech {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin-bottom: 16px;
+
+			.tech-tag {
+				padding: 4px 10px;
+				background: rgba(255, 255, 255, 0.08);
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				border-radius: 20px;
+				font-size: 11px;
+				font-weight: 500;
+				color: rgba(255, 255, 255, 0.8);
+				transition: all 0.2s ease;
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.12);
+					border-color: var(--border-color);
+				}
+			}
+		}
+
+		.project-actions {
+			display: flex;
+			gap: 10px;
+
+			.action-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				padding: 8px 16px;
+				background: #fff;
+				color: #1a1a2e;
+				border-radius: 6px;
+				font-size: 13px;
+				font-weight: 600;
+				text-decoration: none;
+				transition: all 0.3s ease;
+
+				&:hover {
+					transform: translateY(-2px);
+					box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+				}
+			}
+
+			@include mobile-only {
+				flex-direction: column;
+
+				.action-btn {
+					justify-content: center;
+				}
+			}
+		}
+	}
+
+	&__visual {
+		@include mobile-only {
+			order: -1;
+		}
+	}
+}
+
+// 스크린샷 슬라이더
+.screenshot-slider {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	.slider-btn {
+		width: 32px;
+		height: 32px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 50%;
+		color: #fff;
+		cursor: pointer;
+		transition: all 0.2s ease;
+
+		&:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+	}
+
+	&__image-wrapper {
+		flex: 1;
+		position: relative;
+	}
+
+	&__image {
+		aspect-ratio: 16 / 10;
+		background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4e 100%);
+		border-radius: 16px;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.screenshot-placeholder {
+			color: rgba(255, 255, 255, 0.3);
+			font-size: 14px;
+			font-weight: 500;
+		}
+	}
+
+	&__dots {
+		display: flex;
+		justify-content: center;
+		gap: 6px;
+		padding-top: 12px;
+
+		.dot {
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.25);
+			border: none;
+			cursor: pointer;
+			transition: all 0.2s ease;
+
+			&.active {
+				background: var(--slider-glow);
+				transform: scale(1.2);
+			}
+
+			&:hover:not(.active) {
+				background: rgba(255, 255, 255, 0.4);
+			}
+		}
+	}
 }

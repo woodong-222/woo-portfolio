@@ -6,8 +6,15 @@ import { useTranslation } from "react-i18next";
 import ReactiveBackground from "./ReactiveBackground";
 import "./Hero.scss";
 
+const LAST_UPDATED = "2025.11";
+
 const Hero = forwardRef<HTMLElement>((_props, ref) => {
 	const { t } = useTranslation("hero");
+	const eyebrowText = t("eyebrow");
+	const titleHighlight = t("title.highlight");
+	const titleLineTwo = t("title.line2");
+	const descriptionText = t("description");
+	const updatedLabel = t("meta.updated", { date: LAST_UPDATED });
 
 	const containerVariants = {
 		hidden: { opacity: 0 },
@@ -49,25 +56,23 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 					initial="hidden"
 					animate="visible"
 				>
-						{/* Left Side - Text Content */}
-						<div className="hero-new__text">
-							<motion.span
-								className="hero-new__eyebrow"
-								variants={itemVariants}
-							>
-								Security · Fullstack · Cloud
-							</motion.span>
-							<motion.h1 className="hero-new__title" variants={itemVariants}>
-								<span className="gradient-text">세상을 바꾸는 한사람</span>
-								<br />
-								‘이동우’를 소개합니다.
-							</motion.h1>
+				{/* Left Side - Text Content */}
+				<div className="hero-new__text">
+					<motion.span
+						className="hero-new__eyebrow"
+						variants={itemVariants}
+					>
+						{eyebrowText}
+					</motion.span>
+					<motion.h1 className="hero-new__title" variants={itemVariants}>
+						<span className="gradient-text">{titleHighlight}</span>
+						<br />
+						{titleLineTwo}
+					</motion.h1>
 
-							<motion.p className="hero-new__subtitle" variants={itemVariants}>
-								정보보안 전문가 및 보안 제품 개발자를 목표로 공부 중인 대학생으로
-								보안제품 개발, 클라우드 보안, 웹 개발 및 보안 등 다양한 분야에서
-								깊이 있는 지식을 쌓아가고 있습니다.
-							</motion.p>
+					<motion.p className="hero-new__subtitle" variants={itemVariants}>
+						{descriptionText}
+					</motion.p>
 
 							<motion.div className="hero-new__channels" variants={itemVariants}>
 								<motion.a
@@ -90,9 +95,9 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 								</motion.a>
 							</motion.div>
 
-							<motion.div className="hero-new__meta" variants={itemVariants}>
-								업데이트: 2025.11
-							</motion.div>
+					<motion.div className="hero-new__meta" variants={itemVariants}>
+						{updatedLabel}
+					</motion.div>
 
 						<motion.div className="hero-new__social" variants={itemVariants}>
 							<motion.a

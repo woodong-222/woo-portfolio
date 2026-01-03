@@ -1,19 +1,14 @@
-import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import FloatingConnect from '@/components/layout/FloatingConnect';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Projects from '@/components/sections/Projects';
-import ProjectModal from '@/components/modals/ProjectModal';
 import Contact from '@/components/sections/Contact';
 import useScrollSpy from '@/utils/hooks/useScrollSpy';
-import { Project } from '@/components/sections/Projects/projects.data';
 import '@/utils/i18n';
 import '@/utils/styles/globals.scss';
 
 const App = () => {
-	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { currentSection, sectionRefs } = useScrollSpy(4);
 
 	const handleSectionClick = (index: number) => {
@@ -21,18 +16,6 @@ const App = () => {
 		if (section) {
 			section.scrollIntoView({ behavior: 'smooth' });
 		}
-	};
-
-	const handleProjectClick = (project: Project) => {
-		setSelectedProject(project);
-		setIsModalOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsModalOpen(false);
-		setTimeout(() => {
-			setSelectedProject(null);
-		}, 300);
 	};
 
 	const setSectionRef = (index: number) => (el: HTMLElement | null) => {
@@ -51,9 +34,9 @@ const App = () => {
 
 				<About ref={setSectionRef(1)} />
 
-				<section ref={setSectionRef(2)} id="projects">
-					<Projects onProjectClick={handleProjectClick} />
-				</section>
+				<div ref={setSectionRef(2)} id="projects">
+					<Projects />
+				</div>
 
 				<section ref={setSectionRef(3)} id="contact">
 					<Contact />
@@ -61,12 +44,6 @@ const App = () => {
 			</main>
 
 			<FloatingConnect />
-
-			<ProjectModal
-				project={selectedProject}
-				isOpen={isModalOpen}
-				onClose={handleCloseModal}
-			/>
 		</div>
 	);
 };

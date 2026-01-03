@@ -3,10 +3,11 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Mail, MessageCircle, Github, Link as LinkIcon } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
+import { FLOATING_CONNECT_OPEN_EVENT } from "@/utils/constants/events";
 import "./Contact.scss";
 
 const Contact = forwardRef<HTMLDivElement>((_, ref) => {
-	const { ref: viewRef, inView } = useInView({ threshold: 0.2, triggerOnce: true });
+	const { ref: viewRef, inView } = useInView({ threshold: 0.2 });
 	const currentYear = new Date().getFullYear();
 
 	const containerVariants = createVariants({
@@ -18,6 +19,14 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 		hidden: { y: 20, opacity: 0 },
 		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
 	});
+
+	const handleConnectClick = () => {
+		if (typeof window === "undefined") {
+			return;
+		}
+
+		window.dispatchEvent(new Event(FLOATING_CONNECT_OPEN_EVENT));
+	};
 
 	return (
 		<section className="contact section" id="contact" ref={ref}>
@@ -43,9 +52,9 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 						<p className="contact__desc">
 							우측 하단의 Connect 버튼을 통해 메일을 보내실 수 있습니다. 언제든 편하게 연락 주세요.
 						</p>
-						<a className="contact__cta" href="#connect">
-							Connect
-						</a>
+					<button className="contact__cta" type="button" onClick={handleConnectClick}>
+						Connect
+					</button>
 					</motion.div>
 
 					<motion.div className="contact__info" variants={itemVariants}>

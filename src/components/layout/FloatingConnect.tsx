@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { MessageCircle, X, Send, User, Mail, MessageSquare } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { createVariants } from '@/utils/types/motion';
+import { FLOATING_CONNECT_OPEN_EVENT } from '@/utils/constants/events';
 import './FloatingConnect.scss';
 
 const FloatingConnect = () => {
@@ -80,11 +81,24 @@ const FloatingConnect = () => {
 		}
 	};
 
-	const toggleOpen = () => {
-		setIsOpen(!isOpen);
-		if (!isOpen) {
+	useEffect(() => {
+		const handleExternalOpen = () => {
+			setIsOpen(true);
 			setSubmitStatus('idle');
+		};
+
+		window.addEventListener(FLOATING_CONNECT_OPEN_EVENT, handleExternalOpen);
+		return () => window.removeEventListener(FLOATING_CONNECT_OPEN_EVENT, handleExternalOpen);
+	}, []);
+
+	const toggleOpen = () => {
+		if (isOpen) {
+			setIsOpen(false);
+			return;
 		}
+
+		setIsOpen(true);
+		setSubmitStatus('idle');
 	};
 
 	const buttonVariants = createVariants({
@@ -117,7 +131,7 @@ const FloatingConnect = () => {
 	});
 
 	return (
-		<div className="floating-connect">
+		<div className="floating-connect" id="connect">
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div

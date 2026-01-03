@@ -13,7 +13,7 @@
     "programming": ["Python", "C", "C++", "Java", "JavaScript"],
     "frontend": ["React"],
     "backend": ["FastAPI", "PostgreSQL", "MySQL"],
-    "devops": ["Jenkins", "AWS", "Docker", "Git", "Nginx"],
+    "devops": ["Jenkins", "AWS", "Docker", "GitHub", "Nginx"],
     "security": ["Cloud-Security", "Web-Hacking"],
     "os": ["Windows OS", "Linux OS", "Mac OS"],
     "collaboration": ["Slack", "Notion"],

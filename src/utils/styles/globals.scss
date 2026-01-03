@@ -9,7 +9,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
@@ -17,16 +16,12 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
 }
 
 // Scroll container
 .scroll-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  // height와 overflow 제거 - sticky가 제대로 작동하도록
   scroll-behavior: smooth;
-  scroll-padding-top: 60px; // 헤더 실제 높이
   
   &::-webkit-scrollbar {
     width: 6px;
@@ -49,8 +44,6 @@ body {
 // Section base styles
 .section {
   min-height: 100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   display: flex;
   align-items: flex-start;
   justify-content: center;

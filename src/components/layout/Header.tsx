@@ -35,10 +35,24 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 50);
+			const scrollContainer = document.querySelector('.scroll-container');
+			const scrollTop = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+			setIsScrolled(scrollTop > 50);
 		};
 
-		window.addEventListener('scroll', handleScroll);
+		const scrollContainer = document.querySelector('.scroll-container');
+		if (scrollContainer) {
+			scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+			handleScroll();
+
+			return () => {
+				scrollContainer.removeEventListener('scroll', handleScroll);
+			};
+		}
+
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		handleScroll();
+
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 

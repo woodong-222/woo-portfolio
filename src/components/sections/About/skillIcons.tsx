@@ -35,7 +35,7 @@ const skillIconMap: Record<string, SkillIconConfig> = {
 	Jenkins: { src: devicon("jenkins/jenkins-original.svg"), bg: "#ffffff" },
 	AWS: { src: devicon("amazonwebservices/amazonwebservices-original-wordmark.svg"), bg: "#ffffff" },
 	Docker: { src: devicon("docker/docker-original.svg"), bg: "#ffffff" },
-	Git: { src: devicon("git/git-original.svg"), bg: "#ffffff" },
+	GitHub: { src: devicon("github/github-original.svg"), bg: "#ffffff" },
 	Nginx: { src: devicon("nginx/nginx-original.svg"), bg: "#ffffff" },
 	Vercel: { src: devicon("vercel/vercel-original.svg"), bg: "#ffffff" },
 	Kubernetes: { src: devicon("kubernetes/kubernetes-original.svg"), bg: "#ffffff" },

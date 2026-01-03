@@ -12,10 +12,6 @@
   padding: 0;
   box-sizing: border-box;
   transition: background 0.3s ease;
-  
-  // Scroll snap 설정
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 
   @include mobile-only {
     height: 100vh;

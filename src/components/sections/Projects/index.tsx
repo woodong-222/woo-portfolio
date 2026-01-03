@@ -1,214 +1,155 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Github, ExternalLink, Eye, Calendar } from "lucide-react";
-import { projects, Project } from "./projects.data";
-import { createVariants } from "@/utils/types/motion";
-import { ScrollIndicator } from "@/components/common";
+import { Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { projects, Project, Screenshot } from "./projects.data";
 import "./Projects.scss";
 
-interface ProjectsProps {
-	onProjectClick: (project: Project) => void;
-}
+const CARD_OFFSET = 12;
+const HEADER_HEIGHT = 70;
+const TITLE_HEIGHT = 140;
 
-const Projects = ({ onProjectClick }: ProjectsProps) => {
-	const { i18n } = useTranslation();
-	const [selectedCategory, setSelectedCategory] = useState<string>("all");
-	const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
+const CARD_THEMES = [
+	{ bg: 'rgba(107, 61, 61, 0.8)', glow: '#10b981', border: '#10b981' },
+	{ bg: 'rgba(30, 58, 95, 0.8)', glow: '#3b82f6', border: '#3b82f6' },
+	{ bg: 'rgba(74, 90, 61, 0.8)', glow: '#f59e0b', border: '#f59e0b' },
+	{ bg: 'rgba(90, 74, 61, 0.8)', glow: '#eab308', border: '#eab308' },
+	{ bg: 'rgba(74, 61, 90, 0.8)', glow: '#8b5cf6', border: '#8b5cf6' },
+];
 
-	const containerVariants = createVariants({
-		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.1 } },
-	});
-
-	const itemVariants = createVariants({
-		hidden: { y: 30, opacity: 0 },
-		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
-	});
-
-	const categories = [
-		{ key: "all", label: i18n.language === "ko" ? "전체" : "All" },
-		{ key: "security", label: i18n.language === "ko" ? "보안" : "Security" },
-		{ key: "web", label: i18n.language === "ko" ? "웹" : "Web" },
-		{ key: "cloud", label: i18n.language === "ko" ? "클라우드" : "Cloud" },
-		{ key: "other", label: i18n.language === "ko" ? "기타" : "Other" },
-	];
-
-	const filteredProjects = projects.filter(
-		(project) => selectedCategory === "all" || project.category === selectedCategory,
-	);
-
+const Projects = () => {
 	return (
-		<section className="projects section" ref={ref}>
-			<motion.div
-				className="projects__container container"
-				variants={containerVariants}
-				initial="hidden"
-				animate={inView ? "visible" : "hidden"}
-			>
-				<motion.h2 className="section-title" variants={itemVariants}>
-					{i18n.language === "ko" ? "프로젝트" : "Projects"}
-				</motion.h2>
+		<div className="projects-stack">
+			<div className="projects-stack__header">
+				<h2 className="section-title">My Projects</h2>
+			</div>
 
-				<motion.div className="category-filters" variants={itemVariants}>
-					{categories.map((category) => (
-						<motion.button
-							key={category.key}
-							className={`category-btn ${selectedCategory === category.key ? "active" : ""}`}
-							onClick={() => setSelectedCategory(category.key)}
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-						>
-							{category.label}
-						</motion.button>
-					))}
-				</motion.div>
-
-				<motion.div className="projects-grid" variants={containerVariants}>
-					{filteredProjects.map((project) => (
-						<ProjectCard
-							key={project.id}
-							project={project}
-							onProjectClick={onProjectClick}
-							variants={itemVariants}
-						/>
-					))}
-				</motion.div>
-
-				{filteredProjects.length === 0 && (
-					<motion.div className="no-projects" variants={itemVariants}>
-						<p>
-							{i18n.language === "ko"
-								? "해당 카테고리에 프로젝트가 없습니다."
-								: "No projects found in this category."}
-						</p>
-					</motion.div>
-				)}
-			</motion.div>
-			<ScrollIndicator />
-		</section>
+			<div className="projects-stack__cards">
+				{projects.map((project, index) => (
+					<ProjectCard 
+						key={project.id} 
+						project={project} 
+						index={index}
+						total={projects.length}
+						theme={CARD_THEMES[index % CARD_THEMES.length]}
+					/>
+				))}
+			</div>
+		</div>
 	);
 };
 
 interface ProjectCardProps {
 	project: Project;
-	onProjectClick: (project: Project) => void;
-	variants: any;
+	index: number;
+	total: number;
+	theme: { bg: string; glow: string; border: string };
 }
 
-const ProjectCard = ({ project, onProjectClick, variants }: ProjectCardProps) => {
+const ProjectCard = ({ project, index, total, theme }: ProjectCardProps) => {
 	const { i18n } = useTranslation();
+	const lang = i18n.language as 'ko' | 'en';
+	const isLastCard = index === total - 1;
+	
+	const topOffset = HEADER_HEIGHT + TITLE_HEIGHT + (index * CARD_OFFSET);
 
-	const getCategoryLabel = (category: string) => {
-		if (i18n.language === "ko") {
-			if (category === "security") return "보안";
-			if (category === "web") return "웹";
-			if (category === "cloud") return "클라우드";
-			return "기타";
-		}
-		return category.charAt(0).toUpperCase() + category.slice(1);
+	return (
+		<div 
+			className={`project-card ${isLastCard ? 'project-card--last' : ''}`}
+			style={{ 
+				top: `${topOffset}px`,
+				zIndex: index + 1,
+				backgroundColor: theme.bg,
+				'--glow-color': theme.glow,
+				'--border-color': theme.border,
+			} as React.CSSProperties}
+		>
+			<div className="project-card__inner">
+				<div className="project-card__content">
+					<div className="project-period">{project.type} | {project.period}</div>
+					
+					<h3 className="project-title" style={{ color: theme.glow }}>
+						{project.title[lang]}
+					</h3>
+
+					<div className="project-description">
+						{project.features[lang].slice(0, 3).map((feature, idx) => (
+							<p key={idx}>{feature}</p>
+						))}
+					</div>
+
+					<div className="project-tech">
+						{project.technologies.slice(0, 6).map((tech, idx) => (
+							<span key={idx} className="tech-tag">{tech}</span>
+						))}
+					</div>
+
+					<div className="project-actions">
+						{project.githubUrl && (
+							<a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
+								<Github size={14} /> GitHub
+							</a>
+						)}
+						{project.liveUrl && (
+							<a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
+								<ExternalLink size={14} /> Live
+							</a>
+						)}
+					</div>
+				</div>
+
+				<div className="project-card__visual">
+					<ScreenshotSlider screenshots={project.screenshots} lang={lang} glowColor={theme.glow} />
+				</div>
+			</div>
+		</div>
+	);
+};
+
+interface ScreenshotSliderProps {
+	screenshots: Screenshot[];
+	lang: 'ko' | 'en';
+	glowColor: string;
+}
+
+const ScreenshotSlider = ({ screenshots, lang, glowColor }: ScreenshotSliderProps) => {
+	const [currentIndex, setCurrentIndex] = useState(0);
+
+	const goToPrev = () => {
+		setCurrentIndex((prev) => (prev === 0 ? screenshots.length - 1 : prev - 1));
 	};
 
-	const getCategoryColor = (category: string) => {
-		switch (category) {
-			case "security":
-				return "#10b981";
-			case "web":
-				return "#3b82f6";
-			case "cloud":
-				return "#06b6d4";
-			default:
-				return "#6366f1";
-		}
+	const goToNext = () => {
+		setCurrentIndex((prev) => (prev === screenshots.length - 1 ? 0 : prev + 1));
 	};
 
 	return (
-		<motion.div
-			className="project-card"
-			variants={variants}
-			whileHover={{ scale: 1.02, y: -5 }}
-			transition={{ duration: 0.3 }}
-		>
-			{project.featured && (
-				<div className="featured-badge">
-					★ {i18n.language === "ko" ? "추천" : "Featured"}
+		<div className="screenshot-slider" style={{ '--slider-glow': glowColor } as React.CSSProperties}>
+			<button onClick={goToPrev} className="slider-btn">
+				<ChevronLeft size={18} />
+			</button>
+
+			<div className="screenshot-slider__image-wrapper">
+				<div className="screenshot-slider__image">
+					<div className="screenshot-placeholder">
+						<span>Screenshot</span>
+					</div>
 				</div>
-			)}
 
-			<div className="project-header">
-				<div className="project-category" style={{ color: getCategoryColor(project.category) }}>
-					<span className="category-text">{getCategoryLabel(project.category)}</span>
-				</div>
-				<div className="project-period">
-					<Calendar size={14} />
-					<span>{project.period}</span>
-				</div>
-			</div>
-
-			<div className="project-content">
-				<h3 className="project-title">
-					{project.title[i18n.language as keyof typeof project.title]}
-				</h3>
-
-				<p className="project-description">
-					{project.description[i18n.language as keyof typeof project.description]}
-				</p>
-
-				<div className="project-tech">
-					{project.technologies.slice(0, 5).map((tech, index) => (
-						<span key={index} className="tech-tag">
-							{tech}
-						</span>
+				<div className="screenshot-slider__dots">
+					{screenshots.map((_, idx) => (
+						<button
+							key={idx}
+							className={`dot ${idx === currentIndex ? 'active' : ''}`}
+							onClick={() => setCurrentIndex(idx)}
+						/>
 					))}
-					{project.technologies.length > 5 && (
-						<span className="tech-more">
-							+{project.technologies.length - 5}
-						</span>
-					)}
 				</div>
 			</div>
 
-			<div className="project-actions">
-				<motion.button
-					className="action-btn primary"
-					onClick={() => onProjectClick(project)}
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-				>
-					<Eye size={16} />
-					{i18n.language === "ko" ? "자세히 보기" : "View Details"}
-				</motion.button>
-
-				{project.githubUrl && (
-					<motion.a
-						href={project.githubUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="action-btn secondary"
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
-					>
-						<Github size={16} />
-						GitHub
-					</motion.a>
-				)}
-
-				{project.liveUrl && (
-					<motion.a
-						href={project.liveUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="action-btn secondary"
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
-					>
-						<ExternalLink size={16} />
-						{i18n.language === "ko" ? "라이브" : "Live"}
-					</motion.a>
-				)}
-			</div>
-		</motion.div>
+			<button onClick={goToNext} className="slider-btn">
+				<ChevronRight size={18} />
+			</button>
+		</div>
 	);
 };
 

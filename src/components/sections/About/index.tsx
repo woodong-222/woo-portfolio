@@ -4,7 +4,6 @@ import { useInView } from "react-intersection-observer";
 import { Shield, Target, Users, Lightbulb, Code2, Server, ShieldCheck, Palette } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
 import { getSkillIcon } from "./skillIcons";
-import { ScrollIndicator } from "@/components/common";
 import "./About.scss";
 
 type TechCategory = {
@@ -30,16 +29,21 @@ About.displayName = "About";
 
 
 const IntroductionSection = () => {
-	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
+	const { ref, inView } = useInView({ threshold: 0.15 });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.15 } },
+		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
 	});
 
-	const itemVariants = createVariants({
-		hidden: { y: 30, opacity: 0 },
-		visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
+	const titleVariants = createVariants({
+		hidden: { y: 60, opacity: 0, scale: 0.9 },
+		visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] } },
+	});
+
+	const cardVariants = createVariants({
+		hidden: { y: 80, opacity: 0, scale: 0.95 },
+		visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const principles = [
@@ -77,7 +81,7 @@ const IntroductionSection = () => {
 				initial="hidden"
 				animate={inView ? "visible" : "hidden"}
 			>
-				<motion.h2 className="section-title" variants={itemVariants}>
+				<motion.h2 className="section-title" variants={titleVariants}>
 					About Me
 				</motion.h2>
 
@@ -86,8 +90,8 @@ const IntroductionSection = () => {
 						<motion.div
 							key={index}
 							className="principle-card"
-							variants={itemVariants}
-							whileHover={{ scale: 1.02, y: -5 }}
+							variants={cardVariants}
+							whileHover={{ scale: 1.03, y: -8, boxShadow: "0 25px 50px rgba(99, 102, 241, 0.2)" }}
 							transition={{ duration: 0.3 }}
 						>
 							<div className="principle-icon" style={{ color: principle.color }}>
@@ -101,23 +105,27 @@ const IntroductionSection = () => {
 					))}
 				</div>
 			</motion.div>
-			<ScrollIndicator />
 		</section>
 	);
 };
 
 
 const TechStackSection = () => {
-	const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
+	const { ref, inView } = useInView({ threshold: 0.1 });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.08 } },
+		visible: { opacity: 1, transition: { delayChildren: 0.1, staggerChildren: 0.1 } },
 	});
 
-	const itemVariants = createVariants({
-		hidden: { y: 20, opacity: 0 },
-		visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" as const } },
+	const titleVariants = createVariants({
+		hidden: { y: 50, opacity: 0 },
+		visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
+	});
+
+	const cardVariants = createVariants({
+		hidden: { y: 60, opacity: 0, scale: 0.95 },
+		visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const techCategories: TechCategory[] = [
@@ -134,7 +142,7 @@ const TechStackSection = () => {
 			groups: [
 				{ label: "Frontend", items: ["React"] },
 				{ label: "Backend & DB", items: ["FastAPI", "PostgreSQL", "MySQL"] },
-				{ label: "DevOps & Cloud", items: ["Jenkins", "AWS", "Docker", "Git", "Nginx", "Vercel"] },
+				{ label: "DevOps & Cloud", items: ["Jenkins", "AWS", "Docker", "GitHub", "Nginx", "Vercel"] },
 			],
 			color: "#06b6d4",
 			icon: <Server size={20} />,
@@ -167,16 +175,18 @@ const TechStackSection = () => {
 				initial="hidden"
 				animate={inView ? "visible" : "hidden"}
 			>
-				<motion.h2 className="section-title" variants={itemVariants}>
+				<motion.h2 className="section-title" variants={titleVariants}>
 					Tech Stack
 				</motion.h2>
 
 				<div className="tech-grid-container">
-					{techCategories.map((category) => (
+					{techCategories.map((category, index) => (
 						<motion.div
 							key={category.key}
 							className="tech-category"
-							variants={itemVariants}
+							variants={cardVariants}
+							custom={index}
+							whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(99, 102, 241, 0.15)" }}
 						>
 							<div className="tech-category__header" style={{ borderColor: category.color }}>
 								<span className="tech-category__icon" style={{ backgroundColor: category.color }}>
@@ -209,23 +219,27 @@ const TechStackSection = () => {
 					))}
 				</div>
 			</motion.div>
-			<ScrollIndicator />
 		</section>
 	);
 };
 
 
 const CareerSection = () => {
-	const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: true });
+	const { ref, inView } = useInView({ threshold: 0.15 });
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.2 } },
+		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.15 } },
+	});
+
+	const titleVariants = createVariants({
+		hidden: { y: 50, opacity: 0 },
+		visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const itemVariants = createVariants({
-		hidden: { x: -30, opacity: 0 },
-		visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
+		hidden: { x: -60, opacity: 0 },
+		visible: { x: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const timeline = [
@@ -260,17 +274,18 @@ const CareerSection = () => {
 				initial="hidden"
 				animate={inView ? "visible" : "hidden"}
 			>
-				<motion.h2 className="section-title" variants={itemVariants}>
+				<motion.h2 className="section-title" variants={titleVariants}>
 					경력 & 교육
 				</motion.h2>
 
 				<div className="timeline">
-					{timeline.map((period) => (
+					{timeline.map((period, index) => (
 						<motion.div
 							key={period.year}
 							className="timeline-item"
 							variants={itemVariants}
-							whileHover={{ scale: 1.02 }}
+							custom={index}
+							whileHover={{ scale: 1.02, x: 10 }}
 							transition={{ duration: 0.3 }}
 						>
 							<div className="timeline-marker">
@@ -288,7 +303,6 @@ const CareerSection = () => {
 					))}
 				</div>
 			</motion.div>
-			<ScrollIndicator />
 		</section>
 	);
 };
@@ -307,7 +321,7 @@ const TechSkillItem = ({ label }: TechSkillItemProps) => {
 		<motion.div 
 			className="tech-skill" 
 			title={label}
-			whileHover={{ scale: 1.05, y: -3 }}
+			whileHover={{ scale: 1.08, y: -4 }}
 			transition={{ duration: 0.2 }}
 		>
 			<div

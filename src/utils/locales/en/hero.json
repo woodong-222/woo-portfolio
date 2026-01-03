@@ -1,4 +1,13 @@
 {
+  "eyebrow": "Security · Fullstack · Cloud",
+  "title": {
+    "highlight": "One Person Changing the World",
+    "line2": "Meet Dongwoo Lee."
+  },
+  "description": "Undergraduate security engineer in training who builds secure products across application, cloud, and web layers.",
+  "meta": {
+    "updated": "Updated: {{date}}"
+  },
   "typing": {
     "security": "Security Specialist and",
     "fullstack": "Full-Stack Developer and",
