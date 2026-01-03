@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import useResponsive from "@/utils/hooks/useResponsive";
 import { projects, Project, Screenshot } from "./projects.data";
 import "./Projects.scss";
 
-const CARD_OFFSET = 12;
 const HEADER_HEIGHT = 70;
 const TITLE_HEIGHT = 140;
 
@@ -17,8 +17,34 @@ const CARD_THEMES = [
 ];
 
 const Projects = () => {
+	const { isMobile, isTablet } = useResponsive();
+
+	const layoutConfig = useMemo(
+		() => {
+			if (isMobile) {
+				return { cardOffset: 8, stackSpacing: '50vh', lastExtraSpacing: '30vh' };
+			}
+
+			if (isTablet) {
+				return { cardOffset: 12, stackSpacing: '60vh', lastExtraSpacing: '35vh' };
+			}
+
+			return { cardOffset: 16, stackSpacing: '70vh', lastExtraSpacing: '45vh' };
+		},
+		[isMobile, isTablet]
+	);
+
+	const stackStyle = useMemo(
+		() =>
+			({
+				'--card-stack-spacing': layoutConfig.stackSpacing,
+				'--card-stack-last-extra': layoutConfig.lastExtraSpacing,
+			}) as CSSProperties,
+		[layoutConfig]
+	);
+
 	return (
-		<div className="projects-stack">
+		<div className="projects-stack" style={stackStyle}>
 			<div className="projects-stack__header">
 				<h2 className="section-title">My Projects</h2>
 			</div>
@@ -30,6 +56,7 @@ const Projects = () => {
 						project={project} 
 						index={index}
 						total={projects.length}
+						cardOffset={layoutConfig.cardOffset}
 						theme={CARD_THEMES[index % CARD_THEMES.length]}
 					/>
 				))}
@@ -43,14 +70,15 @@ interface ProjectCardProps {
 	index: number;
 	total: number;
 	theme: { bg: string; glow: string; border: string };
+	cardOffset: number;
 }
 
-const ProjectCard = ({ project, index, total, theme }: ProjectCardProps) => {
+const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardProps) => {
 	const { i18n } = useTranslation();
 	const lang = i18n.language as 'ko' | 'en';
 	const isLastCard = index === total - 1;
 	
-	const topOffset = HEADER_HEIGHT + TITLE_HEIGHT + (index * CARD_OFFSET);
+	const topOffset = HEADER_HEIGHT + TITLE_HEIGHT + (index * cardOffset);
 
 	return (
 		<div 
@@ -61,7 +89,7 @@ const ProjectCard = ({ project, index, total, theme }: ProjectCardProps) => {
 				backgroundColor: theme.bg,
 				'--glow-color': theme.glow,
 				'--border-color': theme.border,
-			} as React.CSSProperties}
+			} as CSSProperties}
 		>
 			<div className="project-card__inner">
 				<div className="project-card__content">
@@ -123,7 +151,7 @@ const ScreenshotSlider = ({ screenshots, lang, glowColor }: ScreenshotSliderProp
 	};
 
 	return (
-		<div className="screenshot-slider" style={{ '--slider-glow': glowColor } as React.CSSProperties}>
+		<div className="screenshot-slider" style={{ '--slider-glow': glowColor } as CSSProperties}>
 			<button onClick={goToPrev} className="slider-btn">
 				<ChevronLeft size={18} />
 			</button>
