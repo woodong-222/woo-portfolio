@@ -37,9 +37,8 @@
 	}
 
 	&__tail {
-		// 전체 스크롤 공간 담당
-		// 카드들이 쌓이는 공간 + 쌓인 후 유지되는 공간
-		height: calc((var(--card-count, 5)) * var(--card-stack-spacing, 70vh));
+		// 마지막 카드가 쌓인 직후 다음 섹션으로
+		height: 10vh;
 		pointer-events: none;
 	}
 }
