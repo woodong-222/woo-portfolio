@@ -33,7 +33,8 @@
 
 	&__cards {
 		position: relative;
-		// 추가 공간 불필요 - 마지막 카드 도달 후 전체가 함께 움직임
+		// 카드 뭉치 아래 하단 여백 - 카드와 함께 올라감
+		padding-bottom: 100px;
 	}
 
 	&__tail {
