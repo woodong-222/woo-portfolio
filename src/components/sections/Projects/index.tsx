@@ -7,6 +7,7 @@ import "./Projects.scss";
 
 const HEADER_HEIGHT = 70;
 const TITLE_HEIGHT = 140;
+const CARD_OFFSET = 12;
 
 const CARD_THEMES = [
 	{ bg: 'rgba(107, 61, 61, 0.8)', glow: '#10b981', border: '#10b981' },
@@ -22,25 +23,29 @@ const Projects = () => {
 	const layoutConfig = useMemo(
 		() => {
 			if (isMobile) {
-				return { cardOffset: 8, stackSpacing: '50vh', lastExtraSpacing: '30vh' };
+				return { stackSpacing: '55vh', lastExtraSpacing: '40vh' };
 			}
 
 			if (isTablet) {
-				return { cardOffset: 12, stackSpacing: '60vh', lastExtraSpacing: '35vh' };
+				return { stackSpacing: '65vh', lastExtraSpacing: '50vh' };
 			}
 
-			return { cardOffset: 16, stackSpacing: '70vh', lastExtraSpacing: '45vh' };
+			return { stackSpacing: '75vh', lastExtraSpacing: '60vh' };
 		},
 		[isMobile, isTablet]
 	);
+
+	const cardCount = projects.length;
 
 	const stackStyle = useMemo(
 		() =>
 			({
 				'--card-stack-spacing': layoutConfig.stackSpacing,
 				'--card-stack-last-extra': layoutConfig.lastExtraSpacing,
+				'--card-count': cardCount,
+				'--card-offset': `${CARD_OFFSET}px`,
 			}) as CSSProperties,
-		[layoutConfig]
+		[layoutConfig, cardCount]
 	);
 
 	return (
@@ -56,10 +61,12 @@ const Projects = () => {
 						project={project} 
 						index={index}
 						total={projects.length}
-						cardOffset={layoutConfig.cardOffset}
+						cardOffset={CARD_OFFSET}
 						theme={CARD_THEMES[index % CARD_THEMES.length]}
 					/>
 				))}
+
+				<div className="projects-stack__tail" aria-hidden />
 			</div>
 		</div>
 	);

@@ -33,37 +33,39 @@
 
 	&__cards {
 		position: relative;
-		// 마지막 카드도 sticky 상태를 유지하도록 추가 여백 확보
-		padding-bottom: var(--card-stack-last-extra, 45vh);
+		// 추가 공간 불필요 - 마지막 카드 도달 후 전체가 함께 움직임
+	}
+
+	&__tail {
+		// 전체 스크롤 공간 담당
+		// 카드들이 쌓이는 공간 + 쌓인 후 유지되는 공간
+		height: calc((var(--card-count, 5)) * var(--card-stack-spacing, 70vh));
+		pointer-events: none;
 	}
 }
 
 // 프로젝트 카드 - sticky로 겹침
 .project-card {
 	position: sticky;
-	margin: 0 40px var(--card-stack-spacing, 70vh) 40px;
+	margin: 0 40px; // margin-bottom 없음
 	padding: 28px 40px;
 	min-height: 280px;
 	border-radius: 24px;
-	// 테두리만 (glow 제거)
 	border: 2px solid var(--border-color);
 	box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5);
 
 	&--last {
-		// 마지막 카드가 stack 상태를 유지할 수 있도록 추가 여유 공간 확보
-		margin-bottom: calc(
-			var(--card-stack-spacing, 70vh) + var(--card-stack-last-extra, 45vh)
-		);
+		// 마지막 카드도 동일
 	}
 
 	@include tablet-only {
-		margin: 0 24px var(--card-stack-spacing, 60vh) 24px;
+		margin: 0 24px;
 		padding: 24px;
 		min-height: 250px;
 	}
 
 	@include mobile-only {
-		margin: 0 16px var(--card-stack-spacing, 50vh) 16px;
+		margin: 0 16px;
 		padding: 20px 16px;
 		min-height: auto;
 		border-radius: 16px;
