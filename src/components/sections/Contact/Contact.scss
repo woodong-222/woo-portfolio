@@ -1,9 +1,23 @@
 @use 'sass:map';
 @use '@/utils/styles/variables.scss' as *;
 
+// 스크롤 오프셋 - 네비게이션 바 클릭 시 여백 포함
+#contact {
+  scroll-margin-top: 100px;
+  
+  @include mobile-only {
+    scroll-margin-top: 80px;
+  }
+}
+
 .contact {
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 70%, #f8fafc 100%);
   padding: 40px 0 60px !important;
+  padding-top: 100px !important;
+
+  @include mobile-only {
+    padding-top: 80px !important;
+  }
 
   .contact__container {
     display: flex;

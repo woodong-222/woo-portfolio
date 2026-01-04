@@ -51,7 +51,7 @@ const Projects = () => {
 	return (
 		<div className="projects-stack" style={stackStyle}>
 			<div className="projects-stack__header">
-				<h2 className="section-title">My Projects</h2>
+				<h2 className="section-title">Project</h2>
 			</div>
 
 			<div className="projects-stack__cards">
@@ -85,7 +85,8 @@ const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardPr
 	const lang = i18n.language as 'ko' | 'en';
 	const isLastCard = index === total - 1;
 	
-	const topOffset = HEADER_HEIGHT + TITLE_HEIGHT + (index * cardOffset);
+	// 헤더가 sticky가 아니므로 TITLE_HEIGHT 제거
+	const topOffset = HEADER_HEIGHT + 20 + (index * cardOffset);
 
 	return (
 		<div 

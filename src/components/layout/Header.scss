@@ -5,48 +5,56 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   z-index: map.get($z-index, fixed);
-  padding: map.get($spacing, sm) 0;
-  background: var(--bg-primary);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1.6rem 4rem;
+  mask-image: linear-gradient(to bottom, rgb(0 0 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 57.5%, rgba(0, 0, 0, 0) 100%);
   transition: $transition-base;
 
+  @include mobile-only {
+    padding: 1.2rem 2rem;
+  }
+
   &.scrolled {
-    background: rgba(var(--bg-primary), 0.8);
-    border-bottom-color: var(--border-color);
-    box-shadow: 0 4px 20px var(--shadow);
+    // 배경 제거 - 순수 블러만 사용
   }
 
   &__container {
-    @include flex-between;
+    position: relative;
+    width: 100%;
     max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin: 0 auto;
-    padding: 0 map.get($spacing, sm);
-
-    @include tablet-up {
-      padding: 0 map.get($spacing, md);
-    }
-
-    @include desktop-up {
-      padding: 0 map.get($spacing, lg);
-    }
+    padding-bottom: 0.4rem;
   }
 
   &__logo {
+    flex-shrink: 0;
+    
     .logo-text {
-      font-size: map.get($font-sizes, xl);
+      font-size: 1.1rem;
       font-weight: 700;
       background: var(--gradient-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       cursor: pointer;
+      white-space: nowrap;
+      transition: $transition-base;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 
   &__nav {
+    display: flex;
+    
     @include mobile-only {
       display: none;
     }
@@ -54,143 +62,110 @@
 
   .nav__sections {
     display: flex;
-    gap: map.get($spacing, md);
-  }
-
-  .nav__item-wrapper {
-    position: relative;
-    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
   }
 
   .nav__item {
     position: relative;
     background: none;
     border: none;
-    color: var(--text-secondary);
-    font-size: map.get($font-sizes, base);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 0.9rem;
     font-weight: 500;
-    padding: map.get($spacing, xs) map.get($spacing, sm);
-    border-radius: map.get($border-radius, lg);
+    padding: 6px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: $transition-base;
+    transition: all 0.25s ease;
     display: flex;
     align-items: center;
     gap: 4px;
-
-    .dropdown-icon {
-      transition: transform 0.3s ease;
-    }
+    white-space: nowrap;
+    text-transform: uppercase;
 
     &:hover {
-      color: var(--text-primary);
-      background: var(--bg-secondary);
-
-      .dropdown-icon {
-        transform: rotate(180deg);
-      }
+      color: #6366f1;
     }
 
     &.active {
-      color: var(--bg-accent);
-      
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -4px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 4px;
-        height: 4px;
-        background: var(--bg-accent);
-        border-radius: 50%;
-      }
-    }
-  }
-
-  .nav__dropdown {
-    position: absolute;
-    top: calc(100% + 12px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: row;
-    gap: map.get($spacing, md);
-    z-index: map.get($z-index, modal);
-    width: max-content;
-
-    .dropdown__item {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: map.get($font-sizes, sm);
-      font-weight: 500;
-      padding: map.get($spacing, xs) map.get($spacing, sm);
-      border-radius: map.get($border-radius, lg);
-      cursor: pointer;
-      transition: $transition-base;
-      white-space: nowrap;
-      flex-shrink: 0;
-
-      &:hover {
-        color: var(--text-primary);
-        background: var(--bg-secondary);
-      }
+      color: #6366f1;
     }
   }
 
   &__controls {
-    display: flex;
-    align-items: center;
-    gap: map.get($spacing, xs);
-  }
-
-  .control-btn {
-    @include flex-center;
-    gap: map.get($spacing, xs);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: map.get($spacing, xs);
-    border-radius: map.get($border-radius, lg);
-    cursor: pointer;
-    transition: $transition-base;
-
-    &:hover {
-      color: var(--text-primary);
-      background: var(--bg-accent);
-      color: white;
-    }
-
-    .btn-text {
-      @include mobile-only {
-        display: none;
-      }
-      
-      @include tablet-up {
-        font-size: map.get($font-sizes, sm);
-        font-weight: 500;
-      }
-    }
+    display: none;
   }
 
   .mobile-menu-btn {
-    @include tablet-up {
-      display: none;
+    display: none;
+    
+    @include mobile-only {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: rgba(0, 0, 0, 0.7);
+      padding: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        width: 16px;
+        height: 2px;
+      }
+
+      &::before {
+        top: 30%;
+      }
+
+      &::after {
+        top: 70%;
+      }
+
+      &:hover {
+        color: #6366f1;
+        
+        &::before,
+        &::after {
+          background: #6366f1;
+        }
+      }
     }
   }
 }
 
 .mobile-menu {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
   overflow: hidden;
-  background: var(--bg-primary);
-  border-top: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: map.get($z-index, fixed);
 
   @include tablet-up {
     display: none;
   }
 
   .mobile-nav {
-    padding: map.get($spacing, sm);
+    padding: map.get($spacing, md);
     display: flex;
     flex-direction: column;
     gap: map.get($spacing, xs);
@@ -198,23 +173,24 @@
     &__item {
       background: none;
       border: none;
-      color: var(--text-secondary);
-      font-size: map.get($font-sizes, base);
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 0.9rem;
       font-weight: 500;
       padding: map.get($spacing, sm);
-      border-radius: map.get($border-radius, lg);
+      border-radius: 12px;
       cursor: pointer;
-      transition: $transition-base;
+      transition: all 0.25s ease;
       text-align: left;
+      text-transform: uppercase;
 
       &:hover {
-        color: var(--text-primary);
-        background: var(--bg-secondary);
+        color: #6366f1;
+        background: rgba(0, 0, 0, 0.05);
       }
 
       &.active {
-        color: var(--bg-accent);
-        background: rgba(var(--bg-accent), 0.1);
+        color: #6366f1;
+        background: rgba(99, 102, 241, 0.1);
       }
     }
   }

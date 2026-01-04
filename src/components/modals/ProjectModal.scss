@@ -4,22 +4,26 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
   z-index: map.get($z-index, modal-backdrop);
-  @include flex-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-container {
   position: fixed;
   inset: 0;
   z-index: map.get($z-index, modal);
-  @include flex-center;
-  padding: map.get($spacing, sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   pointer-events: none;
 
   @include tablet-up {
-    padding: map.get($spacing, lg);
+    padding: 0;
   }
 }
 
@@ -37,7 +41,7 @@
 
   @include mobile-only {
     max-height: 95vh;
-    margin: map.get($spacing, sm);
+    width: calc(100% - 2rem);
   }
 
   .modal-header {
@@ -71,7 +75,7 @@
 
       .featured-badge {
         background: var(--gradient-primary);
-        color: white;
+        color: var(--text-primary);
         padding: map.get($spacing, xs) map.get($spacing, sm);
         border-radius: map.get($border-radius, full);
         font-size: map.get($font-sizes, xs);
@@ -92,7 +96,7 @@
 
       &:hover {
         background: var(--bg-accent);
-        color: white;
+        color: var(--text-primary);
         border-color: var(--bg-accent);
       }
     }
@@ -280,7 +284,7 @@
 
           &:hover {
             background: var(--bg-accent);
-            color: white;
+            color: var(--text-primary);
             border-color: var(--bg-accent);
           }
         }
@@ -316,7 +320,7 @@
 
         &.primary {
           background: var(--bg-accent);
-          color: white;
+          color: var(--text-primary);
 
           &:hover {
             background: var(--bg-accent);

@@ -1,30 +1,36 @@
 @use 'sass:map';
 @use '@/utils/styles/variables.scss' as *;
 
+// 스크롤 오프셋 - 네비게이션 바 클릭 시 여백 포함
+#projects {
+	scroll-margin-top: 100px;
+	
+	@include mobile-only {
+		scroll-margin-top: 80px;
+	}
+}
+
 .projects-stack {
 	position: relative;
 	min-height: 100vh;
 	background: #0f0f1a;
+	padding-top: 100px;
 	--card-stack-spacing: 70vh;
 	--card-stack-last-extra: 45vh;
 
+	@include mobile-only {
+		padding-top: 80px;
+	}
+
 	&__header {
-		position: sticky;
-		top: 70px;
-		z-index: 100;
 		text-align: center;
 		padding: 40px 20px;
 		background: #0f0f1a;
-		height: 140px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 
 		.section-title {
 			font-size: clamp(2.5rem, 5vw, 4rem);
-			font-weight: 700;
-			font-style: italic;
-			background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
+			font-weight: 800;
+			background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			background-clip: text;
