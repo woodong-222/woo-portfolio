@@ -10,11 +10,16 @@ const TITLE_HEIGHT = 140;
 const CARD_OFFSET = 12;
 
 const CARD_THEMES = [
-	{ bg: 'rgba(107, 61, 61, 0.5)', glow: '#10b981', border: '#10b981' },
-	{ bg: 'rgba(30, 58, 95, 0.5)', glow: '#3b82f6', border: '#3b82f6' },
-	{ bg: 'rgba(74, 90, 61, 0.5)', glow: '#f59e0b', border: '#f59e0b' },
-	{ bg: 'rgba(90, 74, 61, 0.5)', glow: '#eab308', border: '#eab308' },
-	{ bg: 'rgba(74, 61, 90, 0.5)', glow: '#8b5cf6', border: '#8b5cf6' },
+	// MON47 - 주황 계열
+	{ bg: 'rgba(69, 26, 3, 0.5)', glow: '#f59e0b', border: '#fcd34d' },
+	// Winection - 파랑 계열
+	{ bg: 'rgba(23, 37, 84, 0.5)', glow: '#3b82f6', border: '#93c5fd' },
+	// WHSCA - 초록 계열
+	{ bg: 'rgba(5, 46, 22, 0.5)', glow: '#10b981', border: '#6ee7b7' },
+	// Pokeface - 노랑 계열
+	{ bg: 'rgba(66, 32, 6, 0.5)', glow: '#eab308', border: '#fde047' },
+	// Portfolio - 보라 계열
+	{ bg: 'rgba(46, 16, 101, 0.5)', glow: '#8b5cf6', border: '#c4b5fd' },
 ];
 
 const Projects = () => {
@@ -103,7 +108,7 @@ const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardPr
 				<div className="project-card__content">
 					<div className="project-period">{project.type} | {project.period}</div>
 					
-					<h3 className="project-title" style={{ color: theme.glow }}>
+					<h3 className="project-title">
 						{project.title[lang]}
 					</h3>
 
