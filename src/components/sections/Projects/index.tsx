@@ -45,23 +45,23 @@ const Projects = () => {
 
 	const cardCount = projects.length;
 
-	// 마지막 카드의 sticky top 위치
-	const lastCardStickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT + ((cardCount - 1) * CARD_OFFSET);
+	// 모든 카드가 동일한 sticky top (마지막 카드의 translateY 포함한 실제 위치)
+	const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
+	const lastCardVisualTop = stickyTop + ((cardCount - 1) * CARD_OFFSET);
 
 	useEffect(() => {
 		let rafId: number;
 
 		const handleScroll = () => {
-			// requestAnimationFrame으로 브라우저 렌더링과 동기화
 			rafId = requestAnimationFrame(() => {
 				if (!lastCardRef.current || !titleRef.current) return;
 
 				const lastCardRect = lastCardRef.current.getBoundingClientRect();
 
-				// 마지막 카드가 sticky top 위치보다 위로 올라가면 카드 더미가 올라가기 시작한 것
-				if (lastCardRect.top < lastCardStickyTop) {
-					const offset = lastCardStickyTop - lastCardRect.top;
-					// 직접 DOM 조작으로 즉시 반영
+				// 제목 이동 (마지막 카드 기준)
+				// 마지막 카드의 시각적 위치는 stickyTop + translateY
+				if (lastCardRect.top < lastCardVisualTop) {
+					const offset = lastCardVisualTop - lastCardRect.top;
 					titleRef.current.style.transform = `translateY(-${offset}px)`;
 				} else {
 					titleRef.current.style.transform = 'translateY(0)';
@@ -74,7 +74,7 @@ const Projects = () => {
 			window.removeEventListener('scroll', handleScroll);
 			cancelAnimationFrame(rafId);
 		};
-	}, [lastCardStickyTop]);
+	}, [lastCardVisualTop]);
 
 	const stackStyle = useMemo(
 		() =>
@@ -131,15 +131,18 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 	const lang = i18n.language as 'ko' | 'en';
 	const isLastCard = index === total - 1;
 
-	// 카드는 네비게이션 바 + 제목 영역 높이 아래에서 시작
-	const topOffset = HEADER_HEIGHT + TITLE_AREA_HEIGHT + (index * cardOffset);
+	// 모든 카드가 동일한 top, translateY로 간격 설정
+	// 이렇게 하면 sticky 해제 시에도 translateY가 유지되어 간격 보존
+	const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
+	const translateY = index * cardOffset;
 
 	return (
 		<div
 			ref={ref}
 			className={`project-card ${isLastCard ? 'project-card--last' : ''}`}
 			style={{
-				top: `${topOffset}px`,
+				top: `${stickyTop}px`,
+				transform: `translateY(${translateY}px)`,
 				zIndex: index + 1,
 				backgroundColor: theme.bg,
 				'--glow-color': theme.glow,
