@@ -89,11 +89,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 											{project.category.charAt(0).toUpperCase() + project.category.slice(1)}
 										</span>
 									</div>
-									{project.featured && (
-										<div className="featured-badge">
-											★ {i18n.language === 'ko' ? '추천 프로젝트' : 'Featured Project'}
-										</div>
-									)}
+									{/* Featured badge removed - property doesn't exist */}
 								</div>
 
 								<motion.button
@@ -121,7 +117,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 								</div>
 
 								<div className="project-description">
-									<p>{project.detailedDescription[i18n.language as keyof typeof project.detailedDescription]}</p>
+									<p>{project.features[i18n.language as 'ko' | 'en'][0]}</p>
 								</div>
 
 								<div className="project-details">
@@ -131,7 +127,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 											<h4>{i18n.language === 'ko' ? '개요' : 'Overview'}</h4>
 										</div>
 										<p className="detail-info">
-											{project.description[i18n.language as keyof typeof project.description]}
+											{project.scale[i18n.language as 'ko' | 'en']}
 										</p>
 									</div>
 

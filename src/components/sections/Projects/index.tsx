@@ -139,7 +139,7 @@ const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardPr
 				</div>
 
 				<div className="project-card__visual">
-					<ScreenshotSlider screenshots={project.screenshots} lang={lang} glowColor={theme.glow} />
+					<ScreenshotSlider screenshots={project.screenshots} glowColor={theme.glow} />
 				</div>
 			</div>
 		</div>
@@ -148,11 +148,10 @@ const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardPr
 
 interface ScreenshotSliderProps {
 	screenshots: Screenshot[];
-	lang: 'ko' | 'en';
 	glowColor: string;
 }
 
-const ScreenshotSlider = ({ screenshots, lang, glowColor }: ScreenshotSliderProps) => {
+const ScreenshotSlider = ({ screenshots, glowColor }: ScreenshotSliderProps) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const goToPrev = () => {

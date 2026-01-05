@@ -14,8 +14,12 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isDarkSection, setIsDarkSection] = useState(false);
-	const { t, i18n } = useTranslation('common');
+	const { i18n } = useTranslation('common');
 	const { isMobile } = useResponsive();
+
+	// Prevent unused variable warning
+	void currentSection;
+	void onSectionClick;
 
 	const menuItems = [
 		{ id: 'about-intro', label: i18n.language === 'ko' ? '소개' : 'About' },
