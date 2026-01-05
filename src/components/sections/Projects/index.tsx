@@ -26,7 +26,7 @@ const Projects = () => {
 	const { isMobile, isTablet } = useResponsive();
 	const cardsRef = useRef<HTMLDivElement>(null);
 	const lastCardRef = useRef<HTMLDivElement>(null);
-	const [titleOffset, setTitleOffset] = useState(0);
+	const titleRef = useRef<HTMLDivElement>(null);
 
 	const layoutConfig = useMemo(
 		() => {
@@ -49,24 +49,31 @@ const Projects = () => {
 	const lastCardStickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT + ((cardCount - 1) * CARD_OFFSET);
 
 	useEffect(() => {
+		let rafId: number;
+
 		const handleScroll = () => {
-			if (!lastCardRef.current) return;
+			// requestAnimationFrame으로 브라우저 렌더링과 동기화
+			rafId = requestAnimationFrame(() => {
+				if (!lastCardRef.current || !titleRef.current) return;
 
-			const lastCardRect = lastCardRef.current.getBoundingClientRect();
+				const lastCardRect = lastCardRef.current.getBoundingClientRect();
 
-			// 마지막 카드가 sticky 상태인지 확인
-			// 마지막 카드의 top이 sticky top 위치보다 위로 올라가면 카드 더미가 올라가기 시작한 것
-			if (lastCardRect.top < lastCardStickyTop) {
-				// 카드 더미가 올라간 만큼 제목도 올려줌
-				const offset = lastCardStickyTop - lastCardRect.top;
-				setTitleOffset(offset);
-			} else {
-				setTitleOffset(0);
-			}
+				// 마지막 카드가 sticky top 위치보다 위로 올라가면 카드 더미가 올라가기 시작한 것
+				if (lastCardRect.top < lastCardStickyTop) {
+					const offset = lastCardStickyTop - lastCardRect.top;
+					// 직접 DOM 조작으로 즉시 반영
+					titleRef.current.style.transform = `translateY(-${offset}px)`;
+				} else {
+					titleRef.current.style.transform = 'translateY(0)';
+				}
+			});
 		};
 
 		window.addEventListener('scroll', handleScroll, { passive: true });
-		return () => window.removeEventListener('scroll', handleScroll);
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+			cancelAnimationFrame(rafId);
+		};
 	}, [lastCardStickyTop]);
 
 	const stackStyle = useMemo(
@@ -84,11 +91,9 @@ const Projects = () => {
 		<div className="projects-stack" style={stackStyle}>
 			{/* 제목 - 카드 컨테이너 밖에서 sticky, JS로 오프셋 조절 */}
 			<div
+				ref={titleRef}
 				className="projects-stack__title"
-				style={{
-					top: `${HEADER_HEIGHT}px`,
-					transform: `translateY(-${titleOffset}px)`
-				}}
+				style={{ top: `${HEADER_HEIGHT}px` }}
 			>
 				<h2 className="section-title">Project</h2>
 			</div>
