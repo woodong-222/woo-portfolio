@@ -22,10 +22,19 @@
 		padding-top: 80px;
 	}
 
+	&__cards {
+		position: relative;
+		// 카드 뭉치 아래 하단 여백 - 카드와 함께 올라감
+		padding-bottom: 100px;
+	}
+
 	&__header {
+		position: sticky;
+		top: 70px; // 헤더 높이만큼 간격
+		z-index: 100; // 카드들보다 위에 표시
 		text-align: center;
 		padding: 40px 20px;
-		background: #0f0f1a;
+		background: transparent; // 투명 배경
 
 		.section-title {
 			font-size: map.get($font-sizes, 4xl);
@@ -48,15 +57,10 @@
 		}
 	}
 
-	&__cards {
-		position: relative;
-		// 카드 뭉치 아래 하단 여백 - 카드와 함께 올라감
-		padding-bottom: 100px;
-	}
-
 	&__tail {
-		// 마지막 카드가 쌓인 직후 다음 섹션으로
-		height: 10vh;
+		// 마지막 카드 쌓인 후 적절한 여유 공간
+		// 이 공간을 스크롤하면 __cards 전체가 올라가면서 제목도 함께 이동
+		height: 50vh;
 		pointer-events: none;
 	}
 }

@@ -55,11 +55,11 @@ const Projects = () => {
 
 	return (
 		<div className="projects-stack" style={stackStyle}>
-			<div className="projects-stack__header">
-				<h2 className="section-title">Project</h2>
-			</div>
-
 			<div className="projects-stack__cards">
+				<div className="projects-stack__header">
+					<h2 className="section-title">Project</h2>
+				</div>
+
 				{projects.map((project, index) => (
 					<ProjectCard 
 						key={project.id} 
@@ -90,8 +90,8 @@ const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardPr
 	const lang = i18n.language as 'ko' | 'en';
 	const isLastCard = index === total - 1;
 	
-	// 헤더가 sticky가 아니므로 TITLE_HEIGHT 제거
-	const topOffset = HEADER_HEIGHT + 20 + (index * cardOffset);
+	// __header가 sticky로 상단 고정, 카드는 그 아래에 배치
+	const topOffset = HEADER_HEIGHT + TITLE_HEIGHT + (index * cardOffset);
 
 	return (
 		<div 
