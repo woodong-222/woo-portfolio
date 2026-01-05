@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import useResponsive from "@/utils/hooks/useResponsive";
@@ -6,7 +6,7 @@ import { projects, Project, Screenshot } from "./projects.data";
 import "./Projects.scss";
 
 const HEADER_HEIGHT = 70;
-const TITLE_HEIGHT = 140;
+const TITLE_AREA_HEIGHT = 120; // 제목 영역 높이
 const CARD_OFFSET = 12;
 
 const CARD_THEMES = [
@@ -24,6 +24,9 @@ const CARD_THEMES = [
 
 const Projects = () => {
 	const { isMobile, isTablet } = useResponsive();
+	const cardsRef = useRef<HTMLDivElement>(null);
+	const lastCardRef = useRef<HTMLDivElement>(null);
+	const [titleOffset, setTitleOffset] = useState(0);
 
 	const layoutConfig = useMemo(
 		() => {
@@ -42,6 +45,30 @@ const Projects = () => {
 
 	const cardCount = projects.length;
 
+	// 마지막 카드의 sticky top 위치
+	const lastCardStickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT + ((cardCount - 1) * CARD_OFFSET);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (!lastCardRef.current) return;
+
+			const lastCardRect = lastCardRef.current.getBoundingClientRect();
+
+			// 마지막 카드가 sticky 상태인지 확인
+			// 마지막 카드의 top이 sticky top 위치보다 위로 올라가면 카드 더미가 올라가기 시작한 것
+			if (lastCardRect.top < lastCardStickyTop) {
+				// 카드 더미가 올라간 만큼 제목도 올려줌
+				const offset = lastCardStickyTop - lastCardRect.top;
+				setTitleOffset(offset);
+			} else {
+				setTitleOffset(0);
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll, { passive: true });
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, [lastCardStickyTop]);
+
 	const stackStyle = useMemo(
 		() =>
 			({
@@ -55,24 +82,32 @@ const Projects = () => {
 
 	return (
 		<div className="projects-stack" style={stackStyle}>
-			<div className="projects-stack__cards">
-				<div className="projects-stack__header">
-					<h2 className="section-title">Project</h2>
-				</div>
+			{/* 제목 - 카드 컨테이너 밖에서 sticky, JS로 오프셋 조절 */}
+			<div
+				className="projects-stack__title"
+				style={{
+					top: `${HEADER_HEIGHT}px`,
+					transform: `translateY(-${titleOffset}px)`
+				}}
+			>
+				<h2 className="section-title">Project</h2>
+			</div>
 
+			<div className="projects-stack__cards" ref={cardsRef}>
 				{projects.map((project, index) => (
-					<ProjectCard 
-						key={project.id} 
-						project={project} 
+					<ProjectCard
+						key={project.id}
+						project={project}
 						index={index}
 						total={projects.length}
 						cardOffset={CARD_OFFSET}
 						theme={CARD_THEMES[index % CARD_THEMES.length]}
+						ref={index === projects.length - 1 ? lastCardRef : undefined}
 					/>
 				))}
-
-				<div className="projects-stack__tail" aria-hidden />
 			</div>
+
+			<div className="projects-stack__tail" aria-hidden />
 		</div>
 	);
 };
@@ -85,18 +120,20 @@ interface ProjectCardProps {
 	cardOffset: number;
 }
 
-const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardProps) => {
+const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
+	({ project, index, total, theme, cardOffset }, ref) => {
 	const { i18n } = useTranslation();
 	const lang = i18n.language as 'ko' | 'en';
 	const isLastCard = index === total - 1;
-	
-	// __header가 sticky로 상단 고정, 카드는 그 아래에 배치
-	const topOffset = HEADER_HEIGHT + TITLE_HEIGHT + (index * cardOffset);
+
+	// 카드는 네비게이션 바 + 제목 영역 높이 아래에서 시작
+	const topOffset = HEADER_HEIGHT + TITLE_AREA_HEIGHT + (index * cardOffset);
 
 	return (
-		<div 
+		<div
+			ref={ref}
 			className={`project-card ${isLastCard ? 'project-card--last' : ''}`}
-			style={{ 
+			style={{
 				top: `${topOffset}px`,
 				zIndex: index + 1,
 				backgroundColor: theme.bg,
@@ -144,7 +181,7 @@ const ProjectCard = ({ project, index, total, theme, cardOffset }: ProjectCardPr
 			</div>
 		</div>
 	);
-};
+});
 
 interface ScreenshotSliderProps {
 	screenshots: Screenshot[];

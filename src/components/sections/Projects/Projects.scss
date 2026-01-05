@@ -22,44 +22,44 @@
 		padding-top: 80px;
 	}
 
-	&__cards {
-		position: relative;
-		// 카드 뭉치 아래 하단 여백 - 카드와 함께 올라감
-		padding-bottom: 100px;
-	}
-
-	&__header {
+	// 제목 - sticky로 고정, JS에서 transform으로 이동 제어
+	&__title {
 		position: sticky;
-		top: 70px; // 헤더 높이만큼 간격
 		z-index: 100; // 카드들보다 위에 표시
 		text-align: center;
-		padding: 40px 20px;
-		background: transparent; // 투명 배경
+		padding: 30px 20px;
+		background: transparent;
+		pointer-events: none;
+		// 제목 영역 높이를 확보하여 카드들이 그 아래에 배치되도록 함
+		height: 120px;
 
 		.section-title {
+			pointer-events: auto;
 			font-size: map.get($font-sizes, 4xl);
 			font-weight: 800;
-			margin-bottom: map.get($spacing, lg);
+			margin: 0;
 			background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			background-clip: text;
-			
+
 			@include mobile-only {
 				font-size: map.get($font-sizes, 2xl);
-				margin-bottom: map.get($spacing, md);
 			}
-			
+
 			@include tablet-only {
 				font-size: map.get($font-sizes, 3xl);
-				margin-bottom: map.get($spacing, lg);
 			}
 		}
 	}
 
+	// 카드 컨테이너 - 제목과 분리
+	&__cards {
+		position: relative;
+	}
+
 	&__tail {
-		// 마지막 카드 쌓인 후 적절한 여유 공간
-		// 이 공간을 스크롤하면 __cards 전체가 올라가면서 제목도 함께 이동
+		// 마지막 카드 쌓인 후 여유 공간
 		height: 50vh;
 		pointer-events: none;
 	}
