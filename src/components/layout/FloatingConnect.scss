@@ -7,6 +7,15 @@
   right: map.get($spacing, lg);
   z-index: map.get($z-index, fixed);
 
+  .connect-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.28);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 900;
+  }
+
   @include mobile-only {
     bottom: map.get($spacing, md);
     right: map.get($spacing, md);
@@ -24,6 +33,7 @@
     -webkit-backdrop-filter: blur(20px);
     border-radius: map.get($border-radius, xl);
     box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+    z-index: 950;
 
     @include mobile-only {
       width: 300px;

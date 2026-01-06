@@ -134,11 +134,23 @@ const FloatingConnect = () => {
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div
+						className="connect-overlay"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						onClick={toggleOpen}
+					/>
+				)}
+			</AnimatePresence>
+			<AnimatePresence>
+				{isOpen && (
+					<motion.div
 						className="connect-form-container"
 						variants={formVariants}
 						initial="hidden"
 						animate="visible"
 						exit="exit"
+						onClick={(e) => e.stopPropagation()}
 					>
 						<div className="connect-form">
 							<div className="form-header">

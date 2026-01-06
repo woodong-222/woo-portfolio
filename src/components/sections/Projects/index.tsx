@@ -144,10 +144,10 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 			style={{
 				top: `${stickyTop}px`,
 				transform: `translateY(${translateY}px)`,
-				zIndex: index + 1,
 				backgroundColor: theme.bg,
 				'--glow-color': theme.glow,
 				'--border-color': theme.border,
+				zIndex: index + 1,
 			} as CSSProperties}
 		>
 			<div className="project-card__inner">
