@@ -1,15 +1,17 @@
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-import { Github, ExternalLink, ArrowDown, Link as LinkIcon } from "lucide-react";
+import { Github, ArrowDown, Link as LinkIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReactiveBackground from "./ReactiveBackground";
+import WaveDivider from "@/components/common/WaveDivider";
 import "./Hero.scss";
 
 const LAST_UPDATED = "2025.11";
 
 const Hero = forwardRef<HTMLElement>((_props, ref) => {
 	const { t } = useTranslation("hero");
+	const { t: tCommon } = useTranslation("common");
 	const eyebrowText = t("eyebrow");
 	const titleHighlight = t("title.highlight");
 	const titleLineTwo = t("title.line2");
@@ -77,6 +79,8 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 							<motion.div className="hero-new__channels" variants={itemVariants}>
 								<motion.a
 									href="https://github.com/woodong-222"
+									target="_blank"
+									rel="noopener noreferrer"
 									className="channel-btn primary"
 									whileHover={{ y: -2, scale: 1.02 }}
 									whileTap={{ scale: 0.98 }}
@@ -86,41 +90,20 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 								</motion.a>
 								<motion.a
 									href="https://velog.io/@woo2083/posts"
+									target="_blank"
+									rel="noopener noreferrer"
 									className="channel-btn ghost"
 									whileHover={{ y: -2, scale: 1.02 }}
 									whileTap={{ scale: 0.98 }}
 								>
 									<LinkIcon size={18} />
-									기술 블로그
+									{tCommon('buttons.blog')}
 								</motion.a>
 							</motion.div>
 
 					<motion.div className="hero-new__meta" variants={itemVariants}>
 						{updatedLabel}
 					</motion.div>
-
-						<motion.div className="hero-new__social" variants={itemVariants}>
-							<motion.a
-								href="https://github.com/woodong-222"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="social-link"
-								whileHover={{ scale: 1.1, rotate: 5 }}
-								whileTap={{ scale: 0.9 }}
-							>
-								<Github size={20} />
-							</motion.a>
-							<motion.a
-								href="https://velog.io/@woo2083/posts"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="social-link"
-								whileHover={{ scale: 1.1, rotate: -5 }}
-								whileTap={{ scale: 0.9 }}
-							>
-								<ExternalLink size={20} />
-							</motion.a>
-						</motion.div>
 					</div>
 
 					{/* Right Side - Profile Image */}
@@ -167,6 +150,7 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 					<span>{t("scroll")}</span>
 				</motion.div>
 			</div>
+			<WaveDivider color="#ffffff" className="hero-to-about" />
 		</section>
 	);
 });

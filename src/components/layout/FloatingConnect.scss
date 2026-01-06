@@ -197,8 +197,8 @@
     @include flex-center;
     width: 60px;
     height: 60px;
-    background: var(--bg-accent);
-    color: white;
+    background: #eab308;
+    color: #0f172a;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -221,7 +221,8 @@
     }
 
     &.open {
-      background: var(--text-secondary);
+      background: #d4a106;
+      color: #0f172a;
       transform: rotate(90deg);
     }
 
@@ -239,10 +240,28 @@
       content: '';
       position: absolute;
       inset: -4px;
-      border: 2px solid var(--bg-accent);
+      border: 2px solid #facc15;
       border-radius: 50%;
       opacity: 0;
       animation: pulse-ring 2s infinite;
+    }
+
+    .floating-btn__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: #ffffff;
+      background: transparent;
+
+      svg {
+        color: #ffffff;
+        stroke: #ffffff;
+        width: 22px;
+        height: 22px;
+      }
     }
   }
 }

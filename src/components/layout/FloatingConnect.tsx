@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { MessageCircle, X, Send, User, Mail, MessageSquare } from 'lucide-react';
+import { X, Send, User, Mail, MessageSquare } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { createVariants } from '@/utils/types/motion';
 import { FLOATING_CONNECT_OPEN_EVENT } from '@/utils/constants/events';
@@ -16,7 +16,7 @@ const FloatingConnect = () => {
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-	const { t } = useTranslation('common');
+	const { t } = useTranslation('contactMe');
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -143,7 +143,7 @@ const FloatingConnect = () => {
 					>
 						<div className="connect-form">
 							<div className="form-header">
-								<h3>{t('contact.title')}</h3>
+								<h3>{t('title')}</h3>
 								<motion.button
 									className="close-btn"
 									onClick={toggleOpen}
@@ -161,7 +161,7 @@ const FloatingConnect = () => {
 									animate={{ opacity: 1, y: 0 }}
 								>
 									<div className="success-icon">✅</div>
-									<p>{t('contact.success')}</p>
+									<p>{t('success')}</p>
 								</motion.div>
 							) : (
 								<form onSubmit={handleSubmit} className="contact-form">
@@ -173,7 +173,7 @@ const FloatingConnect = () => {
 												name="name"
 												value={formData.name}
 												onChange={handleInputChange}
-												placeholder={t('contact.placeholder.name')}
+												placeholder={t('placeholder.name')}
 												required
 												disabled={isSubmitting}
 											/>
@@ -188,7 +188,7 @@ const FloatingConnect = () => {
 												name="email"
 												value={formData.email}
 												onChange={handleInputChange}
-												placeholder={t('contact.placeholder.email')}
+												placeholder={t('placeholder.email')}
 												required
 												disabled={isSubmitting}
 											/>
@@ -202,7 +202,7 @@ const FloatingConnect = () => {
 												name="message"
 												value={formData.message}
 												onChange={handleInputChange}
-												placeholder={t('contact.placeholder.message')}
+												placeholder={t('placeholder.message')}
 												rows={4}
 												required
 												disabled={isSubmitting}
@@ -212,7 +212,7 @@ const FloatingConnect = () => {
 
 									{submitStatus === 'error' && (
 										<div className="error-message">
-											<p>{t('contact.error')}</p>
+											<p>{t('error')}</p>
 										</div>
 									)}
 
@@ -226,7 +226,7 @@ const FloatingConnect = () => {
 										<Send size={16} />
 										{isSubmitting ? 
 											<span className="loading-text">...</span> : 
-											t('buttons.send')
+											t('send', { ns: 'common' })
 										}
 									</motion.button>
 								</form>
@@ -239,6 +239,8 @@ const FloatingConnect = () => {
 			<motion.button
 				className={`floating-btn ${isOpen ? 'open' : ''}`}
 				onClick={toggleOpen}
+				aria-label={t('buttonLabel')}
+				title={t('buttonLabel')}
 				variants={buttonVariants}
 				animate={isOpen ? 'open' : 'closed'}
 				whileHover="hover"
@@ -258,12 +260,13 @@ const FloatingConnect = () => {
 					) : (
 						<motion.div
 							key="message"
+							className="floating-btn__icon"
 							initial={{ rotate: 90, opacity: 0 }}
 							animate={{ rotate: 0, opacity: 1 }}
 							exit={{ rotate: -90, opacity: 0 }}
 							transition={{ duration: 0.2 }}
 						>
-							<MessageCircle size={24} />
+							<Mail size={18} />
 						</motion.div>
 					)}
 				</AnimatePresence>

@@ -2,7 +2,7 @@
 @use '@/utils/styles/variables.scss' as *;
 
 // 스크롤 오프셋 - 네비게이션 바 클릭 시 여백 포함
-#contact {
+#contact-me {
   scroll-margin-top: 0px;
   
   @include mobile-only {
@@ -10,13 +10,46 @@
   }
 }
 
+.contact .section-title {
+  text-align: center;
+  font-size: map.get($font-sizes, 4xl);
+  font-weight: 800;
+  margin-bottom: map.get($spacing, lg);
+  color: #facc15;
+
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+    margin-bottom: map.get($spacing, md);
+  }
+
+  @include tablet-only {
+    font-size: map.get($font-sizes, 3xl);
+    margin-bottom: map.get($spacing, lg);
+  }
+}
+
 .contact {
+  position: relative;
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 70%, #f8fafc 100%);
   padding: 40px 0 60px !important;
   padding-top: 200px !important;
 
   @include mobile-only {
     padding-top: 160px !important;
+  }
+
+  // Projects → Contact 전환 물결
+  .projects-to-contact {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 5;
+
+    @include mobile-only {
+      height: 70px;
+    }
   }
 
   .contact__container {
@@ -60,17 +93,17 @@
     margin-top: map.get($spacing, sm);
     padding: 12px 18px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
     color: #fff;
     font-weight: 700;
     text-decoration: none;
-    border: 1px solid rgba(99, 102, 241, 0.35);
-    box-shadow: 0 12px 24px rgba(99, 102, 241, 0.25);
+    border: 1px solid rgba(250, 191, 36, 0.45);
+    box-shadow: 0 12px 24px rgba(250, 204, 21, 0.25);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+      box-shadow: 0 16px 32px rgba(250, 204, 21, 0.35);
     }
   }
 

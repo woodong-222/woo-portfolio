@@ -1,0 +1,19 @@
+{
+  "title": "Contact Me",
+  "eyebrow": "Get in touch",
+  "lead": "Thank you for visiting. Watch me grow as a security engineer and security product developer.",
+  "desc": "You can send me an email via the Connect button at the bottom right. Feel free to reach out anytime.",
+  "quickContact": "Quick Contact",
+  "quickContactDesc": "Send me an email via the Connect button.",
+  "buttonLabel": "Contact Me",
+  "name": "Name",
+  "email": "Email",
+  "message": "Message",
+  "placeholder": {
+    "name": "Enter your name",
+    "email": "Enter your email",
+    "message": "Enter your message"
+  },
+  "success": "Message sent successfully!",
+  "error": "Failed to send message. Please try again."
+}

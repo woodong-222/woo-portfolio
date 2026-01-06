@@ -67,6 +67,7 @@ export const projects: Project[] = [
 		},
 		technologies: ['Python', 'FastAPI', 'SQLAlchemy', 'React', 'Docker'],
 		githubUrl: 'https://github.com/woodong-222',
+		liveUrl: 'https://mon47.com',
 		screenshots: [
 			{ src: '/screenshots/mon47/main.png', label: { ko: '메인 화면', en: 'Main' } },
 			{ src: '/screenshots/mon47/dashboard.png', label: { ko: '대시보드', en: 'Dashboard' } },
@@ -109,6 +110,7 @@ export const projects: Project[] = [
 		},
 		technologies: ['Python', 'AWS', 'Lambda', 'React', 'Redis', 'WebRTC'],
 		githubUrl: 'https://github.com/woodong-222',
+		liveUrl: 'https://winection.kro.kr',
 		screenshots: [
 			{ src: '/screenshots/winection/main.png', label: { ko: '메인 화면', en: 'Main' } },
 			{ src: '/screenshots/winection/video.png', label: { ko: '화상 채팅', en: 'Video Chat' } },
@@ -151,6 +153,7 @@ export const projects: Project[] = [
 		},
 		technologies: ['Python', 'FastAPI', 'PostgreSQL', 'React'],
 		githubUrl: 'https://github.com/woodong-222',
+		liveUrl: 'https://whsca.com',
 		screenshots: [
 			{ src: '/screenshots/whsca/main.png', label: { ko: '메인 화면', en: 'Main' } },
 			{ src: '/screenshots/whsca/scan.png', label: { ko: '스캔 결과', en: 'Scan Result' } },
@@ -193,6 +196,7 @@ export const projects: Project[] = [
 		},
 		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
 		githubUrl: 'https://github.com/woodong-222',
+		liveUrl: 'https://pokeface.kro.kr',
 		screenshots: [
 			{ src: '/screenshots/pokeface/main.png', label: { ko: '메인 화면', en: 'Main' } },
 			{ src: '/screenshots/pokeface/upload.png', label: { ko: '사진 업로드', en: 'Upload' } },
@@ -235,14 +239,15 @@ export const projects: Project[] = [
 		},
 		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
 		githubUrl: 'https://github.com/woodong-222',
+		liveUrl: 'https://woo-portfolio.vercel.app',
 		screenshots: [
 			{ src: '/screenshots/portfolio/main.png', label: { ko: '메인 화면', en: 'Main' } },
 			{ src: '/screenshots/portfolio/about.png', label: { ko: '소개', en: 'About' } },
 			{ src: '/screenshots/portfolio/projects.png', label: { ko: '프로젝트', en: 'Projects' } },
 		],
 		logoText: 'PORTFOLIO',
-		logoColor: '#8b5cf6',
-		glowColor: '#8b5cf6',
+		logoColor: '#facc15',
+		glowColor: '#facc15',
 		category: 'web',
 	},
 ];

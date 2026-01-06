@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { Github, ChevronLeft, ChevronRight, Globe } from "lucide-react";
+import { Github, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import useResponsive from "@/utils/hooks/useResponsive";
 import { projects, Project, Screenshot } from "./projects.data";
 import "./Projects.scss";
@@ -18,8 +18,8 @@ const CARD_THEMES = [
 	{ bg: 'rgba(5, 46, 22, 0.5)', glow: '#10b981', border: '#6ee7b7' },
 	// Pokeface - 노랑 계열
 	{ bg: 'rgba(66, 32, 6, 0.5)', glow: '#eab308', border: '#fde047' },
-	// Portfolio - 보라 계열
-	{ bg: 'rgba(46, 16, 101, 0.5)', glow: '#8b5cf6', border: '#c4b5fd' },
+	// Portfolio - 노랑 계열
+	{ bg: 'rgba(66, 32, 6, 0.5)', glow: '#facc15', border: '#fde047' },
 ];
 
 const Projects = () => {
@@ -113,7 +113,8 @@ const Projects = () => {
 			</div>
 
 			<div className="projects-stack__tail" aria-hidden />
-		</div>
+
+					</div>
 	);
 };
 
@@ -127,7 +128,7 @@ interface ProjectCardProps {
 
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 	({ project, index, total, theme, cardOffset }, ref) => {
-	const { i18n } = useTranslation();
+	const { i18n, t } = useTranslation('common');
 	const lang = i18n.language as 'ko' | 'en';
 	const isLastCard = index === total - 1;
 
@@ -172,7 +173,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 					<div className="project-actions">
 						{project.liveUrl && (
 							<a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn action-btn--primary">
-								<Globe size={14} /> Visit
+								<ExternalLink size={14} /> {t('buttons.visit')}
 							</a>
 						)}
 						{project.githubUrl && (

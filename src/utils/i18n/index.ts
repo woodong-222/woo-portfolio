@@ -9,27 +9,35 @@ import language from '@/utils/locales/common/language.json';
 // Korean translations
 import koCommon from '@/utils/locales/ko/common.json';
 import koHero from '@/utils/locales/ko/hero.json';
-import koAbout from '@/utils/locales/ko/about.json';
-import koThankYou from '@/utils/locales/ko/thankyou.json';
+import koAboutMe from '@/utils/locales/ko/aboutMe.json';
+import koExperience from '@/utils/locales/ko/experience.json';
+import koContactMe from '@/utils/locales/ko/contactMe.json';
+// no thankyou namespace
 
 // English translations
 import enCommon from '@/utils/locales/en/common.json';
 import enHero from '@/utils/locales/en/hero.json';
-import enAbout from '@/utils/locales/en/about.json';
-import enThankYou from '@/utils/locales/en/thankyou.json';
+import enAboutMe from '@/utils/locales/en/aboutMe.json';
+import enExperience from '@/utils/locales/en/experience.json';
+import enContactMe from '@/utils/locales/en/contactMe.json';
+// no thankyou namespace
 
 const resources = {
 	ko: {
 		common: { ...koCommon, ...language },
 		hero: koHero,
-		about: { ...koAbout, techStack: { ...techStack, ...koAbout.techStack } },
-		thankyou: koThankYou,
+		aboutMe: koAboutMe,
+		experience: koExperience,
+		contactMe: koContactMe,
+		about: { techStack },
 	},
 	en: {
 		common: { ...enCommon, ...language },
 		hero: enHero,
-		about: { ...enAbout, techStack: { ...techStack, ...enAbout.techStack } },
-		thankyou: enThankYou,
+		aboutMe: enAboutMe,
+		experience: enExperience,
+		contactMe: enContactMe,
+		about: { techStack },
 	},
 };
 
@@ -41,7 +49,7 @@ i18n
 		lng: 'ko',
 		fallbackLng: 'ko',
 		defaultNS: 'common',
-		ns: ['common', 'hero', 'about', 'thankyou'],
+		ns: ['common', 'hero', 'aboutMe', 'experience', 'contactMe', 'about'],
 		
 		detection: {
 			order: ['localStorage', 'navigator', 'htmlTag'],

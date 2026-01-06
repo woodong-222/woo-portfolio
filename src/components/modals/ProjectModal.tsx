@@ -35,7 +35,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 			case 'security': return '#10b981';
 			case 'web': return '#3b82f6';
 			case 'cloud': return '#06b6d4';
-			default: return '#6366f1';
+			default: return '#facc15';
 		}
 	};
 

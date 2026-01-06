@@ -1,0 +1,148 @@
+@use 'sass:map';
+@use '@/utils/styles/variables.scss' as *;
+
+.experience.section {
+  padding-top: 100px !important;
+  
+  @include mobile-only {
+    padding-top: 80px !important;
+  }
+}
+
+.experience .section-title {
+  text-align: center;
+  font-size: map.get($font-sizes, 4xl);
+  font-weight: 800;
+  margin-bottom: map.get($spacing, lg);
+  color: #facc15;
+
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+    margin-bottom: map.get($spacing, md);
+  }
+
+  @include tablet-only {
+    font-size: map.get($font-sizes, 3xl);
+    margin-bottom: map.get($spacing, lg);
+  }
+}
+
+.experience {
+  background: #ffffff;
+  min-height: auto;
+  padding: 40px 0 120px !important;
+  
+  &__container {
+    max-width: 800px;
+  }
+  
+  .timeline {
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #f59e0b, #fbbf24, #fde047);
+      
+      @include desktop-only {
+        left: 30px;
+      }
+    }
+  }
+  
+  .timeline-item {
+    position: relative;
+    display: flex;
+    margin-bottom: map.get($spacing, 2xl);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    .timeline-marker {
+      position: relative;
+      flex-shrink: 0;
+      width: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      @include desktop-only {
+        width: 60px;
+      }
+      
+      .timeline-dot {
+        width: 14px;
+        height: 14px;
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        border-radius: 50%;
+        border: 3px solid #ffffff;
+        box-shadow: 0 0 0 3px #e2e8f0, 0 4px 12px rgba(250, 204, 21, 0.3);
+        z-index: 2;
+        
+        @include desktop-only {
+          width: 18px;
+          height: 18px;
+        }
+      }
+      
+      .timeline-year {
+        margin-top: map.get($spacing, sm);
+        font-size: map.get($font-sizes, xs);
+        font-weight: 700;
+        color: #f59e0b;
+        background: #fef3c7;
+        padding: map.get($spacing, xs) map.get($spacing, sm);
+        border-radius: map.get($border-radius, full);
+        border: 1px solid #fde68a;
+        white-space: nowrap;
+        
+        @include desktop-only {
+          font-size: map.get($font-sizes, sm);
+        }
+      }
+    }
+    
+    .timeline-content {
+      flex: 1;
+      margin-left: map.get($spacing, md);
+      margin-top: -6px;
+      
+      @include desktop-only {
+        margin-left: map.get($spacing, lg);
+      }
+      
+      .timeline-achievement {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: map.get($border-radius, lg);
+        padding: map.get($spacing, md);
+        margin-bottom: map.get($spacing, sm);
+        font-size: map.get($font-sizes, base);
+        line-height: 1.6;
+        color: #475569;
+        transition: all 0.3s ease-in-out;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        &:hover {
+          background: linear-gradient(135deg, #f59e0b, #fbbf24);
+          color: white;
+          transform: translateX(8px);
+          box-shadow: 0 8px 24px rgba(250, 204, 21, 0.25);
+        }
+        
+        @include desktop-only {
+          font-size: map.get($font-sizes, base);
+          padding: map.get($spacing, lg);
+        }
+      }
+    }
+  }
+}

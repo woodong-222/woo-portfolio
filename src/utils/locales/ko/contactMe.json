@@ -1,0 +1,19 @@
+{
+  "title": "Contact Me",
+  "eyebrow": "Get in touch",
+  "lead": "봐주셔서 감사합니다. 보안 담당자 및 보안 제품 개발자로 성장해나가는 제 모습을 지켜봐주세요.",
+  "desc": "우측 하단의 Connect 버튼을 통해 메일을 보내실 수 있습니다. 언제든 편하게 연락 주세요.",
+  "quickContact": "빠른 연락",
+  "quickContactDesc": "Connect 버튼으로 메일을 보내주세요.",
+  "buttonLabel": "연락하기",
+  "name": "이름",
+  "email": "이메일",
+  "message": "메시지",
+  "placeholder": {
+    "name": "이름을 입력해주세요",
+    "email": "이메일을 입력해주세요",
+    "message": "메시지를 입력해주세요"
+  },
+  "success": "메시지가 성공적으로 전송되었습니다!",
+  "error": "메시지 전송에 실패했습니다. 다시 시도해주세요."
+}

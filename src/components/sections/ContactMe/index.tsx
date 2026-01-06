@@ -1,13 +1,16 @@
 import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useTranslation } from "react-i18next";
 import { Mail, MessageCircle, Github, Link as LinkIcon } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
 import { FLOATING_CONNECT_OPEN_EVENT } from "@/utils/constants/events";
-import "./Contact.scss";
+import WaveDivider from "@/components/common/WaveDivider";
+import "./ContactMe.scss";
 
-const Contact = forwardRef<HTMLDivElement>((_, ref) => {
+const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 	const { ref: viewRef, inView } = useInView({ threshold: 0.2 });
+	const { t } = useTranslation('contactMe');
 	const currentYear = new Date().getFullYear();
 
 	const containerVariants = createVariants({
@@ -29,7 +32,9 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 	};
 
 	return (
-		<section className="contact section" id="contact" ref={ref}>
+		<section className="contact section" id="contact-me" ref={ref}>
+			{/* Projects → Contact 섹션 전환 물결 */}
+			<WaveDivider color="#0f0f1a" className="projects-to-contact" flip />
 			<motion.div
 				ref={viewRef}
 				className="contact__container container"
@@ -38,19 +43,19 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={itemVariants}>
-					Contact Me
+					{t('title')}
 				</motion.h2>
 
 				<div className="contact__grid">
 					<motion.div className="contact__card" variants={itemVariants}>
 						<div className="contact__eyebrow">
-							<Mail size={16} /> Get in touch
+							<Mail size={16} /> {t('eyebrow')}
 						</div>
 						<p className="contact__lead">
-							봐주셔서 감사합니다. 보안 담당자 및 보안 제품 개발자로 성장해나가는 제 모습을 지켜봐주세요.
+							{t('lead')}
 						</p>
 						<p className="contact__desc">
-							우측 하단의 Connect 버튼을 통해 메일을 보내실 수 있습니다. 언제든 편하게 연락 주세요.
+							{t('desc')}
 						</p>
 					<button className="contact__cta" type="button" onClick={handleConnectClick}>
 						Connect
@@ -63,8 +68,8 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 								<MessageCircle size={16} />
 							</div>
 							<div>
-								<p className="info-title">빠른 연락</p>
-								<p className="info-text">Connect 버튼으로 메일을 보내주세요.</p>
+								<p className="info-title">{t('quickContact')}</p>
+								<p className="info-text">{t('quickContactDesc')}</p>
 							</div>
 						</div>
 						<div className="info-row">
@@ -83,7 +88,7 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 								<LinkIcon size={16} />
 							</div>
 							<div>
-								<p className="info-title">Tech Blog</p>
+								<p className="info-title">{t('buttons.blog')}</p>
 								<a className="info-link" href="https://velog.io/@woo2083/posts" target="_blank" rel="noreferrer">
 									velog.io/@woo2083
 								</a>
@@ -100,6 +105,6 @@ const Contact = forwardRef<HTMLDivElement>((_, ref) => {
 	);
 });
 
-Contact.displayName = "Contact";
+ContactMe.displayName = "ContactMe";
 
-export default Contact;
+export default ContactMe;

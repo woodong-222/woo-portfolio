@@ -1,0 +1,171 @@
+@use 'sass:map';
+@use '@/utils/styles/variables.scss' as *;
+
+.tech-stack.section {
+  padding-top: 100px !important;
+  
+  @include mobile-only {
+    padding-top: 80px !important;
+  }
+}
+
+.tech-stack .section-title {
+  text-align: center;
+  font-size: map.get($font-sizes, 4xl);
+  font-weight: 800;
+  margin-bottom: map.get($spacing, lg);
+  color: #facc15;
+
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+    margin-bottom: map.get($spacing, md);
+  }
+
+  @include tablet-only {
+    font-size: map.get($font-sizes, 3xl);
+    margin-bottom: map.get($spacing, lg);
+  }
+}
+
+.tech-stack {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: auto;
+  padding: 40px 0 120px !important;
+
+  &__container {
+    max-width: 1100px;
+  }
+
+  .tech-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: map.get($spacing, xl);
+    
+    @include mobile-only {
+      grid-template-columns: 1fr;
+      gap: map.get($spacing, lg);
+    }
+  }
+
+  .tech-category {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: map.get($spacing, lg);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.12);
+      transform: translateY(-4px);
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: map.get($spacing, sm);
+      padding-bottom: map.get($spacing, md);
+      margin-bottom: map.get($spacing, md);
+      border-bottom: 2px solid;
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    &__title {
+      font-size: map.get($font-sizes, lg);
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: map.get($spacing, md);
+    }
+  }
+
+  .tech-subgroup {
+    &__label {
+      display: block;
+      font-size: map.get($font-sizes, sm);
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: map.get($spacing, xs);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .tech-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: map.get($spacing, sm);
+  }
+
+
+  // 개별 기술 스킬 아이템 - 아이콘 중심 디자인
+  .tech-skill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: map.get($spacing, sm);
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    min-width: 80px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: #ffffff;
+      border-color: #facc15;
+      box-shadow: 0 8px 24px rgba(250, 204, 21, 0.25);
+    }
+
+    &__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fbbf24;
+      color: white;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+
+      img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+      }
+
+      &--fallback {
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        
+        .fallback-text {
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+    }
+
+    &__label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+}

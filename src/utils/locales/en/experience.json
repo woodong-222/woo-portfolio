@@ -1,0 +1,26 @@
+{
+  "title": "Experience",
+  "timeline": [
+    {
+      "year": "2025.07 ~ 2025.12",
+      "items": [
+        "BoB 14th Security Product Development Track Student",
+        "Experience in network, system, cloud security environments & malicious URL detection project"
+      ]
+    },
+    {
+      "year": "2024.03 ~ 2024.09",
+      "items": [
+        "Completed WHS 2nd Next-Gen Security Leader Training",
+        "Security fundamentals & DevSecOps cloud security defense project"
+      ]
+    },
+    {
+      "year": "2020.03 ~ 2026.08",
+      "items": [
+        "Computer Engineering, Korea University of Technology and Education",
+        "2024 CS Department Student Council President"
+      ]
+    }
+  ]
+}

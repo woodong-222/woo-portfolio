@@ -15,11 +15,13 @@
 	min-height: 100vh;
 	background: #0f0f1a;
 	padding-top: 100px;
+	padding-bottom: 80px;
 	--card-stack-spacing: 70vh;
 	--card-stack-last-extra: 45vh;
 
 	@include mobile-only {
 		padding-top: 80px;
+		padding-bottom: 60px;
 	}
 
 	// 제목 - sticky로 고정, JS에서 transform으로 이동 제어
@@ -38,10 +40,7 @@
 			font-size: map.get($font-sizes, 4xl);
 			font-weight: 800;
 			margin: 0;
-			background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-clip: text;
+			color: #facc15;
 
 			@include mobile-only {
 				font-size: map.get($font-sizes, 2xl);
