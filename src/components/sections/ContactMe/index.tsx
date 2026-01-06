@@ -2,7 +2,7 @@ import { forwardRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useTranslation } from "react-i18next";
-import { Mail, Github, Link as LinkIcon, Send, User, MessageSquare } from "lucide-react";
+import { Github, Link as LinkIcon, Send, User, MessageSquare } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { createVariants } from "@/utils/types/motion";
 import WaveDivider from "@/components/common/WaveDivider";
