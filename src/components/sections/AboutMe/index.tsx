@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import Tilt from "react-parallax-tilt";
 import { Shield, Target, Users, Lightbulb } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
 import "./AboutMe.scss";
@@ -81,24 +82,55 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 					{t("title")}
 				</motion.h2>
 
-				<div className="principles-grid">
-					{principles.map((principle, index) => (
-						<motion.div
-							key={index}
-							className="principle-card"
-							variants={cardVariants}
-							whileHover={{ scale: 1.03, y: -8, boxShadow: "0 25px 50px rgba(99, 102, 241, 0.2)" }}
-							transition={{ duration: 0.3 }}
+				<div className="about-me__layout">
+					<motion.div
+						className="about-me__photo"
+						variants={cardVariants}
+						whileHover={{ y: -6 }}
+						transition={{ duration: 0.35 }}
+					>
+						<Tilt
+							tiltMaxAngleX={10}
+							tiltMaxAngleY={10}
+							glareEnable
+							glareMaxOpacity={0.15}
+							glareColor="#ffffff"
+							glarePosition="all"
+							scale={1.02}
 						>
-							<div className="principle-icon" style={{ color: principle.color }}>
-								{principle.icon}
+							<div className="photo-badge">
+								<div className="punch-hole" />
+								<div className="photo-frame">
+									<div className="photo-glow" />
+									<img
+										src="/profile.jpeg"
+										alt="Profile"
+										className="photo-image"
+									/>
+									<div className="photo-border" />
+								</div>
+								<div className="badge-strap" />
 							</div>
-							<div className="principle-content">
-								<p className="principle-title">{principle.title}</p>
-								<p className="principle-text">{principle.text}</p>
-							</div>
-						</motion.div>
-					))}
+						</Tilt>
+					</motion.div>
+
+					<div className="about-me__content">
+						<div className="principles-list">
+							{principles.map((principle, index) => (
+								<motion.div
+									key={index}
+									className="principle-card"
+									variants={cardVariants}
+								>
+									<div className="principle-icon" style={{ color: principle.color }}>
+										{principle.icon}
+									</div>
+									<p className="principle-title">{principle.title}</p>
+									<p className="principle-text">{principle.text}</p>
+								</motion.div>
+							))}
+						</div>
+					</div>
 				</div>
 			</motion.div>
 		</section>

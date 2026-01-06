@@ -56,55 +56,245 @@
     display: flex;
     flex-direction: column;
     gap: map.get($spacing, lg);
+    max-width: 1240px;
+    width: min(1240px, 95vw);
+    margin: 0 auto;
   }
 
-  .contact__card {
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 0.35fr 0.65fr;
+    gap: map.get($spacing, xl);
+
+    @include tablet-only {
+      grid-template-columns: 1fr;
+    }
+
+    @include mobile-only {
+      grid-template-columns: 1fr;
+      gap: map.get($spacing, lg);
+    }
+  }
+
+  .contact__form-card,
+  .contact__info-card {
     background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(15, 23, 42, 0.06);
     border-radius: map.get($border-radius, xl);
     padding: map.get($spacing, xl);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, sm);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 
     @include mobile-only {
       padding: map.get($spacing, lg);
     }
   }
 
-  .contact__lead {
-    font-size: map.get($font-sizes, lg);
-    font-weight: 700;
+  .contact__form-title {
+    font-size: map.get($font-sizes, xl);
+    font-weight: 800;
     color: #0f172a;
-    margin: 0;
-    line-height: 1.5;
+    margin: 0 0 map.get($spacing, xs);
   }
 
-  .contact__desc {
-    font-size: map.get($font-sizes, base);
+  .contact__form-desc {
+    margin: 0 0 map.get($spacing, md);
     color: #475569;
-    margin: 0;
     line-height: 1.6;
   }
 
-  .contact__cta {
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, md);
+    margin-top: map.get($spacing, md);
+
+    .contact__submit {
+      width: 100%;
+      align-self: stretch;
+      justify-content: center;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, xs);
+
+    .field__label {
+      display: inline-flex;
+      align-items: center;
+      gap: map.get($spacing, xs);
+      font-weight: 600;
+      color: #0f172a;
+      font-size: map.get($font-sizes, sm);
+    }
+
+    .field__input {
+      position: relative;
+
+      input,
+      textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(15, 23, 42, 0.12);
+        border-radius: map.get($border-radius, lg);
+        padding: map.get($spacing, sm);
+        font-size: map.get($font-sizes, sm);
+        font-family: $font-family-primary;
+        color: #0f172a;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+        resize: vertical;
+
+        &::placeholder {
+          color: #94a3b8;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: #f59e0b;
+          box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .contact__submit {
+    display: inline-flex;
+    align-items: center;
+    gap: map.get($spacing, xs);
     align-self: flex-start;
-    margin-top: map.get($spacing, sm);
     padding: 12px 18px;
     border-radius: 14px;
     background: linear-gradient(135deg, #f59e0b, #fbbf24);
-    color: #fff;
+    color: #0f172a;
     font-weight: 700;
-    text-decoration: none;
     border: 1px solid rgba(250, 191, 36, 0.45);
     box-shadow: 0 12px 24px rgba(250, 204, 21, 0.25);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(250, 204, 21, 0.35);
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(250, 204, 21, 0.3);
+      filter: brightness(1.05);
     }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .form-feedback {
+    margin: 0;
+    font-size: map.get($font-sizes, sm);
+
+    &.success {
+      color: #15803d;
+    }
+
+    &.error {
+      color: #dc2626;
+    }
+  }
+
+  .contact__info-card {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($spacing, lg);
+    text-align: center;
+    align-items: center;
+
+    .info-hero {
+      display: flex;
+      flex-direction: column;
+      gap: map.get($spacing, sm);
+      align-items: center;
+
+      .info-eyebrow {
+        font-size: map.get($font-sizes, sm);
+        font-weight: 600;
+        color: #0f172a;
+        opacity: 0.8;
+        margin: 0;
+      }
+
+      .info-title {
+        font-size: map.get($font-sizes, xl);
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0;
+      }
+
+      .info-lead {
+        font-size: map.get($font-sizes, lg);
+        font-weight: 600;
+        color: #0f172a;
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      .info-desc {
+        margin: 0;
+        color: #475569;
+        line-height: 1.6;
+      }
+
+      .info-actions {
+        display: flex;
+        gap: map.get($spacing, sm);
+        margin-top: map.get($spacing, md);
+        justify-content: center;
+
+        @include mobile-only {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .channel-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: map.get($spacing, xs);
+          padding: 12px 16px;
+          border-radius: 14px;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.2s ease;
+          border: 1px solid transparent;
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+
+          &.primary {
+            background: #24292e;
+            color: #ffffff;
+            border-color: rgba(36, 41, 46, 0.3);
+
+            &:hover {
+              background: #1b1f23;
+              box-shadow: 0 12px 28px rgba(36, 41, 46, 0.25);
+            }
+          }
+
+          &.ghost {
+            background: rgba(255, 255, 255, 0.9);
+            color: #0f172a;
+            border-color: rgba(15, 23, 42, 0.08);
+
+            &:hover {
+              box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+            }
+          }
+        }
+      }
+    }
+
+    // info-list removed
   }
 
   .contact__footer {
