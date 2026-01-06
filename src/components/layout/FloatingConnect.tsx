@@ -11,7 +11,6 @@ const FloatingConnect = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [formData, setFormData] = useState({
 		name: '',
-		email: '',
 		message: '',
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,7 +41,7 @@ const FloatingConnect = () => {
 				// 시뮬레이션 모드
 				await new Promise(resolve => setTimeout(resolve, 1000));
 				setSubmitStatus('success');
-				setFormData({ name: '', email: '', message: '' });
+				setFormData({ name: '', message: '' });
 				
 				setTimeout(() => {
 					setIsOpen(false);
@@ -54,7 +53,7 @@ const FloatingConnect = () => {
 			// 실제 이메일 전송
 			const templateParams = {
 				from_name: formData.name,
-				from_email: formData.email,
+				from_email: '',
 				message: formData.message,
 				to_email: 'ehddn2083@gmail.com', // 받을 이메일 주소
 			};
@@ -67,7 +66,7 @@ const FloatingConnect = () => {
 			);
 
 			setSubmitStatus('success');
-			setFormData({ name: '', email: '', message: '' });
+			setFormData({ name: '', message: '' });
 			
 			setTimeout(() => {
 				setIsOpen(false);
@@ -181,21 +180,6 @@ const FloatingConnect = () => {
 									</div>
 
 									<div className="form-group">
-										<div className="input-wrapper">
-											<Mail size={18} className="input-icon" />
-											<input
-												type="email"
-												name="email"
-												value={formData.email}
-												onChange={handleInputChange}
-												placeholder={t('placeholder.email')}
-												required
-												disabled={isSubmitting}
-											/>
-										</div>
-									</div>
-
-									<div className="form-group">
 										<div className="textarea-wrapper">
 											<MessageSquare size={18} className="textarea-icon" />
 											<textarea
@@ -226,7 +210,7 @@ const FloatingConnect = () => {
 										<Send size={16} />
 										{isSubmitting ? 
 											<span className="loading-text">...</span> : 
-											t('send', { ns: 'common' })
+											t('send')
 										}
 									</motion.button>
 								</form>

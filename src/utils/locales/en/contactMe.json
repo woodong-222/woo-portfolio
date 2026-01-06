@@ -6,12 +6,11 @@
   "quickContact": "Quick Contact",
   "quickContactDesc": "Send me an email via the Connect button.",
   "buttonLabel": "Contact Me",
+  "send": "Send",
   "name": "Name",
-  "email": "Email",
   "message": "Message",
   "placeholder": {
     "name": "Enter your name",
-    "email": "Enter your email",
     "message": "Enter your message"
   },
   "success": "Message sent successfully!",

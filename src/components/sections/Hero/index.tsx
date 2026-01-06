@@ -4,7 +4,6 @@ import Tilt from "react-parallax-tilt";
 import { Github, ArrowDown, Link as LinkIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReactiveBackground from "./ReactiveBackground";
-import WaveDivider from "@/components/common/WaveDivider";
 import "./Hero.scss";
 
 const LAST_UPDATED = "2025.11";
@@ -150,7 +149,6 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 					<span>{t("scroll")}</span>
 				</motion.div>
 			</div>
-			<WaveDivider color="#ffffff" className="hero-to-about" />
 		</section>
 	);
 });

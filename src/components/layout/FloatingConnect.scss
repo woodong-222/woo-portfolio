@@ -18,6 +18,12 @@
     right: 0;
     width: 350px;
     max-width: calc(100vw - 2rem);
+    max-height: 60vh;
+    overflow: visible;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: map.get($border-radius, xl);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
 
     @include mobile-only {
       width: 300px;
@@ -25,15 +31,18 @@
     }
 
     .connect-form {
-      background: var(--bg-primary);
-      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(30, 41, 59, 0.1);
       border-radius: map.get($border-radius, xl);
-      box-shadow: 0 20px 60px var(--shadow);
+      box-shadow:
+        0 16px 40px rgba(15, 23, 42, 0.16),
+        inset 0 10px 18px rgba(255, 255, 255, 0.35),
+        inset 0 -10px 18px rgba(0, 0, 0, 0.06);
       overflow: hidden;
 
       .form-header {
         @include flex-between;
-        padding: map.get($spacing, lg);
+        padding: map.get($spacing, md);
         border-bottom: 1px solid var(--border-color);
         background: var(--bg-secondary);
 
@@ -45,26 +54,12 @@
         }
 
         .close-btn {
-          @include flex-center;
-          width: 32px;
-          height: 32px;
-          background: var(--bg-primary);
-          border: 1px solid var(--border-color);
-          border-radius: map.get($border-radius, base);
-          color: var(--text-secondary);
-          cursor: pointer;
-          transition: $transition-base;
-
-          &:hover {
-            background: var(--bg-accent);
-            color: white;
-            border-color: var(--bg-accent);
-          }
+          display: none;
         }
       }
 
       .contact-form {
-        padding: map.get($spacing, lg);
+        padding: map.get($spacing, md) map.get($spacing, md);
 
         .form-group {
           margin-bottom: map.get($spacing, md);
@@ -129,26 +124,26 @@
           }
         }
 
-        .submit-btn {
-          width: 100%;
-          @include flex-center;
-          gap: map.get($spacing, xs);
-          background: var(--bg-accent);
-          color: white;
-          border: none;
-          border-radius: map.get($border-radius, lg);
-          padding: map.get($spacing, sm);
-          font-size: map.get($font-sizes, sm);
-          font-weight: 500;
+    .submit-btn {
+      width: 100%;
+      @include flex-center;
+      gap: map.get($spacing, xs);
+      background: #eab308;
+      color: #0f172a;
+      border: none;
+      border-radius: map.get($border-radius, lg);
+      padding: map.get($spacing, sm);
+      font-size: map.get($font-sizes, sm);
+      font-weight: 500;
           cursor: pointer;
           transition: $transition-base;
 
-          &:hover:not(:disabled) {
-            background: var(--bg-accent);
-            opacity: 0.9;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px var(--shadow);
-          }
+      &:hover:not(:disabled) {
+        background: #facc15;
+        color: #0f172a;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.18);
+      }
 
           &:disabled {
             opacity: 0.6;
@@ -221,7 +216,7 @@
     }
 
     &.open {
-      background: #d4a106;
+      background: #eab308;
       color: #0f172a;
       transform: rotate(90deg);
     }
