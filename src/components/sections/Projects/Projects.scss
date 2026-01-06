@@ -79,19 +79,17 @@
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
 
-	// 호버 애니메이션 (transform은 카드 간격에 사용되므로 inner에서 처리)
-	transition: box-shadow 0.3s ease;
+	// 호버 애니메이션 (transform은 카드 간격에 사용되므로 margin으로 처리)
+	transition: box-shadow 0.3s ease, margin-left 0.3s ease, margin-right 0.3s ease;
 
 	&:hover {
 		box-shadow: 4px -4px 30px rgba(0, 0, 0, 0.6);
-
-		.project-card__inner {
-			transform: translateX(-12px);
-		}
+		margin-left: 28px;
+		margin-right: 52px;
 	}
 
 	&--last {
-		// 마지막 카드도 동일
+		// 마지막 카드
 	}
 
 	@include tablet-only {
@@ -114,7 +112,6 @@
 		align-items: center;
 		max-width: 1200px;
 		margin: 0 auto;
-		transition: transform 0.3s ease;
 
 		@include tablet-only {
 			grid-template-columns: 1fr;
@@ -194,8 +191,6 @@
 				align-items: center;
 				gap: 6px;
 				padding: 8px 16px;
-				background: #fff;
-				color: #1a1a2e;
 				border-radius: 6px;
 				font-size: 13px;
 				font-weight: 600;
@@ -205,6 +200,21 @@
 				&:hover {
 					transform: translateY(-2px);
 					box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+				}
+
+				&--primary {
+					background: #fff;
+					color: #1a1a2e;
+				}
+
+				&--secondary {
+					background: rgba(255, 255, 255, 0.1);
+					color: #fff;
+					border: 1px solid rgba(255, 255, 255, 0.3);
+
+					&:hover {
+						background: rgba(255, 255, 255, 0.2);
+					}
 				}
 			}
 

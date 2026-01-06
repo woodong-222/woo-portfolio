@@ -275,7 +275,7 @@ const CareerSection = () => {
 				animate={inView ? "visible" : "hidden"}
 			>
 				<motion.h2 className="section-title" variants={titleVariants}>
-					경력 & 교육
+					Experience
 				</motion.h2>
 
 				<div className="timeline">

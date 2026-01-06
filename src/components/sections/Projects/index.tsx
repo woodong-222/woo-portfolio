@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { Github, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { Github, ChevronLeft, ChevronRight, Globe } from "lucide-react";
 import useResponsive from "@/utils/hooks/useResponsive";
 import { projects, Project, Screenshot } from "./projects.data";
 import "./Projects.scss";
@@ -11,7 +11,7 @@ const CARD_OFFSET = 12;
 
 const CARD_THEMES = [
 	// MON47 - 주황 계열
-	{ bg: 'rgba(69, 26, 3, 0.5)', glow: '#f59e0b', border: '#fcd34d' },
+	{ bg: 'rgba(69, 26, 3, 0.5)', glow: '#f59e0b', border: '#fdba74' },
 	// Winection - 파랑 계열
 	{ bg: 'rgba(23, 37, 84, 0.5)', glow: '#3b82f6', border: '#93c5fd' },
 	// WHSCA - 초록 계열
@@ -170,14 +170,14 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 					</div>
 
 					<div className="project-actions">
-						{project.githubUrl && (
-							<a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-								<Github size={14} /> GitHub
+						{project.liveUrl && (
+							<a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn action-btn--primary">
+								<Globe size={14} /> Visit
 							</a>
 						)}
-						{project.liveUrl && (
-							<a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="action-btn">
-								<ExternalLink size={14} /> Live
+						{project.githubUrl && (
+							<a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="action-btn action-btn--secondary">
+								<Github size={14} /> GitHub
 							</a>
 						)}
 					</div>
