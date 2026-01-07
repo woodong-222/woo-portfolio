@@ -4,10 +4,13 @@
 // Wrapper & shared typography for About sections
 .about-wrapper {
   position: relative;
+  z-index: 2;
+  margin-top: -90vh;
   padding-top: 100px;
   padding-bottom: 100px; // space for wave
 
   @include mobile-only {
+    margin-top: -70vh;
     padding-top: 80px;
     padding-bottom: 70px;
   }

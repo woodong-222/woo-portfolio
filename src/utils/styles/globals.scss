@@ -41,6 +41,23 @@ body {
   }
 }
 
+.hero-sticky {
+  position: relative;
+  height: 220vh;
+}
+
+.hero-sticky__inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .hero-sticky {
+    height: 180vh;
+  }
+}
+
 // Section base styles
 .section {
   min-height: 100vh;

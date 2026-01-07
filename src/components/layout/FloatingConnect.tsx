@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { X, Send, User, Mail, MessageSquare } from 'lucide-react';
+import { X, Send, User, Mail, MessageSquare, ArrowUp } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { createVariants } from '@/utils/types/motion';
 import { FLOATING_CONNECT_OPEN_EVENT } from '@/utils/constants/events';
@@ -15,7 +15,8 @@ const FloatingConnect = () => {
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-	const { t } = useTranslation('contactMe');
+	const [spinTarget, setSpinTarget] = useState<'contact' | 'lang' | 'top' | null>(null);
+	const { t, i18n } = useTranslation('contactMe');
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -90,7 +91,16 @@ const FloatingConnect = () => {
 		return () => window.removeEventListener(FLOATING_CONNECT_OPEN_EVENT, handleExternalOpen);
 	}, []);
 
+	const triggerSpin = (target: 'contact' | 'lang' | 'top') => {
+		setSpinTarget(target);
+		setTimeout(() => {
+			setSpinTarget(null);
+		}, 520);
+	};
+
 	const toggleOpen = () => {
+		triggerSpin('contact');
+
 		if (isOpen) {
 			setIsOpen(false);
 			return;
@@ -100,12 +110,21 @@ const FloatingConnect = () => {
 		setSubmitStatus('idle');
 	};
 
-	const buttonVariants = createVariants({
-		closed: { scale: 1 },
-		open: { scale: 0.9 },
-		hover: { scale: 1.1 },
-		tap: { scale: 0.95 },
-	});
+	const toggleLanguage = () => {
+		triggerSpin('lang');
+		i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko');
+	};
+
+	const scrollToTop = () => {
+		triggerSpin('top');
+		const scrollContainer = document.querySelector('.scroll-container');
+		if (scrollContainer instanceof HTMLElement && scrollContainer.scrollHeight > scrollContainer.clientHeight) {
+			scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+			return;
+		}
+
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	};
 
 	const formVariants = createVariants({
 		hidden: { 
@@ -232,42 +251,44 @@ const FloatingConnect = () => {
 				)}
 			</AnimatePresence>
 
-			<motion.button
-				className={`floating-btn ${isOpen ? 'open' : ''}`}
-				onClick={toggleOpen}
-				aria-label={t('buttonLabel')}
-				title={t('buttonLabel')}
-				variants={buttonVariants}
-				animate={isOpen ? 'open' : 'closed'}
-				whileHover="hover"
-				whileTap="tap"
-				transition={{ duration: 0.05, ease: 'linear' }}
-			>
-				<AnimatePresence mode="wait">
-					{isOpen ? (
-						<motion.div
-							key="close"
-							initial={{ rotate: -90, opacity: 0 }}
-							animate={{ rotate: 0, opacity: 1 }}
-							exit={{ rotate: 90, opacity: 0 }}
-							transition={{ duration: 0.2 }}
-						>
-							<X size={24} />
-						</motion.div>
-					) : (
-						<motion.div
-							key="message"
-							className="floating-btn__icon"
-							initial={{ rotate: 90, opacity: 0 }}
-							animate={{ rotate: 0, opacity: 1 }}
-							exit={{ rotate: -90, opacity: 0 }}
-							transition={{ duration: 0.2 }}
-						>
-							<Mail size={18} />
-						</motion.div>
-					)}
-				</AnimatePresence>
-			</motion.button>
+			<div className="floating-actions">
+				<motion.button
+					className={`floating-action contact ${isOpen ? 'active' : ''} ${spinTarget === 'contact' ? 'spin' : ''}`}
+					onClick={toggleOpen}
+					aria-label={t('buttonLabel')}
+					title={t('buttonLabel')}
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
+				>
+					<span className="floating-action__icon" aria-hidden="true">
+						{isOpen ? <X size={18} /> : <Mail size={18} />}
+					</span>
+				</motion.button>
+				<motion.button
+					className={`floating-action lang ${spinTarget === 'lang' ? 'spin' : ''}`}
+					onClick={toggleLanguage}
+					aria-label="Toggle language"
+					title={i18n.language === 'ko' ? 'EN' : 'KO'}
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
+				>
+					<span className="floating-action__icon floating-action__text">
+						{i18n.language === 'ko' ? 'EN' : 'KO'}
+					</span>
+				</motion.button>
+				<motion.button
+					className={`floating-action top ${spinTarget === 'top' ? 'spin' : ''}`}
+					onClick={scrollToTop}
+					aria-label="Back to top"
+					title="Top"
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
+				>
+					<span className="floating-action__icon" aria-hidden="true">
+						<ArrowUp size={18} />
+					</span>
+				</motion.button>
+			</div>
 		</div>
 	);
 };

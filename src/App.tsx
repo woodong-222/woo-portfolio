@@ -33,7 +33,11 @@ const App = () => {
 			/>
 
 	<main className="scroll-container">
-		<Hero ref={setSectionRef(0)} />
+		<div className="hero-sticky">
+			<div className="hero-sticky__inner">
+				<Hero ref={setSectionRef(0)} />
+			</div>
+		</div>
 
 		<div className="about-wrapper">
 			<AboutMe ref={setSectionRef(1)} />

@@ -270,6 +270,12 @@
           border: 1px solid transparent;
           box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
 
+          .velog-icon {
+            width: 18px;
+            height: 18px;
+            display: block;
+          }
+
           &.primary {
             background: #24292e;
             color: #ffffff;

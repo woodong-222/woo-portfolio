@@ -1,6 +1,6 @@
 import { forwardRef, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { Github, ArrowDown, Link as LinkIcon } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReactiveBackground from "./ReactiveBackground";
 import "./Hero.scss";
@@ -9,7 +9,6 @@ const LAST_UPDATED = "2025.11";
 
 const Hero = forwardRef<HTMLElement>((_props, ref) => {
 	const { t } = useTranslation("hero");
-	const { t: tCommon } = useTranslation("common");
 	const eyebrowText = t("eyebrow");
 	const titleHighlight = t("title.highlight");
 	const titleLineTwo = t("title.line2");
@@ -113,8 +112,7 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 									whileHover={{ y: -2, scale: 1.02 }}
 									whileTap={{ scale: 0.98 }}
 								>
-									<Github size={18} />
-									GitHub
+									Github
 								</motion.a>
 								<motion.a
 									href="https://velog.io/@woo2083/posts"
@@ -124,8 +122,7 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 									whileHover={{ y: -2, scale: 1.02 }}
 									whileTap={{ scale: 0.98 }}
 								>
-									<LinkIcon size={18} />
-									{tCommon('buttons.blog')}
+									Velog
 								</motion.a>
 							</motion.div>
 

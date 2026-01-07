@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import useResponsive from '@/utils/hooks/useResponsive';
 import './Header.scss';
 
@@ -14,7 +14,7 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isDarkSection, setIsDarkSection] = useState(false);
-	const { t, i18n } = useTranslation('common');
+	const { t } = useTranslation('common');
 	const { isMobile } = useResponsive();
 
 	// Prevent unused variable warning
@@ -120,13 +120,6 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 								</button>
 							))}
 						</div>
-						<button
-							className="lang-toggle"
-							onClick={() => i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}
-						>
-							<Globe size={14} />
-							<span>{i18n.language === 'ko' ? 'EN' : 'KO'}</span>
-						</button>
 					</nav>
 				)}
 
@@ -164,15 +157,6 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 								{item.label}
 							</motion.button>
 						))}
-						<motion.button
-							className="mobile-nav__item mobile-nav__lang"
-							onClick={() => i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko')}
-							whileHover={{ scale: 1.02 }}
-							whileTap={{ scale: 0.98 }}
-						>
-							<Globe size={16} />
-							<span>{i18n.language === 'ko' ? 'EN' : 'KO'}</span>
-						</motion.button>
 					</nav>
 				</motion.div>
 			)}
