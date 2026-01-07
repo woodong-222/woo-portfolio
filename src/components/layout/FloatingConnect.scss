@@ -199,6 +199,8 @@
   }
 
   .floating-btn {
+    position: relative;
+    z-index: 960;
     @include flex-center;
     width: 60px;
     height: 60px;
@@ -227,7 +229,7 @@
 
     &.open {
       background: #eab308;
-      color: #0f172a;
+      color: #ffffff;
       transform: rotate(90deg);
     }
 
@@ -267,6 +269,11 @@
         width: 22px;
         height: 22px;
       }
+    }
+
+    &.open svg {
+      color: #ffffff;
+      stroke: #ffffff;
     }
   }
 }

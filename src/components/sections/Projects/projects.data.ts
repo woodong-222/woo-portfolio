@@ -66,7 +66,7 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['Python', 'FastAPI', 'SQLAlchemy', 'React', 'Docker'],
-		githubUrl: 'https://github.com/woodong-222',
+		githubUrl: 'https://github.com/bob-mon47',
 		liveUrl: 'https://mon47.com',
 		screenshots: [
 			{ src: '/screenshots/mon47/main.png', label: { ko: '메인 화면', en: 'Main' } },
@@ -109,7 +109,7 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['Python', 'AWS', 'Lambda', 'React', 'Redis', 'WebRTC'],
-		githubUrl: 'https://github.com/woodong-222',
+		githubUrl: 'https://github.com/DongUgaUga',
 		liveUrl: 'https://winection.kro.kr',
 		screenshots: [
 			{ src: '/screenshots/winection/main.png', label: { ko: '메인 화면', en: 'Main' } },
@@ -152,7 +152,7 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['Python', 'FastAPI', 'PostgreSQL', 'React'],
-		githubUrl: 'https://github.com/woodong-222',
+		githubUrl: 'https://github.com/orgs/WhiteHatSchool',
 		liveUrl: 'https://whsca.com',
 		screenshots: [
 			{ src: '/screenshots/whsca/main.png', label: { ko: '메인 화면', en: 'Main' } },
@@ -195,7 +195,7 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
-		githubUrl: 'https://github.com/woodong-222',
+		githubUrl: 'https://github.com/woodong-222/pokeface-api',
 		liveUrl: 'https://pokeface.kro.kr',
 		screenshots: [
 			{ src: '/screenshots/pokeface/main.png', label: { ko: '메인 화면', en: 'Main' } },
@@ -238,7 +238,7 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
-		githubUrl: 'https://github.com/woodong-222',
+		githubUrl: 'https://github.com/woodong-222/woo-portfolio',
 		liveUrl: 'https://woo-portfolio.vercel.app',
 		screenshots: [
 			{ src: '/screenshots/portfolio/main.png', label: { ko: '메인 화면', en: 'Main' } },

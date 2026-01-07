@@ -23,7 +23,6 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
 const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 	const { ref: inViewRef, inView } = useInView({ threshold: 0.15 });
 	const { t } = useTranslation("aboutMe");
-
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
 		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
@@ -89,30 +88,30 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 						whileHover={{ y: -6 }}
 						transition={{ duration: 0.35 }}
 					>
-						<Tilt
-							tiltMaxAngleX={10}
-							tiltMaxAngleY={10}
-							glareEnable
-							glareMaxOpacity={0.15}
-							glareColor="#ffffff"
-							glarePosition="all"
-							scale={1.02}
-						>
-							<div className="photo-badge">
-								<div className="punch-hole" />
-								<div className="photo-frame">
-									<div className="photo-glow" />
-									<img
-										src="/profile.jpeg"
-										alt="Profile"
-										className="photo-image"
-									/>
-									<div className="photo-border" />
-								</div>
-								<div className="badge-strap" />
+					<Tilt
+						tiltMaxAngleX={10}
+						tiltMaxAngleY={10}
+						glareEnable
+						glareMaxOpacity={0.2}
+						glareColor="#ffffff"
+						glarePosition="all"
+						glareBorderRadius="24px"
+						scale={1.02}
+					>
+						<div className="photo-badge">
+							<div className="punch-hole" />
+							<div className="photo-frame">
+								<img
+									src="/profile.jpeg"
+									alt="Profile"
+									className="photo-image"
+								/>
+								<div className="photo-border" />
 							</div>
-						</Tilt>
-					</motion.div>
+							<div className="badge-strap" />
+						</div>
+					</Tilt>
+				</motion.div>
 
 					<div className="about-me__content">
 						<div className="principles-list">

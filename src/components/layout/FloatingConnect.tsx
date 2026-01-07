@@ -241,6 +241,7 @@ const FloatingConnect = () => {
 				animate={isOpen ? 'open' : 'closed'}
 				whileHover="hover"
 				whileTap="tap"
+				transition={{ duration: 0.05, ease: 'linear' }}
 			>
 				<AnimatePresence mode="wait">
 					{isOpen ? (

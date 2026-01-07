@@ -66,11 +66,22 @@ const Experience = forwardRef<HTMLElement>((_, forwardedRef) => {
 								<div className="timeline-year">{period.year}</div>
 							</div>
 							<div className="timeline-content">
-								{period.items.map((item, itemIndex) => (
-									<div key={itemIndex} className="timeline-achievement">
-										{item}
-									</div>
-								))}
+								{period.items.length > 0 && (() => {
+									const [main, ...details] = period.items;
+									return (
+										<div
+											className={`timeline-achievement ${details.length ? "has-detail" : ""}`}
+											tabIndex={details.length ? 0 : -1}
+										>
+											{main}
+											{details.length > 0 && (
+												<span className="timeline-detail">
+													{details.join(" / ")}
+												</span>
+											)}
+										</div>
+									);
+								})()}
 							</div>
 						</motion.div>
 					))}
