@@ -274,18 +274,25 @@
 
     .image-container {
       position: relative;
-      width: 320px;
-      height: 380px;
-      border-radius: 28px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
       overflow: hidden;
-      background: linear-gradient(160deg, rgba(250, 191, 36, 0.15), rgba(249, 115, 22, 0.15));
+      background: #f1f5f9;
       box-shadow: 
-        0 0 0 6px rgba(255,255,255,0.8),
+        0 0 0 10px rgba(255,255,255,0.8),
         0 25px 70px rgba(15, 23, 42, 0.18);
+      transition: box-shadow 0.25s ease;
+      cursor: grab;
+      touch-action: none;
+
+      &:active {
+        cursor: grabbing;
+      }
 
       @include mobile-only {
-        width: 260px;
-        height: 320px;
+        width: 220px;
+        height: 220px;
       }
 
       .image-glow {
@@ -305,18 +312,35 @@
         height: 100%;
         object-fit: cover;
         z-index: 1;
-        transform: scale(1.02);
+        transform: scale(1.50);
+        filter: grayscale(1);
+        transition: filter 0.3s ease;
+        pointer-events: none;
+        user-select: none;
       }
 
       .image-border {
         position: absolute;
         inset: -2px;
-        background: linear-gradient(135deg, #f59e0b, #fbbf24, #fde047, #f97316);
-        background-size: 300% 300%;
-        border-radius: 28px;
+        border-radius: 50%;
         z-index: 0;
-        animation: borderFlow 4s ease infinite;
-        opacity: 0.6;
+        border: 2px solid #facc15;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      &:hover {
+        box-shadow:
+          0 0 0 10px rgba(250, 204, 21, 0.5),
+          0 25px 70px rgba(15, 23, 42, 0.22);
+
+        .profile-image {
+          filter: grayscale(0);
+        }
+
+        .image-border {
+          opacity: 1;
+        }
       }
     }
 

@@ -1,6 +1,5 @@
-import { forwardRef } from "react";
-import { motion } from "framer-motion";
-import Tilt from "react-parallax-tilt";
+import { forwardRef, useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { Github, ArrowDown, Link as LinkIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReactiveBackground from "./ReactiveBackground";
@@ -45,6 +44,36 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 				repeat: Infinity,
 			},
 		},
+	};
+
+	const dragX = useMotionValue(0);
+	const dragY = useMotionValue(0);
+	const hoverX = useSpring(dragX, { stiffness: 180, damping: 18 });
+	const hoverY = useSpring(dragY, { stiffness: 180, damping: 18 });
+	const hoverMax = 6;
+	const isDraggingRef = useRef(false);
+
+	const handleHoverMove = (event: React.MouseEvent<HTMLDivElement>) => {
+		if (isDraggingRef.current) {
+			return;
+		}
+
+		const rect = event.currentTarget.getBoundingClientRect();
+		const centerX = rect.left + rect.width / 2;
+		const centerY = rect.top + rect.height / 2;
+		const dx = (event.clientX - centerX) / (rect.width / 2);
+		const dy = (event.clientY - centerY) / (rect.height / 2);
+		dragX.set(Math.max(-hoverMax, Math.min(hoverMax, dx * hoverMax)));
+		dragY.set(Math.max(-hoverMax, Math.min(hoverMax, dy * hoverMax)));
+	};
+
+	const resetHover = () => {
+		if (isDraggingRef.current) {
+			return;
+		}
+
+		dragX.set(0);
+		dragY.set(0);
 	};
 
 	return (
@@ -111,25 +140,36 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 						variants={itemVariants}
 						animate={floatingVariants.animate}
 					>
-						<Tilt
-							tiltMaxAngleX={10}
-							tiltMaxAngleY={10}
-							glareEnable
-							glareMaxOpacity={0.2}
-							glareColor="#ffffff"
-							glarePosition="all"
-							scale={1.05}
+						<motion.div
+							className="image-container"
+							drag
+							dragConstraints={{ left: -75, right: 75, top: -75, bottom: 75 }}
+							dragElastic={0.2}
+							dragMomentum={false}
+							dragSnapToOrigin
+							style={{ x: hoverX, y: hoverY }}
+							whileHover={{ scale: 1.02 }}
+							whileDrag={{ scale: 1.02 }}
+							onMouseMove={handleHoverMove}
+							onMouseLeave={resetHover}
+							onDragStart={() => {
+								isDraggingRef.current = true;
+							}}
+							onDragEnd={() => {
+								isDraggingRef.current = false;
+								resetHover();
+							}}
 						>
-							<div className="image-container">
-								<div className="image-glow" />
-								<img
-									src="/profile.jpeg"
-									alt={t("profileAlt")}
-									className="profile-image"
-								/>
-								<div className="image-border" />
-							</div>
-						</Tilt>
+							<div className="image-glow" />
+							<img
+								src="/photo.jpg"
+								alt={t("profileAlt")}
+								className="profile-image"
+								draggable={false}
+								onDragStart={(e) => e.preventDefault()}
+							/>
+							<div className="image-border" />
+						</motion.div>
 					</motion.div>
 				</motion.div>
 
