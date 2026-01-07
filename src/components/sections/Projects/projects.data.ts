@@ -26,6 +26,7 @@ export interface Project {
 	};
 	technologies: string[];
 	githubUrl?: string;
+	githubUrls?: { label: string; url: string }[];
 	liveUrl?: string;
 	screenshots: Screenshot[];
 	logoText: string;
@@ -66,7 +67,7 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['Python', 'FastAPI', 'SQLAlchemy', 'React', 'Docker'],
-		githubUrl: 'https://github.com/bob-mon47',
+		githubUrl: undefined,
 		liveUrl: 'https://mon47.com',
 		screenshots: [
 			{ src: '/screenshots/mon47/main.png', label: { ko: '메인 화면', en: 'Main' } },
@@ -109,7 +110,10 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['Python', 'AWS', 'Lambda', 'React', 'Redis', 'WebRTC'],
-		githubUrl: 'https://github.com/DongUgaUga',
+		githubUrls: [
+			{ label: 'winection-api GIT 바로가기', url: 'https://github.com/DongUgaUga/winection-api' },
+			{ label: 'winection-web GIT 바로가기', url: 'https://github.com/DongUgaUga/winection-web' },
+		],
 		liveUrl: 'https://winection.kro.kr',
 		screenshots: [
 			{ src: '/screenshots/winection/main.png', label: { ko: '메인 화면', en: 'Main' } },
@@ -195,7 +199,10 @@ export const projects: Project[] = [
 			],
 		},
 		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
-		githubUrl: 'https://github.com/woodong-222/pokeface-api',
+		githubUrls: [
+			{ label: 'pokeface-api GIT 바로가기', url: 'https://github.com/woodong-222/pokeface-api' },
+			{ label: 'pokeface-web GIT 바로가기', url: 'https://github.com/woodong-222/pokeface-web' },
+		],
 		liveUrl: 'https://pokeface.kro.kr',
 		screenshots: [
 			{ src: '/screenshots/pokeface/main.png', label: { ko: '메인 화면', en: 'Main' } },

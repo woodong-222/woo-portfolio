@@ -104,6 +104,7 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 					whileTap={{ scale: 0.95 }}
 					onClick={handleLogoClick}
 				>
+					<img className="logo-image" src="/logo.png" alt="Woo logo" />
 					<span className="logo-text">Woo</span>
 				</motion.div>
 

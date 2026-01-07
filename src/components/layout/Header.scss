@@ -35,6 +35,24 @@
 
   &__logo {
     flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+
+    .logo-image {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      transform-origin: center;
+      animation: logo-spin 4.5s linear infinite;
+      animation-play-state: paused;
+    }
+
+    &:hover .logo-image {
+      animation-play-state: running;
+    }
     
     .logo-text {
       font-size: 1.1rem;
@@ -224,6 +242,15 @@
         }
       }
     }
+  }
+}
+
+@keyframes logo-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
