@@ -1,50 +1,63 @@
 @use 'sass:map';
 @use '@/utils/styles/variables.scss' as *;
 
-// ─── CSS custom properties (responsive) ───────────────────────────────────────
+// ─── CSS custom properties ─────────────────────────────────────────────────────
 
 .tech-stack {
-  // gap=0 필수: gap이 있으면 대각 꼭짓점이 어긋남
-  // overlap = H/4 (정확히), offset = W/2 (정확히)
-  --hex-w:        88px;
-  --hex-h:        102px;
-  --hex-gap:      0px;
-  --row-overlap:  25.5px;
-  --row-offset:   44px;
-  --icon-size:    28px;
-  --img-size:     24px;
+  --hex-w:       88px;
+  --hex-h:       102px;
+  --row-overlap: 25.5px;  // H/4
+  --row-offset:  44px;    // W/2
+  --icon-size:   28px;
+  --img-size:    24px;
 
   @include tablet-only {
-    --hex-w:        78px;
-    --hex-h:        90px;
-    --hex-gap:      0px;
-    --row-overlap:  22.5px;
-    --row-offset:   39px;
-    --icon-size:    24px;
-    --img-size:     20px;
+    --hex-w:       72px;
+    --hex-h:       83px;
+    --row-overlap: 20.75px;
+    --row-offset:  36px;
+    --icon-size:   22px;
+    --img-size:    18px;
   }
 
   @include mobile-only {
-    --hex-w:        62px;
-    --hex-h:        72px;
-    --hex-gap:      0px;
-    --row-overlap:  18px;
-    --row-offset:   31px;
-    --icon-size:    22px;
-    --img-size:     18px;
+    --hex-w:       58px;
+    --hex-h:       67px;
+    --row-overlap: 16.75px;
+    --row-offset:  29px;
+    --icon-size:   18px;
+    --img-size:    15px;
   }
 }
 
 // ─── Section wrapper ──────────────────────────────────────────────────────────
 
 .tech-stack.section {
+  position: relative;
   background: linear-gradient(160deg, #f8fafc 0%, #f0f4ff 100%);
   padding-top: 72px !important;
   padding-bottom: 72px !important;
 
+  // Full-section honeycomb background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='153' viewBox='0 0 88 153'%3E%3Cpolygon points='44 0 88 25.5 88 76.5 44 102 0 76.5 0 25.5' fill='none' stroke='rgba(148 163 184 / 0.18)' stroke-width='1.5'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='153' viewBox='0 0 88 153'%3E%3Cpolygon points='44 0 88 25.5 88 76.5 44 102 0 76.5 0 25.5' fill='none' stroke='rgba(148 163 184 / 0.18)' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-size: 88px 153px, 88px 153px;
+    background-position:
+      var(--hex-bg-x, 0px) var(--hex-bg-y, 0px),
+      calc(var(--hex-bg-x, 0px) + 44px) calc(var(--hex-bg-y, 0px) + 76.5px);
+    background-repeat: repeat, repeat;
+    pointer-events: none;
+    z-index: 0;
+  }
+
   @include mobile-only {
-    padding-top: 56px !important;
-    padding-bottom: 56px !important;
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
   }
 }
 
@@ -75,154 +88,144 @@
   min-height: auto;
 
   &__container {
-    max-width: 1100px;
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// ─── Honeycomb wrapper ────────────────────────────────────────────────────────
+
+.honeycomb-wrapper {
+  display: flex;
+  justify-content: center;
+  overflow: visible; // let scaled cells show without clipping
+  padding: 12px 12px 20px; // breathing room for hover scale-up
+
+  @include mobile-only {
+    overflow-x: auto;
+    overflow-y: visible;
+    justify-content: flex-start;
+    padding: 8px 0 12px;
+  }
+}
+
+// ─── Honeycomb grid ───────────────────────────────────────────────────────────
+
+.honeycomb {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // critical: NOT center — center doubles the offset
+}
+
+// ─── Honeycomb rows ───────────────────────────────────────────────────────────
+
+.honeycomb__row {
+  display: flex;
+  gap: 0;
+  margin-top: calc(-1 * var(--row-overlap));
+
+  &:first-child {
+    margin-top: 0;
   }
 
-  // ─── Honeycomb grid ──────────────────────────────────────────────────────────
+  &--offset {
+    margin-left: var(--row-offset);
+  }
+}
 
-  .honeycomb {
+// ─── Ghost hex cell ───────────────────────────────────────────────────────────
+
+.hex-ghost {
+  width: var(--hex-w);
+  height: var(--hex-h);
+  flex-shrink: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// ─── Individual hex cell ──────────────────────────────────────────────────────
+
+.hex-cell {
+  position: relative;
+  width: var(--hex-w);
+  height: var(--hex-h);
+  flex-shrink: 0;
+  cursor: default;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: var(--hex-color);
+    transition: opacity 0.2s ease;
+    opacity: 0.85;
+  }
+
+  &__face {
+    position: absolute;
+    inset: 3px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    &__row {
-      display: flex;
-      gap: var(--hex-gap);
-      margin-top: calc(-1 * var(--row-overlap));
-
-      &:first-child {
-        margin-top: 0;
-      }
-
-      &--offset {
-        margin-left: var(--row-offset);
-      }
-    }
-  }
-
-  // ─── Individual hex cell ──────────────────────────────────────────────────────
-
-  .hex-cell {
-    position: relative;
-    width: var(--hex-w);
-    height: var(--hex-h);
-    flex-shrink: 0;
-    cursor: default;
-
-    // Colored border layer (category color)
-    &__bg {
-      position: absolute;
-      inset: 0;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: var(--hex-color);
-      transition: opacity 0.2s ease;
-      opacity: 0.85;
-    }
-
-    // White inner face with content
-    &__face {
-      position: absolute;
-      inset: 3px;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      padding: 6px 4px 8px;
-      transition: background 0.2s ease;
-    }
-
-    &:hover {
-      .hex-cell__bg {
-        opacity: 1;
-      }
-      .hex-cell__face {
-        background: #f0f7ff;
-      }
-    }
-
-    // Icon
-    &__icon {
-      width: var(--icon-size);
-      height: var(--icon-size);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-
-      img {
-        width: var(--img-size);
-        height: var(--img-size);
-        object-fit: contain;
-      }
-    }
-
-    &__fallback {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--hex-color);
-      line-height: 1;
-
-      @include mobile-only {
-        font-size: 14px;
-      }
-    }
-
-    // Label (hidden on mobile — icon only)
-    &__label {
-      font-size: 9px;
-      font-weight: 600;
-      color: #374151;
-      text-align: center;
-      line-height: 1.2;
-      max-width: 60px;
-      word-break: break-word;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-
-      @include mobile-only {
-        display: none;
-      }
-    }
-  }
-
-  // ─── Category legend ──────────────────────────────────────────────────────────
-
-  .tech-legend {
-    display: flex;
     justify-content: center;
+    gap: 3px;
+    padding: 6px 4px 8px;
+    transition: background 0.2s ease;
+  }
+
+  &:hover {
+    .hex-cell__bg { opacity: 1; }
+    .hex-cell__face { background: #f0f7ff; }
+  }
+
+  &__icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    display: flex;
     align-items: center;
-    gap: 28px;
-    margin-top: 32px;
-    flex-wrap: wrap;
+    justify-content: center;
+    flex-shrink: 0;
+
+    img {
+      width: var(--img-size);
+      height: var(--img-size);
+      object-fit: contain;
+    }
+  }
+
+  &__fallback {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--hex-color);
+    line-height: 1;
 
     @include mobile-only {
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    &__item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    &__dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    &__label {
       font-size: 13px;
-      font-weight: 600;
-      color: #64748b;
-      letter-spacing: -0.1px;
+    }
+  }
+
+  &__label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #374151;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 60px;
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    @include mobile-only {
+      display: none;
     }
   }
 }

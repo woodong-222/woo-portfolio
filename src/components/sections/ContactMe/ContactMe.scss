@@ -1,44 +1,23 @@
 @use 'sass:map';
 @use '@/utils/styles/variables.scss' as *;
 
-// 스크롤 오프셋 - 네비게이션 바 클릭 시 여백 포함
 #contact-me {
   scroll-margin-top: 0px;
-  
-  @include mobile-only {
-    scroll-margin-top: 0px;
-  }
 }
 
-.contact .section-title {
-  text-align: center;
-  font-size: map.get($font-sizes, 4xl);
-  font-weight: 800;
-  margin-bottom: map.get($spacing, lg);
-  color: #facc15;
-
-  @include mobile-only {
-    font-size: map.get($font-sizes, 2xl);
-    margin-bottom: map.get($spacing, md);
-  }
-
-  @include tablet-only {
-    font-size: map.get($font-sizes, 3xl);
-    margin-bottom: map.get($spacing, lg);
-  }
-}
+// ─── Section wrapper ──────────────────────────────────────────────────────────
 
 .contact {
   position: relative;
-  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 70%, #f8fafc 100%);
-  padding: 40px 0 60px !important;
+  background: #f8fafc;
+  padding: 0 0 60px !important;
   padding-top: 200px !important;
 
   @include mobile-only {
     padding-top: 160px !important;
+    padding-bottom: 48px !important;
   }
 
-  // Projects → Contact 전환 물결
   .projects-to-contact {
     position: absolute;
     top: 0;
@@ -51,262 +30,293 @@
       height: 70px;
     }
   }
+}
 
-  .contact__container {
-    display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, lg);
-    max-width: 1240px;
-    width: min(1240px, 95vw);
-    margin: 0 auto;
+// ─── Title ────────────────────────────────────────────────────────────────────
+
+.contact .section-title {
+  text-align: center;
+  font-size: map.get($font-sizes, 4xl);
+  font-weight: 800;
+  margin-bottom: 48px;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+
+  @include tablet-only {
+    font-size: map.get($font-sizes, 3xl);
+    margin-bottom: 36px;
   }
 
-  .contact__grid {
-    display: grid;
-    grid-template-columns: 0.35fr 0.65fr;
-    gap: map.get($spacing, xl);
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+    margin-bottom: 28px;
+  }
+}
 
-    @include tablet-only {
-      grid-template-columns: 1fr;
+// ─── Container ────────────────────────────────────────────────────────────────
+
+.contact__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+  width: min(1100px, 95vw);
+  margin: 0 auto;
+}
+
+// ─── Two-column grid ──────────────────────────────────────────────────────────
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  gap: 64px;
+  align-items: start;
+
+  @include tablet-only {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @include mobile-only {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+// ─── Left column — info ───────────────────────────────────────────────────────
+
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 4px;
+}
+
+.contact__info-heading {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.contact__channels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.channel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  color: #111827;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #111827;
+    transition: height 0.3s ease;
+    z-index: -1;
+    transform-origin: bottom;
+  }
+
+  &:hover {
+    color: #ffffff;
+
+    &::after {
+      height: 100%;
     }
-
-    @include mobile-only {
-      grid-template-columns: 1fr;
-      gap: map.get($spacing, lg);
-    }
   }
+}
 
-  .contact__form-card,
-  .contact__info-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(15, 23, 42, 0.06);
-    border-radius: map.get($border-radius, xl);
-    padding: map.get($spacing, xl);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+// ─── Email text + copy button ────────────────────────────────────────────────
 
-    @include mobile-only {
-      padding: map.get($spacing, lg);
-    }
+.contact__email {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.contact__email-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  user-select: all;
+}
+
+.contact__copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #f1f5f9;
+    color: #111827;
   }
+}
 
-  .contact__form-title {
-    font-size: map.get($font-sizes, xl);
-    font-weight: 800;
-    color: #0f172a;
-    margin: 0 0 map.get($spacing, xs);
-  }
+// ─── Right column — form ──────────────────────────────────────────────────────
 
-  .contact__form-desc {
-    margin: 0 0 map.get($spacing, md);
+.contact__form-wrap {
+  width: 100%;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+// ─── Form fields ──────────────────────────────────────────────────────────────
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .field__label {
+    font-size: 13px;
+    font-weight: 600;
     color: #475569;
-    line-height: 1.6;
+    letter-spacing: 0.2px;
   }
 
-  .contact__form {
-    display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, md);
-    margin-top: map.get($spacing, md);
-
-    .contact__submit {
-      width: 100%;
-      align-self: stretch;
-      justify-content: center;
-    }
-  }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, xs);
-
-    .field__label {
-      display: inline-flex;
-      align-items: center;
-      gap: map.get($spacing, xs);
-      font-weight: 600;
-      color: #0f172a;
-      font-size: map.get($font-sizes, sm);
-    }
-
-    .field__input {
-      position: relative;
-
-      input,
-      textarea {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        border: 1px solid rgba(15, 23, 42, 0.12);
-        border-radius: map.get($border-radius, lg);
-        padding: map.get($spacing, sm);
-        font-size: map.get($font-sizes, sm);
-        font-family: $font-family-primary;
-        color: #0f172a;
-        transition: border 0.2s ease, box-shadow 0.2s ease;
-        resize: vertical;
-
-        &::placeholder {
-          color: #94a3b8;
-        }
-
-        &:focus {
-          outline: none;
-          border-color: #f59e0b;
-          box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.18);
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-      }
-    }
-  }
-
-  .contact__submit {
-    display: inline-flex;
-    align-items: center;
-    gap: map.get($spacing, xs);
-    align-self: flex-start;
-    padding: 12px 18px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  input,
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid rgba(15, 23, 42, 0.15);
+    border-radius: 0;
+    padding: 10px 2px;
+    font-size: 15px;
+    font-family: $font-family-primary;
     color: #0f172a;
-    font-weight: 700;
-    border: 1px solid rgba(250, 191, 36, 0.45);
-    box-shadow: 0 12px 24px rgba(250, 204, 21, 0.25);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    resize: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
 
-    &:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(250, 204, 21, 0.3);
-      filter: brightness(1.05);
+    &::placeholder {
+      color: #cbd5e1;
+    }
+
+    &:focus {
+      outline: none;
+      border-bottom-color: #111827;
     }
 
     &:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
     }
   }
 
-  .form-feedback {
-    margin: 0;
-    font-size: map.get($font-sizes, sm);
+  textarea {
+    min-height: 120px;
+    line-height: 1.6;
+  }
+}
 
-    &.success {
-      color: #15803d;
-    }
+// ─── Feedback ─────────────────────────────────────────────────────────────────
 
-    &.error {
-      color: #dc2626;
-    }
+.form-feedback {
+  font-size: 13px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  &--success {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
   }
 
-  .contact__info-card {
-    display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, lg);
-    text-align: center;
-    align-items: center;
+  &--error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+  }
+}
 
-    .info-hero {
-      display: flex;
-      flex-direction: column;
-      gap: map.get($spacing, sm);
-      align-items: center;
+// ─── Submit button ────────────────────────────────────────────────────────────
 
-      .info-eyebrow {
-        font-size: map.get($font-sizes, sm);
-        font-weight: 600;
-        color: #0f172a;
-        opacity: 0.8;
-        margin: 0;
-      }
+.contact__submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: stretch;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 0;
+  background: #111827;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.3s ease;
 
-      .info-title {
-        font-size: map.get($font-sizes, xl);
-        font-weight: 800;
-        color: #0f172a;
-        margin: 0;
-      }
-
-      .info-lead {
-        font-size: map.get($font-sizes, lg);
-        font-weight: 600;
-        color: #0f172a;
-        margin: 0;
-        line-height: 1.5;
-      }
-
-      .info-desc {
-        margin: 0;
-        color: #475569;
-        line-height: 1.6;
-      }
-
-      .info-actions {
-        display: flex;
-        gap: map.get($spacing, sm);
-        margin-top: map.get($spacing, md);
-        justify-content: center;
-
-        @include mobile-only {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .channel-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: map.get($spacing, xs);
-          padding: 12px 16px;
-          border-radius: 14px;
-          font-weight: 700;
-          text-decoration: none;
-          transition: all 0.2s ease;
-          border: 1px solid transparent;
-          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
-
-          .velog-icon {
-            width: 18px;
-            height: 18px;
-            display: block;
-          }
-
-          &.primary {
-            background: #24292e;
-            color: #ffffff;
-            border-color: rgba(36, 41, 46, 0.3);
-
-            &:hover {
-              background: #1b1f23;
-              box-shadow: 0 12px 28px rgba(36, 41, 46, 0.25);
-            }
-          }
-
-          &.ghost {
-            background: rgba(255, 255, 255, 0.9);
-            color: #0f172a;
-            border-color: rgba(15, 23, 42, 0.08);
-
-            &:hover {
-              box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
-            }
-          }
-        }
-      }
-    }
-
-    // info-list removed
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #374151;
+    transition: height 0.3s ease;
+    z-index: -1;
+    transform-origin: bottom;
   }
 
-  .contact__footer {
-    margin-top: map.get($spacing, lg);
-    font-size: map.get($font-sizes, sm);
-    color: #6b7280;
-    text-align: center;
+  &:hover:not(:disabled)::after {
+    height: 100%;
   }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+.contact__footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  font-size: 13px;
+  color: #94a3b8;
+  text-align: center;
 }

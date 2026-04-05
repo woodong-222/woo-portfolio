@@ -2,7 +2,7 @@ import { forwardRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useTranslation } from "react-i18next";
-import { Github, Link as LinkIcon, Send, User, MessageSquare } from "lucide-react";
+import { Github, Link as LinkIcon, Send, Copy, Check } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { createVariants } from "@/utils/types/motion";
 import WaveDivider from "@/components/common/WaveDivider";
@@ -17,14 +17,21 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 	const [formData, setFormData] = useState({ name: "", message: "" });
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+	const [copied, setCopied] = useState(false);
+
+	const handleCopyEmail = async () => {
+		await navigator.clipboard.writeText("ehddn2083@gmail.com");
+		setCopied(true);
+		setTimeout(() => setCopied(false), 2000);
+	};
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.1 } },
+		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
 	});
 
 	const itemVariants = createVariants({
-		hidden: { y: 20, opacity: 0 },
+		hidden: { y: 24, opacity: 0 },
 		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" as const } },
 	});
 
@@ -44,7 +51,6 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 			const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 			if (!serviceId || !templateId || !publicKey) {
-				console.warn("EmailJS configuration is missing. Falling back to demo mode.");
 				await new Promise(resolve => setTimeout(resolve, 800));
 				setSubmitStatus("success");
 				setFormData({ name: "", message: "" });
@@ -75,7 +81,6 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 
 	return (
 		<section className="contact section" id="contact-me" ref={ref}>
-			{/* Projects → Contact 섹션 전환 물결 */}
 			<WaveDivider color="#0f0f1a" className="projects-to-contact" flip />
 			<motion.div
 				ref={viewRef}
@@ -89,86 +94,83 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 				</motion.h2>
 
 				<div className="contact__grid">
-					<motion.div className="contact__form-card" variants={itemVariants}>
-						<p className="contact__form-title">{t("buttonLabel")}</p>
-						<p className="contact__form-desc">{t("desc")}</p>
+					{/* Left — info & links */}
+					<motion.div className="contact__info" variants={itemVariants}>
+						<p className="contact__info-heading">{t("buttonLabel")}</p>
 
+						<div className="contact__channels">
+							<a
+								className="channel-btn"
+								href="https://github.com/woodong-222"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Github size={16} />
+								GitHub
+							</a>
+							<a
+								className="channel-btn"
+								href="https://velog.io/@woo2083/posts"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<LinkIcon size={16} />
+								{tCommon("buttons.blog")}
+							</a>
+							<div className="contact__email">
+								<span className="contact__email-text">ehddn2083@gmail.com</span>
+								<button
+									className="contact__copy-btn"
+									onClick={handleCopyEmail}
+									aria-label="이메일 복사"
+								>
+									{copied ? <Check size={13} /> : <Copy size={13} />}
+								</button>
+							</div>
+						</div>
+					</motion.div>
+
+					{/* Right — form */}
+					<motion.div className="contact__form-wrap" variants={itemVariants}>
 						<form className="contact__form" onSubmit={handleSubmit}>
 							<label className="field">
-								<span className="field__label">
-									<User size={16} /> {t("name")}
-								</span>
-								<div className="field__input">
-									<input
-										name="name"
-										type="text"
-										value={formData.name}
-										onChange={handleInputChange}
-										placeholder={t("placeholder.name")}
-										required
-										disabled={isSubmitting}
-									/>
-								</div>
+								<span className="field__label">{t("name")}</span>
+								<input
+									name="name"
+									type="text"
+									value={formData.name}
+									onChange={handleInputChange}
+									placeholder={t("placeholder.name")}
+									required
+									disabled={isSubmitting}
+								/>
 							</label>
 
 							<label className="field">
-								<span className="field__label">
-									<MessageSquare size={16} /> {t("message")}
-								</span>
-								<div className="field__input">
-									<textarea
-										name="message"
-										value={formData.message}
-										onChange={handleInputChange}
-										placeholder={t("placeholder.message")}
-										rows={5}
-										required
-										disabled={isSubmitting}
-									/>
-								</div>
+								<span className="field__label">{t("message")}</span>
+								<textarea
+									name="message"
+									value={formData.message}
+									onChange={handleInputChange}
+									placeholder={t("placeholder.message")}
+									rows={5}
+									required
+									disabled={isSubmitting}
+								/>
 							</label>
 
 							{submitStatus === "error" && (
-								<p className="form-feedback error">{t("error")}</p>
+								<p className="form-feedback form-feedback--error">{t("error")}</p>
 							)}
 							{submitStatus === "success" && (
-								<p className="form-feedback success">{t("success")}</p>
+								<p className="form-feedback form-feedback--success">{t("success")}</p>
 							)}
 
 							<button type="submit" className="contact__submit" disabled={isSubmitting}>
-								<Send size={16} />
+								<Send size={15} />
 								{isSubmitting ? "..." : t("send")}
 							</button>
 						</form>
-					</motion.div>
-
-					<motion.div className="contact__info-card" variants={itemVariants}>
-						<div className="info-hero">
-							<p className="info-eyebrow">{t("eyebrow")}</p>
-							<h3 className="info-title">{t("lead")}</h3>
-							<p className="info-desc">{t("desc")}</p>
-
-							<div className="info-actions">
-								<a
-									className="channel-btn primary"
-									href="https://github.com/woodong-222"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<Github size={18} />
-									GitHub
-								</a>
-								<a
-									className="channel-btn ghost"
-									href="https://velog.io/@woo2083/posts"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<LinkIcon size={18} />
-									{tCommon("buttons.blog")}
-								</a>
-							</div>
-						</div>
 					</motion.div>
 				</div>
 

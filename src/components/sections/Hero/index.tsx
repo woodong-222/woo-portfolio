@@ -5,12 +5,13 @@ import { useTranslation } from "react-i18next";
 import ReactiveBackground from "./ReactiveBackground";
 import "./Hero.scss";
 
-const LAST_UPDATED = "2025.11";
+const LAST_UPDATED = "2026.04";
 
 const Hero = forwardRef<HTMLElement>((_props, ref) => {
 	const { t } = useTranslation("hero");
 	const eyebrowText = t("eyebrow");
 	const titleHighlight = t("title.highlight");
+	const titleName = t("title.name");
 	const titleLineTwo = t("title.line2");
 	const descriptionText = t("description");
 	const updatedLabel = t("meta.updated", { date: LAST_UPDATED });
@@ -96,7 +97,7 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 					<motion.h1 className="hero-new__title" variants={itemVariants}>
 						<span className="gradient-text">{titleHighlight}</span>
 						<br />
-						{titleLineTwo}
+						{titleName}{titleLineTwo}
 					</motion.h1>
 
 					<motion.p className="hero-new__subtitle" variants={itemVariants}>
