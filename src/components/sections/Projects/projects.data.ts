@@ -18,6 +18,10 @@ export interface Project {
 		ko: string;
 		en: string;
 	};
+	impact: {
+		ko: string;
+		en: string;
+	};
 	mainTech: string;
 	library: string;
 	features: {
@@ -47,6 +51,10 @@ export const projects: Project[] = [
 		scale: {
 			ko: '팀 프로젝트',
 			en: 'Team Project',
+		},
+		impact: {
+			ko: 'ML 기반 악성 URL 실시간 탐지 · 팀 4인 · 4개월',
+			en: 'ML-based malicious URL detection · Team of 4 · 4 months',
 		},
 		mainTech: 'React',
 		library: 'FastAPI',
@@ -90,6 +98,10 @@ export const projects: Project[] = [
 		scale: {
 			ko: '팀 프로젝트',
 			en: 'Team Project',
+		},
+		impact: {
+			ko: 'AI 실시간 수어 변환 · WebRTC · 팀 4인 · 9개월',
+			en: 'AI real-time sign language · WebRTC · Team of 4 · 9 months',
 		},
 		mainTech: 'React',
 		library: 'AWS Lambda',
@@ -137,6 +149,10 @@ export const projects: Project[] = [
 			ko: '팀 프로젝트',
 			en: 'Team Project',
 		},
+		impact: {
+			ko: 'SCA 보안 취약점 자동 탐지 · CI/CD 연동 · 팀 4인 · 3개월',
+			en: 'Automated SCA vulnerability detection · CI/CD integration · Team of 4 · 3 months',
+		},
 		mainTech: 'Python',
 		library: 'FastAPI',
 		features: {
@@ -179,6 +195,10 @@ export const projects: Project[] = [
 		scale: {
 			ko: '토이 프로젝트',
 			en: 'Toy Project',
+		},
+		impact: {
+			ko: 'AI 얼굴 분석 포켓몬 추천 · 개인 프로젝트 · 1개월',
+			en: 'AI face analysis Pokémon matcher · Solo · 1 month',
 		},
 		mainTech: 'React',
 		library: 'Vite',
@@ -225,6 +245,10 @@ export const projects: Project[] = [
 		scale: {
 			ko: '개인 프로젝트',
 			en: 'Personal Project',
+		},
+		impact: {
+			ko: 'Three.js + Framer Motion · 한/영 다국어 · 개인 프로젝트',
+			en: 'Three.js + Framer Motion · KO/EN i18n · Solo project',
 		},
 		mainTech: 'React',
 		library: 'Vite',

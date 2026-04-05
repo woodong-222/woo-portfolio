@@ -1,152 +1,154 @@
 import { forwardRef, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Github, ChevronLeft, ChevronRight, ExternalLink, X, Link as LinkIcon } from "lucide-react";
+import { Github, ExternalLink, X, Link as LinkIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import useResponsive from "@/utils/hooks/useResponsive";
-import { projects, Project, Screenshot } from "./projects.data";
+import { projects, type Project, type Screenshot } from "./projects.data";
 import "./Projects.scss";
 
+// ─── Constants ───────────────────────────────────────────────────────────────
+
 const HEADER_HEIGHT = 70;
-const TITLE_AREA_HEIGHT = 120; // 제목 영역 높이
-const CARD_OFFSET = 12;
+const TITLE_AREA_HEIGHT = 110;
+const CARD_OFFSET = 14;
 
 const CARD_THEMES = [
-	// MON47 - 주황 계열
-	{ bg: 'rgba(69, 26, 3, 0.5)', glow: '#f59e0b', border: '#fdba74' },
-	// Winection - 파랑 계열
-	{ bg: 'rgba(23, 37, 84, 0.5)', glow: '#3b82f6', border: '#93c5fd' },
-	// WHSCA - 초록 계열
-	{ bg: 'rgba(5, 46, 22, 0.5)', glow: '#10b981', border: '#6ee7b7' },
-	// Pokeface - 노랑 계열
-	{ bg: 'rgba(66, 32, 6, 0.5)', glow: '#eab308', border: '#fde047' },
-	// Portfolio - 노랑 계열
-	{ bg: 'rgba(49, 33, 91, 0.5)', glow: '#a78bfa', border: '#7c3aed' },
+	{ bg: "rgba(69, 26, 3, 0.55)", glow: "#f59e0b", border: "#fdba74" },
+	{ bg: "rgba(23, 37, 84, 0.55)", glow: "#3b82f6", border: "#93c5fd" },
+	{ bg: "rgba(5, 46, 22, 0.55)", glow: "#10b981", border: "#6ee7b7" },
+	{ bg: "rgba(66, 32, 6, 0.55)", glow: "#eab308", border: "#fde047" },
+	{ bg: "rgba(49, 33, 91, 0.55)", glow: "#a78bfa", border: "#c4b5fd" },
 ];
 
-const Projects = () => {
-	const { isMobile, isTablet } = useResponsive();
-	const cardsRef = useRef<HTMLDivElement>(null);
-	const lastCardRef = useRef<HTMLDivElement>(null);
-	const titleRef = useRef<HTMLDivElement>(null);
-	const [activeProject, setActiveProject] = useState<Project | null>(null);
-	const [openingProjectId, setOpeningProjectId] = useState<string | null>(null);
+// ─── ScreenshotImage ──────────────────────────────────────────────────────────
 
-	const layoutConfig = useMemo(
-		() => {
-			if (isMobile) {
-				return { stackSpacing: '55vh', lastExtraSpacing: '40vh' };
-			}
+interface ScreenshotImageProps {
+	src: string;
+	alt: string;
+	className?: string;
+}
 
-			if (isTablet) {
-				return { stackSpacing: '65vh', lastExtraSpacing: '50vh' };
-			}
+const ScreenshotImage = ({ src, alt, className }: ScreenshotImageProps) => {
+	const [hasError, setHasError] = useState(false);
 
-			return { stackSpacing: '75vh', lastExtraSpacing: '60vh' };
-		},
-		[isMobile, isTablet]
-	);
-
-	const cardCount = projects.length;
-
-	// 모든 카드가 동일한 sticky top (마지막 카드의 translateY 포함한 실제 위치)
-	const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
-	const lastCardVisualTop = stickyTop + ((cardCount - 1) * CARD_OFFSET);
-
-	useEffect(() => {
-		let rafId: number;
-
-		const handleScroll = () => {
-			rafId = requestAnimationFrame(() => {
-				if (!lastCardRef.current || !titleRef.current) return;
-
-				const lastCardRect = lastCardRef.current.getBoundingClientRect();
-
-				// 제목 이동 (마지막 카드 기준)
-				// 마지막 카드의 시각적 위치는 stickyTop + translateY
-				if (lastCardRect.top < lastCardVisualTop) {
-					const offset = lastCardVisualTop - lastCardRect.top;
-					titleRef.current.style.transform = `translateY(-${offset}px)`;
-				} else {
-					titleRef.current.style.transform = 'translateY(0)';
-				}
-			});
-		};
-
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-			cancelAnimationFrame(rafId);
-		};
-	}, [lastCardVisualTop]);
-
-	useEffect(() => {
-		if (activeProject) {
-			document.body.style.overflow = 'hidden';
-			return;
-		}
-
-		document.body.style.overflow = '';
-	}, [activeProject]);
-
-	const stackStyle = useMemo(
-		() =>
-			({
-				'--card-stack-spacing': layoutConfig.stackSpacing,
-				'--card-stack-last-extra': layoutConfig.lastExtraSpacing,
-				'--card-count': cardCount,
-				'--card-offset': `${CARD_OFFSET}px`,
-			}) as CSSProperties,
-		[layoutConfig, cardCount]
-	);
+	if (hasError) {
+		return <div className="screenshot-skeleton" aria-label={alt} />;
+	}
 
 	return (
-		<>
-			<div className="projects-stack" style={stackStyle}>
-				{/* 제목 - 카드 컨테이너 밖에서 sticky, JS로 오프셋 조절 */}
-				<div
-					ref={titleRef}
-					className="projects-stack__title"
-					style={{ top: `${HEADER_HEIGHT}px` }}
-				>
-					<h2 className="section-title">Project</h2>
+		<img
+			src={src}
+			alt={alt}
+			className={className}
+			loading="lazy"
+			onError={() => setHasError(true)}
+		/>
+	);
+};
+
+// ─── ScreenshotSlider ─────────────────────────────────────────────────────────
+
+interface ScreenshotSliderProps {
+	screenshots: Screenshot[];
+	glowColor: string;
+	variant?: "card" | "modal";
+}
+
+const ScreenshotSlider = ({ screenshots, glowColor, variant = "card" }: ScreenshotSliderProps) => {
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const { i18n } = useTranslation("common");
+	const lang = i18n.language as "ko" | "en";
+	const isModal = variant === "modal";
+
+	useEffect(() => {
+		if (!isModal || screenshots.length <= 1) return;
+		const timer = window.setInterval(() => {
+			setCurrentIndex((prev) => (prev + 1) % screenshots.length);
+		}, 4500);
+		return () => window.clearInterval(timer);
+	}, [isModal, screenshots.length]);
+
+	if (screenshots.length === 0) {
+		return (
+			<div className="screenshot-slider" style={{ "--slider-glow": glowColor } as CSSProperties}>
+				<div className="screenshot-slider__image-wrapper">
+					<div className="screenshot-slider__image">
+						<div className="screenshot-skeleton" />
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	const prevIndex = currentIndex === 0 ? screenshots.length - 1 : currentIndex - 1;
+	const nextIndex = currentIndex === screenshots.length - 1 ? 0 : currentIndex + 1;
+
+	return (
+		<div className="screenshot-slider" style={{ "--slider-glow": glowColor } as CSSProperties}>
+			<button
+				onClick={() => setCurrentIndex(prevIndex)}
+				className="slider-btn"
+				aria-label="이전 스크린샷"
+			>
+				<ChevronLeft size={16} />
+			</button>
+
+			<div className="screenshot-slider__image-wrapper">
+				{isModal && (
+					<div
+						className="screenshot-slider__preview screenshot-slider__preview--left"
+						onClick={() => setCurrentIndex(prevIndex)}
+					>
+						<ScreenshotImage src={screenshots[prevIndex].src} alt={screenshots[prevIndex].label[lang]} />
+					</div>
+				)}
+
+				<div className="screenshot-slider__image">
+					<ScreenshotImage
+						src={screenshots[currentIndex].src}
+						alt={screenshots[currentIndex].label[lang]}
+					/>
 				</div>
 
-				<div className="projects-stack__cards" ref={cardsRef}>
-					{projects.map((project, index) => (
-						<ProjectCard
-							key={project.id}
-							project={project}
-							index={index}
-							total={projects.length}
-							cardOffset={CARD_OFFSET}
-							theme={CARD_THEMES[index % CARD_THEMES.length]}
-							isExpanding={openingProjectId === project.id}
-							onOpen={() => {
-								setOpeningProjectId(project.id);
-								window.setTimeout(() => {
-									setActiveProject(project);
-									setOpeningProjectId(null);
-								}, 220);
-							}}
-							ref={index === projects.length - 1 ? lastCardRef : undefined}
+				{isModal && (
+					<div
+						className="screenshot-slider__preview screenshot-slider__preview--right"
+						onClick={() => setCurrentIndex(nextIndex)}
+					>
+						<ScreenshotImage src={screenshots[nextIndex].src} alt={screenshots[nextIndex].label[lang]} />
+					</div>
+				)}
+
+				{isModal && (
+					<div className="screenshot-slider__caption">
+						{screenshots[currentIndex].label[lang]}
+					</div>
+				)}
+
+				<div className="screenshot-slider__dots">
+					{screenshots.map((_, idx) => (
+						<button
+							key={idx}
+							className={`dot ${idx === currentIndex ? "active" : ""}`}
+							onClick={() => setCurrentIndex(idx)}
+							aria-label={`스크린샷 ${idx + 1}`}
 						/>
 					))}
 				</div>
-
-				<div className="projects-stack__tail" aria-hidden />
 			</div>
 
-			{activeProject && (
-				<ProjectModal
-					project={activeProject}
-					onClose={() => {
-						setActiveProject(null);
-						setOpeningProjectId(null);
-					}}
-				/>
-			)}
-		</>
+			<button
+				onClick={() => setCurrentIndex(nextIndex)}
+				className="slider-btn"
+				aria-label="다음 스크린샷"
+			>
+				<ChevronRight size={16} />
+			</button>
+		</div>
 	);
 };
+
+// ─── ProjectCard ──────────────────────────────────────────────────────────────
 
 interface ProjectCardProps {
 	project: Project;
@@ -160,66 +162,104 @@ interface ProjectCardProps {
 
 const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 	({ project, index, total, theme, cardOffset, isExpanding, onOpen }, ref) => {
-	const { i18n, t } = useTranslation('common');
-	const lang = i18n.language as 'ko' | 'en';
-	const isLastCard = index === total - 1;
+		const { i18n, t } = useTranslation("common");
+		const lang = i18n.language as "ko" | "en";
+		const isLastCard = index === total - 1;
+		const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
+		const translateY = index * cardOffset;
 
-	// 모든 카드가 동일한 top, translateY로 간격 설정
-	// 이렇게 하면 sticky 해제 시에도 translateY가 유지되어 간격 보존
-	const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
-	const translateY = index * cardOffset;
+		return (
+			<motion.div
+				ref={ref}
+				className={`project-card ${isLastCard ? "project-card--last" : ""} ${isExpanding ? "project-card--expanding" : ""}`}
+				initial={{ opacity: 0 }}
+				whileInView={{ opacity: 1 }}
+				viewport={{ once: true, margin: "-60px" }}
+				transition={{ duration: 0.5, delay: index * 0.08 }}
+				style={{
+					top: `${stickyTop}px`,
+					transform: `translateY(${translateY}px)`,
+					backgroundColor: theme.bg,
+					"--glow-color": theme.glow,
+					"--border-color": theme.border,
+					zIndex: index + 1,
+				} as CSSProperties}
+			>
+				<div className="project-card__inner">
+					{/* 좌: 텍스트 */}
+					<div className="project-card__content">
+						<div className="project-card__meta">
+							<span className="project-card__type">{project.type}</span>
+							<span className="project-card__period">{project.period}</span>
+							<span className="project-card__scale">{project.scale[lang]}</span>
+						</div>
 
-	return (
-		<div
-			ref={ref}
-			className={`project-card ${isLastCard ? 'project-card--last' : ''} ${isExpanding ? 'project-card--expanding' : ''}`}
-			style={{
-				top: `${stickyTop}px`,
-				backgroundColor: theme.bg,
-				'--glow-color': theme.glow,
-				'--border-color': theme.border,
-				'--card-translate': `${translateY}px`,
-				zIndex: index + 1,
-			} as CSSProperties}
-		>
-			<div className="project-card__inner">
-				<div className="project-card__content">
-					<div className="project-period">{project.type} | {project.period}</div>
-					
-					<h3 className="project-title">
-						{project.title[lang]}
-					</h3>
+						<h3 className="project-card__title">{project.title[lang]}</h3>
 
-					<div className="project-description">
-						{project.features[lang].slice(0, 3).map((feature, idx) => (
-							<p key={idx}>{feature}</p>
-						))}
+						<p className="project-card__impact">{project.impact[lang]}</p>
+
+						<ul className="project-card__features">
+							{project.features[lang].slice(0, 3).map((feature, idx) => (
+								<li key={idx}>{feature}</li>
+							))}
+						</ul>
+
+						<div className="project-card__tech">
+							{project.technologies.slice(0, 5).map((tech) => (
+								<span key={tech} className="tech-tag">{tech}</span>
+							))}
+						</div>
+
+						<div className="project-card__actions">
+							<button
+								type="button"
+								className="action-btn action-btn--primary"
+								onClick={onOpen}
+							>
+								{t("buttons.detail")}
+							</button>
+							{project.liveUrl && (
+								<a
+									href={project.liveUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="action-btn action-btn--secondary"
+								>
+									<ExternalLink size={13} />
+									Live
+								</a>
+							)}
+							{project.githubUrl && (
+								<a
+									href={project.githubUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="action-btn action-btn--secondary"
+								>
+									<Github size={13} />
+									GitHub
+								</a>
+							)}
+						</div>
 					</div>
 
-					<div className="project-tech">
-						{project.technologies.slice(0, 6).map((tech, idx) => (
-							<span key={idx} className="tech-tag">{tech}</span>
-						))}
-					</div>
-
-					<div className="project-actions">
-						<button
-							type="button"
-							className="action-btn action-btn--primary"
-							onClick={onOpen}
-						>
-							{t('buttons.detail')}
-						</button>
+					{/* 우: 스크린샷 */}
+					<div className="project-card__visual">
+						<ScreenshotSlider
+							screenshots={project.screenshots}
+							glowColor={theme.glow}
+							variant="card"
+						/>
 					</div>
 				</div>
+			</motion.div>
+		);
+	}
+);
 
-				<div className="project-card__visual">
-					<ScreenshotSlider screenshots={project.screenshots} glowColor={theme.glow} variant="card" />
-				</div>
-			</div>
-		</div>
-	);
-});
+ProjectCard.displayName = "ProjectCard";
+
+// ─── ProjectModal ─────────────────────────────────────────────────────────────
 
 interface ProjectModalProps {
 	project: Project;
@@ -227,8 +267,8 @@ interface ProjectModalProps {
 }
 
 const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
-	const { i18n, t } = useTranslation('common');
-	const lang = i18n.language as 'ko' | 'en';
+	const { i18n, t } = useTranslation("common");
+	const lang = i18n.language as "ko" | "en";
 	const [isGitPanelOpen, setIsGitPanelOpen] = useState(false);
 
 	return (
@@ -236,9 +276,15 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 			<div className="project-modal__backdrop" onClick={onClose} />
 			<div className="project-modal__shell" role="document">
 				<div className="project-modal__dialog">
-					<button className="project-modal__close" type="button" onClick={onClose} aria-label={t('buttons.close')}>
+					<button
+						className="project-modal__close"
+						type="button"
+						onClick={onClose}
+						aria-label={t("buttons.close")}
+					>
 						<X size={18} />
 					</button>
+
 					<div className="project-modal__header">
 						<p className="project-modal__eyebrow">{project.type} · {project.period}</p>
 						<h3 className="project-modal__title">{project.title[lang]}</h3>
@@ -251,14 +297,13 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 
 					<div className="project-modal__body">
 						<div className="project-modal__left">
-							<h4>{lang === 'ko' ? '핵심 포인트' : 'Highlights'}</h4>
+							<h4>{lang === "ko" ? "핵심 포인트" : "Highlights"}</h4>
 							<ul>
 								{project.features[lang].map((feature, idx) => (
 									<li key={idx}>{feature}</li>
 								))}
 							</ul>
-
-							<h4>{lang === 'ko' ? '기술 스택' : 'Tech Stack'}</h4>
+							<h4>{lang === "ko" ? "기술 스택" : "Tech Stack"}</h4>
 							<div className="project-modal__tags">
 								{project.technologies.map((tech) => (
 									<span key={tech}>{tech}</span>
@@ -267,7 +312,11 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 						</div>
 
 						<div className="project-modal__right">
-							<ScreenshotSlider screenshots={project.screenshots} glowColor={project.glowColor} variant="modal" />
+							<ScreenshotSlider
+								screenshots={project.screenshots}
+								glowColor={project.glowColor}
+								variant="modal"
+							/>
 						</div>
 					</div>
 				</div>
@@ -280,7 +329,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 								target="_blank"
 								rel="noopener noreferrer"
 								className="project-modal__action-btn"
-								aria-label={t('buttons.visit')}
+								aria-label={t("buttons.visit")}
 							>
 								<ExternalLink size={18} />
 							</a>
@@ -290,7 +339,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 								rel="noopener noreferrer"
 								className="project-modal__action-tooltip"
 							>
-								{lang === 'ko' ? '사이트 바로가기' : 'Visit site'}
+								{lang === "ko" ? "사이트 바로가기" : "Visit site"}
 							</a>
 						</div>
 					)}
@@ -301,7 +350,7 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 								target="_blank"
 								rel="noopener noreferrer"
 								className="project-modal__action-btn project-modal__action-btn--single"
-								aria-label={t('buttons.github')}
+								aria-label={t("buttons.github")}
 							>
 								<Github size={18} />
 							</a>
@@ -311,16 +360,22 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 								rel="noopener noreferrer"
 								className="project-modal__action-tooltip"
 							>
-								{lang === 'ko' ? '깃허브 바로가기' : 'GitHub'}
+								{lang === "ko" ? "깃허브 바로가기" : "GitHub"}
 							</a>
 						</div>
 					)}
 					{project.githubUrls && project.githubUrls.length > 0 && (
-						<div className={`project-modal__action-item project-modal__action-item--multi ${isGitPanelOpen ? 'is-open' : ''}`}>
+						<div
+							className={`project-modal__action-item project-modal__action-item--multi ${
+								isGitPanelOpen ? "is-open" : ""
+							}`}
+						>
 							<button
 								type="button"
-								className={`project-modal__action-btn project-modal__action-btn--multi ${isGitPanelOpen ? 'is-open' : ''}`}
-								aria-label={t('buttons.github')}
+								className={`project-modal__action-btn project-modal__action-btn--multi ${
+									isGitPanelOpen ? "is-open" : ""
+								}`}
+								aria-label={t("buttons.github")}
 								onClick={() => setIsGitPanelOpen((prev) => !prev)}
 							>
 								<span className="project-modal__action-icon" aria-hidden="true">
@@ -348,79 +403,110 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 	);
 };
 
-interface ScreenshotSliderProps {
-	screenshots: Screenshot[];
-	glowColor: string;
-	variant?: 'card' | 'modal';
-}
+ProjectModal.displayName = "ProjectModal";
 
-const ScreenshotSlider = ({ screenshots, glowColor, variant = 'card' }: ScreenshotSliderProps) => {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const { i18n } = useTranslation('common');
-	const lang = i18n.language as 'ko' | 'en';
-	const isModal = variant === 'modal';
+// ─── Projects (main) ──────────────────────────────────────────────────────────
+
+const Projects = () => {
+	const { isMobile, isTablet } = useResponsive();
+	const titleRef = useRef<HTMLDivElement>(null);
+	const lastCardRef = useRef<HTMLDivElement>(null);
+	const [activeProject, setActiveProject] = useState<Project | null>(null);
+	const [openingProjectId, setOpeningProjectId] = useState<string | null>(null);
+
+	const cardCount = projects.length;
+	const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
+	const lastCardVisualTop = stickyTop + ((cardCount - 1) * CARD_OFFSET);
+
+	const layoutConfig = useMemo(() => {
+		if (isMobile) return { stackSpacing: "55vh", lastExtraSpacing: "40vh" };
+		if (isTablet) return { stackSpacing: "65vh", lastExtraSpacing: "50vh" };
+		return { stackSpacing: "75vh", lastExtraSpacing: "60vh" };
+	}, [isMobile, isTablet]);
+
+	const stackStyle = useMemo(
+		() => ({
+			"--card-stack-spacing": layoutConfig.stackSpacing,
+			"--card-stack-last-extra": layoutConfig.lastExtraSpacing,
+			"--card-count": cardCount,
+			"--card-offset": `${CARD_OFFSET}px`,
+		}) as CSSProperties,
+		[layoutConfig, cardCount]
+	);
+
+	// 마지막 카드가 올라오면 제목도 밀어올리기
+	useEffect(() => {
+		let rafId: number;
+		const handleScroll = () => {
+			rafId = requestAnimationFrame(() => {
+				if (!lastCardRef.current || !titleRef.current) return;
+				const rect = lastCardRef.current.getBoundingClientRect();
+				if (rect.top < lastCardVisualTop) {
+					const offset = lastCardVisualTop - rect.top;
+					titleRef.current.style.transform = `translateY(-${offset}px)`;
+				} else {
+					titleRef.current.style.transform = "translateY(0)";
+				}
+			});
+		};
+		window.addEventListener("scroll", handleScroll, { passive: true });
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+			cancelAnimationFrame(rafId);
+		};
+	}, [lastCardVisualTop]);
 
 	useEffect(() => {
-		if (!isModal || screenshots.length <= 1) return;
-		const timer = window.setInterval(() => {
-			setCurrentIndex((prev) => (prev + 1) % screenshots.length);
-		}, 4500);
-
-		return () => window.clearInterval(timer);
-	}, [screenshots.length]);
-
-	const goToPrev = () => {
-		setCurrentIndex((prev) => (prev === 0 ? screenshots.length - 1 : prev - 1));
-	};
-
-	const goToNext = () => {
-		setCurrentIndex((prev) => (prev === screenshots.length - 1 ? 0 : prev + 1));
-	};
-
-	const prevIndex = currentIndex === 0 ? screenshots.length - 1 : currentIndex - 1;
-	const nextIndex = currentIndex === screenshots.length - 1 ? 0 : currentIndex + 1;
+		document.body.style.overflow = activeProject ? "hidden" : "";
+		return () => { document.body.style.overflow = ""; };
+	}, [activeProject]);
 
 	return (
-		<div className="screenshot-slider" style={{ '--slider-glow': glowColor } as CSSProperties}>
-			<button onClick={goToPrev} className="slider-btn">
-				<ChevronLeft size={18} />
-			</button>
-
-			<div className="screenshot-slider__image-wrapper">
-				{isModal && (
-					<div className="screenshot-slider__preview screenshot-slider__preview--left" onClick={() => setCurrentIndex(prevIndex)}>
-						<img src={screenshots[prevIndex].src} alt={screenshots[prevIndex].label[lang]} />
-					</div>
-				)}
-				<div className="screenshot-slider__image">
-					<img src={screenshots[currentIndex].src} alt={screenshots[currentIndex].label[lang]} />
+		<>
+			<div className="projects-stack" id="projects" style={stackStyle}>
+				<div
+					ref={titleRef}
+					className="projects-stack__title"
+					style={{ top: `${HEADER_HEIGHT}px` }}
+				>
+					<h2 className="section-title">Project</h2>
 				</div>
-				{isModal && (
-					<div className="screenshot-slider__preview screenshot-slider__preview--right" onClick={() => setCurrentIndex(nextIndex)}>
-						<img src={screenshots[nextIndex].src} alt={screenshots[nextIndex].label[lang]} />
-					</div>
-				)}
-				{isModal && (
-					<div className="screenshot-slider__caption">
-						{screenshots[currentIndex].label[lang]}
-					</div>
-				)}
 
-				<div className="screenshot-slider__dots">
-					{screenshots.map((_, idx) => (
-						<button
-							key={idx}
-							className={`dot ${idx === currentIndex ? 'active' : ''}`}
-							onClick={() => setCurrentIndex(idx)}
+				<div className="projects-stack__cards">
+					{projects.map((project, index) => (
+						<ProjectCard
+							key={project.id}
+							project={project}
+							index={index}
+							total={projects.length}
+							cardOffset={CARD_OFFSET}
+							theme={CARD_THEMES[index % CARD_THEMES.length]}
+							isExpanding={openingProjectId === project.id}
+							onOpen={() => {
+								setOpeningProjectId(project.id);
+								window.setTimeout(() => {
+									setActiveProject(project);
+									setOpeningProjectId(null);
+								}, 200);
+							}}
+							ref={index === projects.length - 1 ? lastCardRef : undefined}
 						/>
 					))}
 				</div>
+
+				<div className="projects-stack__tail" aria-hidden />
 			</div>
 
-			<button onClick={goToNext} className="slider-btn">
-				<ChevronRight size={18} />
-			</button>
-		</div>
+			{activeProject && (
+				<ProjectModal
+					project={activeProject}
+					onClose={() => {
+						setActiveProject(null);
+						setOpeningProjectId(null);
+					}}
+				/>
+			)}
+		</>
 	);
 };
 

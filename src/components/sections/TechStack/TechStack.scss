@@ -1,171 +1,228 @@
 @use 'sass:map';
 @use '@/utils/styles/variables.scss' as *;
 
-.tech-stack.section {
-  padding-top: 100px !important;
-  
+// ─── CSS custom properties (responsive) ───────────────────────────────────────
+
+.tech-stack {
+  // gap=0 필수: gap이 있으면 대각 꼭짓점이 어긋남
+  // overlap = H/4 (정확히), offset = W/2 (정확히)
+  --hex-w:        88px;
+  --hex-h:        102px;
+  --hex-gap:      0px;
+  --row-overlap:  25.5px;
+  --row-offset:   44px;
+  --icon-size:    28px;
+  --img-size:     24px;
+
+  @include tablet-only {
+    --hex-w:        78px;
+    --hex-h:        90px;
+    --hex-gap:      0px;
+    --row-overlap:  22.5px;
+    --row-offset:   39px;
+    --icon-size:    24px;
+    --img-size:     20px;
+  }
+
   @include mobile-only {
-    padding-top: 80px !important;
+    --hex-w:        62px;
+    --hex-h:        72px;
+    --hex-gap:      0px;
+    --row-overlap:  18px;
+    --row-offset:   31px;
+    --icon-size:    22px;
+    --img-size:     18px;
   }
 }
+
+// ─── Section wrapper ──────────────────────────────────────────────────────────
+
+.tech-stack.section {
+  background: linear-gradient(160deg, #f8fafc 0%, #f0f4ff 100%);
+  padding-top: 72px !important;
+  padding-bottom: 72px !important;
+
+  @include mobile-only {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+}
+
+// ─── Title ────────────────────────────────────────────────────────────────────
 
 .tech-stack .section-title {
   text-align: center;
   font-size: map.get($font-sizes, 4xl);
   font-weight: 800;
-  margin-bottom: map.get($spacing, lg);
-  color: #facc15;
-
-  @include mobile-only {
-    font-size: map.get($font-sizes, 2xl);
-    margin-bottom: map.get($spacing, md);
-  }
+  margin-bottom: 40px;
+  color: #0f172a;
+  letter-spacing: -0.5px;
 
   @include tablet-only {
     font-size: map.get($font-sizes, 3xl);
-    margin-bottom: map.get($spacing, lg);
+    margin-bottom: 32px;
+  }
+
+  @include mobile-only {
+    font-size: map.get($font-sizes, 2xl);
+    margin-bottom: 24px;
   }
 }
 
+// ─── Container ────────────────────────────────────────────────────────────────
+
 .tech-stack {
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   min-height: auto;
-  padding: 40px 0 120px !important;
 
   &__container {
     max-width: 1100px;
   }
 
-  .tech-grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: map.get($spacing, xl);
-    
-    @include mobile-only {
-      grid-template-columns: 1fr;
-      gap: map.get($spacing, lg);
-    }
-  }
+  // ─── Honeycomb grid ──────────────────────────────────────────────────────────
 
-  .tech-category {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: map.get($spacing, lg);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
-    
-    &:hover {
-      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.12);
-      transform: translateY(-4px);
-    }
-
-    &__header {
-      display: flex;
-      align-items: center;
-      gap: map.get($spacing, sm);
-      padding-bottom: map.get($spacing, md);
-      margin-bottom: map.get($spacing, md);
-      border-bottom: 2px solid;
-    }
-
-    &__icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    }
-
-    &__title {
-      font-size: map.get($font-sizes, lg);
-      font-weight: 700;
-      color: #1e293b;
-      margin: 0;
-    }
-
-    &__content {
-      display: flex;
-      flex-direction: column;
-      gap: map.get($spacing, md);
-    }
-  }
-
-  .tech-subgroup {
-    &__label {
-      display: block;
-      font-size: map.get($font-sizes, sm);
-      font-weight: 600;
-      color: #64748b;
-      margin-bottom: map.get($spacing, xs);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-  }
-
-  .tech-skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: map.get($spacing, sm);
-  }
-
-
-  // 개별 기술 스킬 아이템 - 아이콘 중심 디자인
-  .tech-skill {
+  .honeycomb {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: map.get($spacing, sm);
-    background: #f8fafc;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    min-width: 80px;
-    cursor: pointer;
-    transition: all 0.25s ease;
 
-    &:hover {
-      background: #ffffff;
-      border-color: #facc15;
-      box-shadow: 0 8px 24px rgba(250, 204, 21, 0.25);
+    &__row {
+      display: flex;
+      gap: var(--hex-gap);
+      margin-top: calc(-1 * var(--row-overlap));
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &--offset {
+        margin-left: var(--row-offset);
+      }
+    }
+  }
+
+  // ─── Individual hex cell ──────────────────────────────────────────────────────
+
+  .hex-cell {
+    position: relative;
+    width: var(--hex-w);
+    height: var(--hex-h);
+    flex-shrink: 0;
+    cursor: default;
+
+    // Colored border layer (category color)
+    &__bg {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: var(--hex-color);
+      transition: opacity 0.2s ease;
+      opacity: 0.85;
     }
 
+    // White inner face with content
+    &__face {
+      position: absolute;
+      inset: 3px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 6px 4px 8px;
+      transition: background 0.2s ease;
+    }
+
+    &:hover {
+      .hex-cell__bg {
+        opacity: 1;
+      }
+      .hex-cell__face {
+        background: #f0f7ff;
+      }
+    }
+
+    // Icon
     &__icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
+      width: var(--icon-size);
+      height: var(--icon-size);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fbbf24;
-      color: white;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      border: 1px solid #e2e8f0;
+      flex-shrink: 0;
 
       img {
-        width: 32px;
-        height: 32px;
+        width: var(--img-size);
+        height: var(--img-size);
         object-fit: contain;
-      }
-
-      &--fallback {
-        background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        
-        .fallback-text {
-          font-size: 20px;
-          font-weight: 700;
-        }
       }
     }
 
+    &__fallback {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--hex-color);
+      line-height: 1;
+
+      @include mobile-only {
+        font-size: 14px;
+      }
+    }
+
+    // Label (hidden on mobile — icon only)
     &__label {
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 600;
-      color: #475569;
+      color: #374151;
       text-align: center;
-      white-space: nowrap;
+      line-height: 1.2;
+      max-width: 60px;
+      word-break: break-word;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+
+      @include mobile-only {
+        display: none;
+      }
+    }
+  }
+
+  // ─── Category legend ──────────────────────────────────────────────────────────
+
+  .tech-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+
+    @include mobile-only {
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    &__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    &__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: -0.1px;
     }
   }
 }
