@@ -275,7 +275,14 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 		<div className="project-modal" role="dialog" aria-modal="true">
 			<div className="project-modal__backdrop" onClick={onClose} />
 			<div className="project-modal__shell" role="document">
-				<div className="project-modal__dialog">
+				<div
+					className="project-modal__dialog"
+					style={{
+						"--modal-glow": project.glowColor,
+						"--modal-border": project.glowColor + "44",
+						"--modal-bg": "rgba(15, 23, 42, 0.55)",
+					} as React.CSSProperties}
+				>
 					<button
 						className="project-modal__close"
 						type="button"

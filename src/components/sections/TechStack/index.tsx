@@ -40,11 +40,12 @@ const HexCell = ({ label, color, delay }: HexCellProps) => {
 			className="hex-cell"
 			style={{ "--hex-color": color } as React.CSSProperties}
 			initial={{ opacity: 0, scale: 0.5 }}
-			whileInView={{ opacity: 1, scale: 1, filter: "none", transition: { duration: 0.35, delay, ease: [0.25, 0.46, 0.45, 0.94] } }}
+			whileInView={{ opacity: 1, scale: 1, filter: "drop-shadow(0 0 0px transparent) drop-shadow(0 0 0px transparent)", transition: { duration: 0.35, delay, ease: [0.25, 0.46, 0.45, 0.94] } }}
 			viewport={{ once: true, margin: "-20px" }}
 			transition={{ duration: 0.04, ease: "easeOut" }}
 			whileHover={{
 				scale: 1.12,
+				zIndex: 10,
 				filter: `drop-shadow(0 0 8px ${color}ee) drop-shadow(0 0 20px ${color}66)`,
 				transition: { duration: 0.12, ease: "easeOut" },
 			}}
@@ -126,6 +127,21 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 				</motion.h2>
 
 				<div className="honeycomb-wrapper">
+					{/* 카테고리 레이블 전체를 하나의 패널로 */}
+					<div className="labels-panel">
+						{CATEGORIES.map((cat, i) => (
+							<React.Fragment key={cat.key}>
+								{i > 0 && <div className="labels-panel__divider" />}
+								<span
+									className="labels-panel__item"
+									style={{ color: cat.color }}
+								>
+									{cat.label}
+								</span>
+							</React.Fragment>
+						))}
+					</div>
+
 					{/* filter applied to the whole honeycomb: treats all hexes as one
 					    composite shape → glow appears only on the outer perimeter */}
 					<motion.div
@@ -143,9 +159,6 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 								key={cat.key}
 								className={`honeycomb__row${rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
 							>
-								<div className="row-label" style={{ color: cat.color }}>
-									{cat.label}
-								</div>
 								{cat.skills.map((skill, colIdx) => (
 									<HexCell
 										key={skill}

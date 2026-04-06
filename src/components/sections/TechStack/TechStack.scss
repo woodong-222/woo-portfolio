@@ -124,8 +124,54 @@
 
 // ─── Honeycomb wrapper ────────────────────────────────────────────────────────
 
+.labels-panel {
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 16px 20px;
+  margin-right: 32px;
+  background: rgba(129, 140, 248, 0.13);
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 0 14px -4px rgba(129, 140, 248, 0.45),
+    0 0 30px -10px rgba(129, 140, 248, 0.2);
+
+  &__item {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  &__divider {
+    width: 45%;
+    height: 1px;
+    background: rgba(160, 160, 180, 0.55);
+    align-self: center;
+  }
+
+  @include tablet-only {
+    margin-right: 20px;
+    padding: 12px 14px;
+
+    &__item { font-size: 12px; }
+  }
+
+  @include mobile-only {
+    display: none;
+  }
+}
+
 .honeycomb-wrapper {
   display: flex;
+  align-items: center;
   justify-content: center;
   overflow: visible; // let scaled cells show without clipping
   padding: 12px 12px 20px; // breathing room for hover scale-up
@@ -144,6 +190,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start; // critical: NOT center — center doubles the offset
+  flex-shrink: 0; // prevent flex squishing in honeycomb-wrapper row
 }
 
 // ─── Honeycomb rows ───────────────────────────────────────────────────────────
@@ -163,39 +210,6 @@
   }
 }
 
-// ─── Row category label ───────────────────────────────────────────────────────
-
-.row-label {
-  position: absolute;
-  right: calc(100% + 48px);
-  width: 120px;
-  text-align: right;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  padding: 0;
-  background: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
-
-  @include tablet-only {
-    width: 100px;
-    right: calc(100% + 20px);
-  }
-
-  @include mobile-only {
-    display: none;
-  }
-}
-
-.honeycomb__row--offset .row-label {
-  transform: translateY(-50%) translateX(calc(-1 * var(--row-offset)));
-}
 
 // ─── Individual hex cell ──────────────────────────────────────────────────────
 

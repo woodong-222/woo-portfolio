@@ -1,9 +1,10 @@
 {
   "title": "About Me",
+  "bio": "I care about finding the right balance between security and user experience. I value the team moving in the same direction over individual performance, and when I hit a problem, I try not to default to the familiar solution.",
   "principles": {
-    "balance": "I balance security and user experience, strengthening protection while considering convenience.",
-    "communication": "I understand different methodologies and intentions first, then decide on methods at the end.",
-    "teamwork": "I help teams move consistently by clearly setting direction and goals to minimize confusion.",
-    "growth": "I solve problems with creative approaches and continuously learn new technologies."
+    "balance": "A feature without security is meaningless, and security that's too inconvenient won't be used. I look for the point where neither has to be sacrificed.",
+    "communication": "I try to understand intent and context before methodology. Even with the same goal, people express it differently — so I figure out the background before deciding on an approach.",
+    "teamwork": "Clear goals reduce unnecessary confusion. I think aligning the team's direction is actually the fastest way forward.",
+    "growth": "New technologies are tools, not goals. If something can solve the problem, I'm willing to try unfamiliar approaches."
   }
 }

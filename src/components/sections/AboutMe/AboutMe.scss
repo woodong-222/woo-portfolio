@@ -207,82 +207,50 @@
     width: min(1240px, 95vw);
   }
 
-  .principles-list {
-    display: flex;
-    flex-direction: column;
-    gap: map.get($spacing, xs);
+  &__bio {
+    font-size: 0.975rem;
+    line-height: 1.85;
+    color: #334155;
+    margin: 0 0 20px;
+    padding-left: 16px;
+    border-left: 2.5px solid #facc15;
+  }
 
-    @include tablet-only {
-      gap: map.get($spacing, lg);
-    }
+  &__values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 
     @include mobile-only {
-      gap: map.get($spacing, sm);
+      grid-template-columns: 1fr;
     }
   }
 
-  .principle-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    align-items: center;
-    column-gap: map.get($spacing, md);
-    row-gap: map.get($spacing, xs);
+  .value-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border-radius: 10px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-radius: map.get($border-radius, xl);
-    padding: map.get($spacing, md) map.get($spacing, lg);
-    box-shadow:
-      0 10px 28px rgba(15, 23, 42, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    cursor: default;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease;
 
     &:hover {
-      border-color: rgba(250, 204, 21, 0.6);
-      box-shadow:
-        0 10px 28px rgba(15, 23, 42, 0.08),
-        0 0 0 2px rgba(250, 204, 21, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-
-      .principle-title {
-        color: #d97706; // deeper yellow for title
-      }
-
-      .principle-text {
-        color: #facc15; // match border yellow
-      }
-    }
-    
-    .principle-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 48px;
-      min-height: 48px;
-      background: #ffffff;
-      border-radius: map.get($border-radius, lg);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      border-color: rgba(250, 204, 21, 0.55);
     }
 
-    .principle-title {
-      grid-column: 2;
-      font-size: map.get($font-sizes, lg);
-      font-weight: 700;
-      color: #1e293b;
-      margin: 0;
+    &__icon {
+      flex-shrink: 0;
+      display: flex;
+      padding-top: 1px;
     }
-  
-    .principle-text {
-      grid-column: 1 / -1;
-      font-size: map.get($font-sizes, base);
+
+    &__text {
+      font-size: 13px;
       line-height: 1.7;
-      color: #64748b;
+      color: #475569;
       margin: 0;
-        
-      @include desktop-only {
-        font-size: map.get($font-sizes, base);
-      }
     }
   }
 }

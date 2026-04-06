@@ -40,28 +40,24 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 
 	const principles = [
 		{
-			icon: <Shield size={24} />,
-			title: "Balance",
+			icon: <Shield size={18} />,
 			text: t("principles.balance"),
-			color: "#fbbf24",
-		},
-		{
-			icon: <Target size={24} />,
-			title: "Communication",
-			text: t("principles.communication"),
 			color: "#f59e0b",
 		},
 		{
-			icon: <Users size={24} />,
-			title: "Teamwork",
-			text: t("principles.teamwork"),
-			color: "#facc15",
+			icon: <Target size={18} />,
+			text: t("principles.communication"),
+			color: "#eab308",
 		},
 		{
-			icon: <Lightbulb size={24} />,
-			title: "Growth",
+			icon: <Users size={18} />,
+			text: t("principles.teamwork"),
+			color: "#fbbf24",
+		},
+		{
+			icon: <Lightbulb size={18} />,
 			text: t("principles.growth"),
-			color: "#eab308",
+			color: "#facc15",
 		},
 	];
 
@@ -114,18 +110,21 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 				</motion.div>
 
 					<div className="about-me__content">
-						<div className="principles-list">
+						<motion.p className="about-me__bio" variants={cardVariants}>
+							{t("bio")}
+						</motion.p>
+
+						<div className="about-me__values">
 							{principles.map((principle, index) => (
 								<motion.div
 									key={index}
-									className="principle-card"
+									className="value-item"
 									variants={cardVariants}
 								>
-									<div className="principle-icon" style={{ color: principle.color }}>
+									<span className="value-item__icon" style={{ color: principle.color }}>
 										{principle.icon}
-									</div>
-									<p className="principle-title">{principle.title}</p>
-									<p className="principle-text">{principle.text}</p>
+									</span>
+									<p className="value-item__text">{principle.text}</p>
 								</motion.div>
 							))}
 						</div>
