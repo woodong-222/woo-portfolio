@@ -2,32 +2,12 @@
   "eyebrow": "Security · Fullstack · Cloud",
   "title": {
     "highlight": "One Person Changing the World",
+    "name": "",
     "line2": "Meet Dongwoo Lee."
   },
   "description": "Frontend developer who understands security. I build products that balance protection and user experience — from malicious URL detection to sign language AI to vulnerability analysis tools.",
   "meta": {
     "updated": "Updated: {{date}}"
-  },
-  "typing": {
-    "security": "Security Specialist and",
-    "fullstack": "Full-Stack Developer and",
-    "solver": "Problem Solver and",
-    "innovator": "Innovation Seeker"
-  },
-  "name": "Dongwoo Lee",
-  "nameEnd": "",
-  "subtitle": "Creating Safe and Beautiful Web",
-  "highlight": "Security · Performance · UX",
-  "buttons": {
-    "projects": "💼 View Projects",
-    "contact": "Contact Me"
-  },
-  "skills": {
-    "security": "Security",
-    "fullstack": "Full-Stack",
-    "cloud": "Cloud",
-    "uiux": "UI/UX",
-    "performance": "Optimization"
   },
   "scroll": "Scroll",
   "profileAlt": "Dongwoo Lee Profile"

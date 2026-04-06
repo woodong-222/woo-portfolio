@@ -133,6 +133,12 @@
       animation: gradientFlow 3s ease infinite;
     }
 
+    .title-line2 {
+      font-size: 0.6em;
+      font-weight: 600;
+      opacity: 0.75;
+    }
+
     .gradient-text {
       background: linear-gradient(135deg, #fbbf24 0%, #fde047 25%, #f59e0b 50%, #f97316 100%);
       background-size: 200% 200%;

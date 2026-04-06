@@ -55,6 +55,21 @@
     z-index: 0;
   }
 
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      #f8fafc 0%,
+      transparent 12%,
+      transparent 80%,
+      #ffffff 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
   @include mobile-only {
     padding-top: 48px !important;
     padding-bottom: 48px !important;
@@ -70,6 +85,19 @@
   margin-bottom: 40px;
   color: #0f172a;
   letter-spacing: -0.5px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 6px 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(248, 250, 252, 0.6) 20%,
+    rgba(248, 250, 252, 0.6) 80%,
+    transparent 100%
+  );
 
   @include tablet-only {
     font-size: map.get($font-sizes, 3xl);
@@ -121,6 +149,7 @@
 // ─── Honeycomb rows ───────────────────────────────────────────────────────────
 
 .honeycomb__row {
+  position: relative;
   display: flex;
   gap: 0;
   margin-top: calc(-1 * var(--row-overlap));
@@ -134,18 +163,38 @@
   }
 }
 
-// ─── Ghost hex cell ───────────────────────────────────────────────────────────
+// ─── Row category label ───────────────────────────────────────────────────────
 
-.hex-ghost {
-  width: var(--hex-w);
-  height: var(--hex-h);
-  flex-shrink: 0;
+.row-label {
+  position: absolute;
+  right: calc(100% + 48px);
+  width: 120px;
+  text-align: right;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 0;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
 
-  svg {
-    display: block;
-    width: 100%;
-    height: 100%;
+  @include tablet-only {
+    width: 100px;
+    right: calc(100% + 20px);
   }
+
+  @include mobile-only {
+    display: none;
+  }
+}
+
+.honeycomb__row--offset .row-label {
+  transform: translateY(-50%) translateX(calc(-1 * var(--row-offset)));
 }
 
 // ─── Individual hex cell ──────────────────────────────────────────────────────
@@ -163,12 +212,12 @@
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: var(--hex-color);
     transition: opacity 0.2s ease;
-    opacity: 0.85;
+    opacity: 1;
   }
 
   &__face {
     position: absolute;
-    inset: 3px;
+    inset: 1.5px;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     background: #ffffff;
     display: flex;
@@ -182,7 +231,6 @@
 
   &:hover {
     .hex-cell__bg { opacity: 1; }
-    .hex-cell__face { background: #f0f7ff; }
   }
 
   &__icon {

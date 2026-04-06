@@ -97,7 +97,7 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
 					<motion.h1 className="hero-new__title" variants={itemVariants}>
 						<span className="gradient-text">{titleHighlight}</span>
 						<br />
-						{titleName}{titleLineTwo}
+						{titleName}<span className="title-line2">{titleLineTwo}</span>
 					</motion.h1>
 
 					<motion.p className="hero-new__subtitle" variants={itemVariants}>

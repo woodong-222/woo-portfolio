@@ -24,17 +24,17 @@ const Experience = forwardRef<HTMLElement>((_, forwardedRef) => {
 
 	const containerVariants = createVariants({
 		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.15 } },
+		visible: { opacity: 1, transition: { delayChildren: 0.1, staggerChildren: 0.12 } },
 	});
 
 	const titleVariants = createVariants({
-		hidden: { y: 50, opacity: 0 },
-		visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
+		hidden: { y: 30, opacity: 0 },
+		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const itemVariants = createVariants({
-		hidden: { x: -60, opacity: 0 },
-		visible: { x: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
+		hidden: { opacity: 0, y: 16 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const timeline = t("timeline", { returnObjects: true }) as { year: string; items: string[] }[];
@@ -51,37 +51,15 @@ const Experience = forwardRef<HTMLElement>((_, forwardedRef) => {
 					{t("title")}
 				</motion.h2>
 
-				<div className="timeline">
-					{timeline.map((period, index) => (
-						<motion.div
-							key={period.year}
-							className="timeline-item"
-							variants={itemVariants}
-							custom={index}
-							whileHover={{ scale: 1.02, x: 10 }}
-							transition={{ duration: 0.3 }}
-						>
-							<div className="timeline-marker">
-								<div className="timeline-dot"></div>
-								<div className="timeline-year">{period.year}</div>
-							</div>
-							<div className="timeline-content">
-								{period.items.length > 0 && (() => {
-									const [main, ...details] = period.items;
-									return (
-										<div
-											className={`timeline-achievement ${details.length ? "has-detail" : ""}`}
-											tabIndex={details.length ? 0 : -1}
-										>
-											{main}
-											{details.length > 0 && (
-												<span className="timeline-detail">
-													{details.join(" / ")}
-												</span>
-											)}
-										</div>
-									);
-								})()}
+				<div className="exp-list">
+					{timeline.map((period) => (
+						<motion.div key={period.year} className="exp-item" variants={itemVariants}>
+							<div className="exp-item__year">{period.year}</div>
+							<div className="exp-item__body">
+								<p className="exp-item__main">{period.items[0]}</p>
+								{period.items[1] && (
+									<p className="exp-item__detail">{period.items[1]}</p>
+								)}
 							</div>
 						</motion.div>
 					))}
@@ -92,5 +70,4 @@ const Experience = forwardRef<HTMLElement>((_, forwardedRef) => {
 });
 
 Experience.displayName = "Experience";
-
 export default Experience;
