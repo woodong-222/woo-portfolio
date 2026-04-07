@@ -24,8 +24,8 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 	const { ref: inViewRef, inView } = useInView({ threshold: 0.15 });
 	const { t } = useTranslation("aboutMe");
 	const containerVariants = createVariants({
-		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
+		hidden: { transition: { staggerChildren: 0.08, staggerDirection: -1 } },
+		visible: { transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
 	});
 
 	const titleVariants = createVariants({

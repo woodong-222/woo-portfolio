@@ -46,10 +46,12 @@
     background-image:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='153' viewBox='0 0 88 153'%3E%3Cpolygon points='44 0 88 25.5 88 76.5 44 102 0 76.5 0 25.5' fill='none' stroke='rgba(148 163 184 / 0.18)' stroke-width='1.5'/%3E%3C/svg%3E"),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='153' viewBox='0 0 88 153'%3E%3Cpolygon points='44 0 88 25.5 88 76.5 44 102 0 76.5 0 25.5' fill='none' stroke='rgba(148 163 184 / 0.18)' stroke-width='1.5'/%3E%3C/svg%3E");
-    background-size: 88px 153px, 88px 153px;
+    background-size:
+      var(--hex-w) calc(var(--hex-h) * 1.5),
+      var(--hex-w) calc(var(--hex-h) * 1.5);
     background-position:
       var(--hex-bg-x, 0px) var(--hex-bg-y, 0px),
-      calc(var(--hex-bg-x, 0px) + 44px) calc(var(--hex-bg-y, 0px) + 76.5px);
+      calc(var(--hex-bg-x, 0px) + calc(var(--hex-w) / 2)) calc(var(--hex-bg-y, 0px) + calc(var(--hex-h) * 0.75));
     background-repeat: repeat, repeat;
     pointer-events: none;
     z-index: 0;
@@ -178,9 +180,13 @@
 
   @include mobile-only {
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     justify-content: flex-start;
-    padding: 8px 0 12px;
+    padding: 8px 1rem 12px;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width: calc(100% + 2rem);
+    -webkit-overflow-scrolling: touch;
   }
 }
 

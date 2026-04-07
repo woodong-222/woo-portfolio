@@ -2,7 +2,7 @@ import { forwardRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useTranslation } from "react-i18next";
-import { Github, Link as LinkIcon, Send, Copy, Check } from "lucide-react";
+import { Send, Copy, Check } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { createVariants } from "@/utils/types/motion";
 import WaveDivider from "@/components/common/WaveDivider";
@@ -11,7 +11,6 @@ import "./ContactMe.scss";
 const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 	const { ref: viewRef, inView } = useInView({ threshold: 0.2 });
 	const { t } = useTranslation("contactMe");
-	const { t: tCommon } = useTranslation("common");
 	const currentYear = new Date().getFullYear();
 
 	const [formData, setFormData] = useState({ name: "", message: "" });
@@ -26,8 +25,8 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 	};
 
 	const containerVariants = createVariants({
-		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
+		hidden: { transition: { staggerChildren: 0.08, staggerDirection: -1 } },
+		visible: { transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
 	});
 
 	const itemVariants = createVariants({
@@ -99,24 +98,6 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 						<p className="contact__info-heading">{t("buttonLabel")}</p>
 
 						<div className="contact__channels">
-							<a
-								className="channel-btn"
-								href="https://github.com/woodong-222"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<Github size={16} />
-								GitHub
-							</a>
-							<a
-								className="channel-btn"
-								href="https://velog.io/@woo2083/posts"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<LinkIcon size={16} />
-								{tCommon("buttons.blog")}
-							</a>
 							<div className="contact__email">
 								<span className="contact__email-text">ehddn2083@gmail.com</span>
 								<button
@@ -126,6 +107,28 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 								>
 									{copied ? <Check size={13} /> : <Copy size={13} />}
 								</button>
+							</div>
+							<div className="contact__links">
+								<motion.a
+									className="channel-btn primary"
+									href="https://github.com/woodong-222"
+									target="_blank"
+									rel="noopener noreferrer"
+									whileHover={{ y: -2, scale: 1.02 }}
+									whileTap={{ scale: 0.98 }}
+								>
+									Github
+								</motion.a>
+								<motion.a
+									className="channel-btn ghost"
+									href="https://velog.io/@woo2083/posts"
+									target="_blank"
+									rel="noopener noreferrer"
+									whileHover={{ y: -2, scale: 1.02 }}
+									whileTap={{ scale: 0.98 }}
+								>
+									Velog
+								</motion.a>
 							</div>
 						</div>
 					</motion.div>

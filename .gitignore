@@ -40,6 +40,9 @@ Thumbs.db
 
 # pnpm
 .pnpm-debug.log
+
+# ai
 .gstack/
 .claude/
 .omc/
+CLAUDE.md

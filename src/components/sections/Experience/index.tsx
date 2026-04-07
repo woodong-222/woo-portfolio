@@ -23,8 +23,8 @@ const Experience = forwardRef<HTMLElement>((_, forwardedRef) => {
 	const { t } = useTranslation("experience");
 
 	const containerVariants = createVariants({
-		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { delayChildren: 0.1, staggerChildren: 0.12 } },
+		hidden: { transition: { staggerChildren: 0.08, staggerDirection: -1 } },
+		visible: { transition: { delayChildren: 0.1, staggerChildren: 0.12 } },
 	});
 
 	const titleVariants = createVariants({

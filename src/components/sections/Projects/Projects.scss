@@ -57,7 +57,10 @@
 
 .project-card {
 	position: sticky;
-	margin: 0 32px;
+	max-width: 1280px;
+	width: calc(100% - 64px);
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 20px;
 	border: 1.5px solid var(--border-color, rgba(255, 255, 255, 0.12));
 	// 글래스모피즘
@@ -92,14 +95,11 @@
 	}
 
 	@include tablet-only {
-		margin: 0 20px;
+		width: calc(100% - 40px);
 	}
 
 	@include mobile-only {
-		position: relative !important;
-		top: 0 !important;
-		transform: none !important;
-		margin: 0 12px 16px;
+		width: calc(100% - 24px);
 		border-radius: 16px;
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
@@ -110,20 +110,20 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 40px;
-		align-items: center;
+		align-items: start;
 		padding: 36px 44px;
 		max-width: 1280px;
 		margin: 0 auto;
 		position: relative;
 		z-index: 2;
 
-		@include tablet-only {
-			grid-template-columns: 1fr;
-			gap: 24px;
-			padding: 28px 32px;
+		@media (min-width: 900px) and (max-width: 1023px) {
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
+			padding: 24px 28px;
 		}
 
-		@include mobile-only {
+		@media (max-width: 899px) {
 			grid-template-columns: 1fr;
 			gap: 20px;
 			padding: 24px 20px;
@@ -205,10 +205,12 @@
 		display: flex;
 		gap: 8px;
 		flex-wrap: wrap;
+		justify-content: center;
 		padding-top: 4px;
 
 		@include mobile-only {
 			flex-direction: column;
+			align-items: center;
 
 			.action-btn { justify-content: center; }
 		}
@@ -216,8 +218,7 @@
 
 	// ── 우: 스크린샷 ──────────────────────────────────────────────
 	&__visual {
-		@include tablet-only { order: -1; }
-		@include mobile-only { order: -1; }
+		@media (max-width: 899px) { order: -1; }
 	}
 
 	// ── 확장 중 (모달 오픈 트랜지션) ─────────────────────────────
@@ -282,6 +283,16 @@
 		&:hover {
 			background: rgba(255, 255, 255, 0.15);
 		}
+	}
+}
+
+// ─── Narrow viewport: cap screenshot height ──────────────────────────────────
+
+@media (max-width: 899px) {
+	.screenshot-slider__image {
+		aspect-ratio: auto;
+		height: 220px;
+		max-height: 220px;
 	}
 }
 

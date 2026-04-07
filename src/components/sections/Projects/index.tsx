@@ -174,7 +174,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 				className={`project-card ${isLastCard ? "project-card--last" : ""} ${isExpanding ? "project-card--expanding" : ""}`}
 				initial={{ opacity: 0 }}
 				whileInView={{ opacity: 1 }}
-				viewport={{ once: true, margin: "-60px" }}
+				viewport={{ once: false, margin: "-60px" }}
 				transition={{ duration: 0.5, delay: index * 0.08 }}
 				style={{
 					top: `${stickyTop}px`,

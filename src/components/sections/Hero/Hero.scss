@@ -117,7 +117,7 @@
   }
 
   &__title {
-    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-size: clamp(1.3rem, 3.5vw, 2.6rem);
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: map.get($spacing, sm);
@@ -131,6 +131,10 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: gradientFlow 3s ease infinite;
+    }
+
+    .hero-new__name {
+      font-size: clamp(1.5rem, 4vw, 3rem);
     }
 
     .title-line2 {
@@ -300,6 +304,7 @@
     @include mobile-only {
       order: -1;
       margin-bottom: map.get($spacing, lg);
+      justify-self: center;
     }
 
     .image-container {

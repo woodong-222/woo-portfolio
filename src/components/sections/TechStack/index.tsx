@@ -2,6 +2,7 @@ import React, { forwardRef, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { createVariants } from "@/utils/types/motion";
+import useResponsive from "@/utils/hooks/useResponsive";
 import { getSkillIcon } from "./skillIcons";
 import "./TechStack.scss";
 
@@ -16,13 +17,13 @@ interface CategoryDef {
 
 const CATEGORIES: CategoryDef[] = [
 	{ key: "lang",  label: "Languages",   color: "#f59e0b",
-	  skills: ["Python", "TypeScript", "C", "C++"] },
+	  skills: ["Python", "C++", "C", "TypeScript"] },
 	{ key: "dev",   label: "Development", color: "#3b82f6",
-	  skills: ["React", "FastAPI", "PostgreSQL", "MySQL", "Docker", "AWS", "Jenkins", "GitHub", "Nginx"] },
+	  skills: ["React", "FastAPI", "PostgreSQL", "MySQL", "Docker", "AWS", "Jenkins", "Nginx"] },
 	{ key: "sec",   label: "Security",    color: "#10b981",
 	  skills: ["Cloud", "Web"] },
 	{ key: "other", label: "Other",       color: "#8b5cf6",
-	  skills: ["Windows OS", "Linux OS", "MacOS", "Figma", "Notion", "Slack", "Photoshop", "Premiere"] },
+	  skills: ["Notion", "Slack", "Figma", "Photoshop", "Premiere"] },
 ];
 
 // ─── HexCell ─────────────────────────────────────────────────────────────────
@@ -41,7 +42,7 @@ const HexCell = ({ label, color, delay }: HexCellProps) => {
 			style={{ "--hex-color": color } as React.CSSProperties}
 			initial={{ opacity: 0, scale: 0.5 }}
 			whileInView={{ opacity: 1, scale: 1, filter: "drop-shadow(0 0 0px transparent) drop-shadow(0 0 0px transparent)", transition: { duration: 0.35, delay, ease: [0.25, 0.46, 0.45, 0.94] } }}
-			viewport={{ once: true, margin: "-20px" }}
+			viewport={{ once: false, margin: "-20px" }}
 			transition={{ duration: 0.04, ease: "easeOut" }}
 			whileHover={{
 				scale: 1.12,
@@ -83,7 +84,17 @@ const NEON_COLOR = "#818cf8";
 const NEON_GLOW =
 	`drop-shadow(0 0 6px ${NEON_COLOR}cc) drop-shadow(0 0 16px ${NEON_COLOR}55)`;
 
+// Mobile-optimized rows: Development(8) → 4+4 so no row exceeds 375px
+const MOBILE_ROWS: CategoryDef[] = [
+	{ key: "lang",  label: "Languages",   color: "#f59e0b", skills: ["Python", "C++", "C", "TypeScript"] },
+	{ key: "dev-a", label: "Development", color: "#3b82f6", skills: ["React", "FastAPI", "PostgreSQL", "MySQL"] },
+	{ key: "dev-b", label: "Development", color: "#3b82f6", skills: ["Docker", "AWS", "Jenkins", "Nginx"] },
+	{ key: "sec",   label: "Security",    color: "#10b981", skills: ["Cloud", "Web"] },
+	{ key: "other", label: "Other",       color: "#8b5cf6", skills: ["Notion", "Slack", "Figma", "Photoshop", "Premiere"] },
+];
+
 const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
+	const { isMobile } = useResponsive();
 	const { ref, inView } = useInView({ threshold: 0.1 });
 	const sectionRef = useRef<HTMLElement | null>(null);
 	const honeycombRef = useRef<HTMLDivElement | null>(null);
@@ -152,9 +163,9 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 							filter: NEON_GLOW,
 							transition: { duration: 0.9, delay: 0.5, ease: "easeOut" },
 						}}
-						viewport={{ once: true, margin: "-20px" }}
+						viewport={{ once: false, margin: "-20px" }}
 					>
-						{CATEGORIES.map((cat, rowIdx) => (
+						{(isMobile ? MOBILE_ROWS : CATEGORIES).map((cat, rowIdx) => (
 							<div
 								key={cat.key}
 								className={`honeycomb__row${rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
