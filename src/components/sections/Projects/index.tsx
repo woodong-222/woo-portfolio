@@ -178,7 +178,7 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 				transition={{ duration: 0.5, delay: index * 0.08 }}
 				style={{
 					top: `${stickyTop}px`,
-					transform: `translateY(${translateY}px)`,
+					"--stack-y": `${translateY}px`,
 					backgroundColor: theme.bg,
 					"--glow-color": theme.glow,
 					"--border-color": theme.border,
@@ -225,8 +225,8 @@ const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
 									rel="noopener noreferrer"
 									className="action-btn action-btn--secondary"
 								>
-									<ExternalLink size={13} />
-									Live
+									<LinkIcon size={13} />
+									Link
 								</a>
 							)}
 							{project.githubUrl && (

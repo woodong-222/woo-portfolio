@@ -84,13 +84,26 @@ const NEON_COLOR = "#818cf8";
 const NEON_GLOW =
 	`drop-shadow(0 0 6px ${NEON_COLOR}cc) drop-shadow(0 0 16px ${NEON_COLOR}55)`;
 
-// Mobile-optimized rows: Development(8) → 4+4 so no row exceeds 375px
-const MOBILE_ROWS: CategoryDef[] = [
-	{ key: "lang",  label: "Languages",   color: "#f59e0b", skills: ["Python", "C++", "C", "TypeScript"] },
-	{ key: "dev-a", label: "Development", color: "#3b82f6", skills: ["React", "FastAPI", "PostgreSQL", "MySQL"] },
-	{ key: "dev-b", label: "Development", color: "#3b82f6", skills: ["Docker", "AWS", "Jenkins", "Nginx"] },
-	{ key: "sec",   label: "Security",    color: "#10b981", skills: ["Cloud", "Web"] },
-	{ key: "other", label: "Other",       color: "#8b5cf6", skills: ["Notion", "Slack", "Figma", "Photoshop", "Premiere"] },
+// Mobile groups: one label per category, multiple rows allowed
+interface MobileGroupDef {
+	key: string;
+	label: string;
+	color: string;
+	rows: string[][];
+}
+
+const MOBILE_GROUPS: MobileGroupDef[] = [
+	{ key: "lang",  label: "Languages",   color: "#f59e0b",
+	  rows: [["Python", "C++", "C", "TypeScript"]] },
+	{ key: "dev",   label: "Development", color: "#3b82f6",
+	  rows: [
+		["React", "FastAPI", "PostgreSQL", "MySQL"],
+		["Docker", "AWS", "Jenkins", "Nginx"],
+	  ] },
+	{ key: "sec",   label: "Security",    color: "#10b981",
+	  rows: [["Cloud", "Web"]] },
+	{ key: "other", label: "Other",       color: "#8b5cf6",
+	  rows: [["Notion", "Slack", "Figma", "Photoshop", "Premiere"]] },
 ];
 
 const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
@@ -137,51 +150,93 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 					Tech Stack
 				</motion.h2>
 
-				<div className="honeycomb-wrapper">
-					{/* 카테고리 레이블 전체를 하나의 패널로 */}
-					<div className="labels-panel">
-						{CATEGORIES.map((cat, i) => (
-							<React.Fragment key={cat.key}>
-								{i > 0 && <div className="labels-panel__divider" />}
+				{isMobile ? (
+					/* ── 모바일: 카테고리별 수직 그룹 ── */
+					<div className="mobile-stack">
+						{MOBILE_GROUPS.map((group, groupIdx) => (
+							<div key={group.key} className="mobile-stack__group">
 								<span
-									className="labels-panel__item"
-									style={{ color: cat.color }}
+									className="mobile-stack__label"
+									style={{ color: group.color }}
 								>
-									{cat.label}
+									{group.label}
 								</span>
-							</React.Fragment>
-						))}
-					</div>
-
-					{/* filter applied to the whole honeycomb: treats all hexes as one
-					    composite shape → glow appears only on the outer perimeter */}
-					<motion.div
-						className="honeycomb"
-						ref={honeycombRef}
-						initial={{ filter: "drop-shadow(0 0 0px transparent)" }}
-						whileInView={{
-							filter: NEON_GLOW,
-							transition: { duration: 0.9, delay: 0.5, ease: "easeOut" },
-						}}
-						viewport={{ once: false, margin: "-20px" }}
-					>
-						{(isMobile ? MOBILE_ROWS : CATEGORIES).map((cat, rowIdx) => (
-							<div
-								key={cat.key}
-								className={`honeycomb__row${rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
-							>
-								{cat.skills.map((skill, colIdx) => (
-									<HexCell
-										key={skill}
-										label={skill}
-										color={cat.color}
-										delay={rowIdx * 0.1 + colIdx * 0.04}
-									/>
-								))}
+								<div className="honeycomb-wrapper">
+									<motion.div
+										className="honeycomb"
+										ref={groupIdx === 0 ? honeycombRef : undefined}
+										initial={{ filter: "drop-shadow(0 0 0px transparent)" }}
+										whileInView={{
+											filter: NEON_GLOW,
+											transition: { duration: 0.9, delay: 0.2, ease: "easeOut" },
+										}}
+										viewport={{ once: false, margin: "-20px" }}
+									>
+										{group.rows.map((rowSkills, rowIdx) => (
+											<div
+												key={rowIdx}
+												className={`honeycomb__row${rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
+											>
+												{rowSkills.map((skill, colIdx) => (
+													<HexCell
+														key={skill}
+														label={skill}
+														color={group.color}
+														delay={colIdx * 0.05}
+													/>
+												))}
+											</div>
+										))}
+									</motion.div>
+								</div>
 							</div>
 						))}
-					</motion.div>
-				</div>
+					</div>
+				) : (
+					/* ── 데스크탑/태블릿: 기존 레이아웃 ── */
+					<div className="honeycomb-wrapper">
+						<div className="labels-panel">
+							{CATEGORIES.map((cat, i) => (
+								<React.Fragment key={cat.key}>
+									{i > 0 && <div className="labels-panel__divider" />}
+									<span
+										className="labels-panel__item"
+										style={{ color: cat.color }}
+									>
+										{cat.label}
+									</span>
+								</React.Fragment>
+							))}
+						</div>
+
+						<motion.div
+							className="honeycomb"
+							ref={honeycombRef}
+							initial={{ filter: "drop-shadow(0 0 0px transparent)" }}
+							whileInView={{
+								filter: NEON_GLOW,
+								transition: { duration: 0.9, delay: 0.5, ease: "easeOut" },
+							}}
+							viewport={{ once: false, margin: "-20px" }}
+						>
+							{CATEGORIES.map((cat, rowIdx) => (
+								<div
+									key={cat.key}
+									className={`honeycomb__row${rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
+								>
+									{cat.skills.map((skill, colIdx) => (
+										<HexCell
+											key={skill}
+											label={skill}
+											color={cat.color}
+											delay={rowIdx * 0.1 + colIdx * 0.04}
+										/>
+									))}
+								</div>
+							))}
+						</motion.div>
+					</div>
+				)}
 
 			</div>
 		</section>

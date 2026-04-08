@@ -75,6 +75,11 @@
   @include mobile-only {
     padding-top: 48px !important;
     padding-bottom: 48px !important;
+
+    // 섹션 전체 배경 패턴 숨김 — 모바일에서는 각 그룹별로 독립 정렬
+    &::before {
+      display: none;
+    }
   }
 }
 
@@ -121,6 +126,35 @@
     max-width: 1200px;
     position: relative;
     z-index: 1;
+  }
+}
+
+// ─── Mobile: category-grouped stack ──────────────────────────────────────────
+
+.mobile-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1.5px solid currentColor;
+    width: fit-content;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 }
 
@@ -187,6 +221,19 @@
     margin-right: -1rem;
     width: calc(100% + 2rem);
     -webkit-overflow-scrolling: touch;
+
+    // 각 그룹별 독립 벌집 배경 패턴 — local attachment로 스크롤과 함께 이동
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='58' height='101' viewBox='0 0 58 101'%3E%3Cpolygon points='29 0 58 16.75 58 50.25 29 67 0 50.25 0 16.75' fill='none' stroke='rgba(148 163 184 / 0.18)' stroke-width='1.5'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='58' height='101' viewBox='0 0 58 101'%3E%3Cpolygon points='29 0 58 16.75 58 50.25 29 67 0 50.25 0 16.75' fill='none' stroke='rgba(148 163 184 / 0.18)' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-size:
+      var(--hex-w) calc(var(--hex-h) * 1.5),
+      var(--hex-w) calc(var(--hex-h) * 1.5);
+    background-position:
+      1rem 8px,
+      calc(1rem + var(--hex-w) / 2) calc(8px + var(--hex-h) * 0.75);
+    background-repeat: repeat, repeat;
+    background-attachment: local, local;
   }
 }
 
