@@ -95,8 +95,6 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 				<div className="contact__grid">
 					{/* Left — info & links */}
 					<motion.div className="contact__info" variants={itemVariants}>
-						<p className="contact__info-heading">{t("buttonLabel")}</p>
-
 						<div className="contact__channels">
 							<div className="contact__email">
 								<span className="contact__email-text">ehddn2083@gmail.com</span>

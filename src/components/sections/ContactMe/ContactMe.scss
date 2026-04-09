@@ -93,6 +93,10 @@
   flex-direction: column;
   gap: 24px;
   padding-top: 4px;
+
+  @include mobile-only {
+    order: 2;
+  }
 }
 
 .contact__info-heading {
