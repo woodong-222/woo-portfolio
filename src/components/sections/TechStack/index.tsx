@@ -124,7 +124,11 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 			section.style.setProperty("--hex-bg-x", `${offsetX}px`);
 			section.style.setProperty("--hex-bg-y", `${offsetY}px`);
 		};
+
 		align();
+		setTimeout(align, 100);
+		setTimeout(align, 500);
+
 		window.addEventListener("resize", align);
 		return () => window.removeEventListener("resize", align);
 	}, []);
@@ -133,6 +137,27 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 		hidden: { y: 50, opacity: 0 },
 		visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
+
+	// Flatten mobile groups into a single unified grid naturally mapped to the background
+	const flattenedMobileRows = React.useMemo(() => {
+		const list: any[] = [];
+		let globalRowIdx = 0;
+		MOBILE_GROUPS.forEach((group, gIdx) => {
+			if (gIdx > 0) {
+				list.push({ isSpacer: true, rowIdx: globalRowIdx++ });
+			}
+			group.rows.forEach((rowSkills, rIdx) => {
+				list.push({
+					isSpacer: false,
+					skills: rowSkills,
+					groupLabel: rIdx === 0 ? group.label : null,
+					groupColor: group.color,
+					rowIdx: globalRowIdx++,
+				});
+			});
+		});
+		return list;
+	}, []);
 
 	return (
 		<section
@@ -151,46 +176,55 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 				</motion.h2>
 
 				{isMobile ? (
-					/* ── 모바일: 카테고리별 수직 그룹 ── */
-					<div className="mobile-stack">
-						{MOBILE_GROUPS.map((group, groupIdx) => (
-							<div key={group.key} className="mobile-stack__group">
-								<span
-									className="mobile-stack__label"
-									style={{ color: group.color }}
+					/* ── 모바일: 완전히 평탄화된 단일 육각형 그리드 ── */
+					<div className="honeycomb-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+						<motion.div
+							className="honeycomb"
+							ref={honeycombRef}
+							initial={{ filter: "drop-shadow(0 0 0px transparent)" }}
+							whileInView={{
+								filter: NEON_GLOW,
+								transition: { duration: 0.9, delay: 0.2, ease: "easeOut" },
+							}}
+							viewport={{ once: false, margin: "-20px" }}
+						>
+							{flattenedMobileRows.map((row) => (
+								<div
+									key={`mob-row-${row.rowIdx}`}
+									className={`honeycomb__row${row.rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
+									style={{ position: "relative" }}
 								>
-									{group.label}
-								</span>
-								<div className="honeycomb-wrapper">
-									<motion.div
-										className="honeycomb"
-										ref={groupIdx === 0 ? honeycombRef : undefined}
-										initial={{ filter: "drop-shadow(0 0 0px transparent)" }}
-										whileInView={{
-											filter: NEON_GLOW,
-											transition: { duration: 0.9, delay: 0.2, ease: "easeOut" },
-										}}
-										viewport={{ once: false, margin: "-20px" }}
-									>
-										{group.rows.map((rowSkills, rowIdx) => (
-											<div
-												key={rowIdx}
-												className={`honeycomb__row${rowIdx % 2 === 1 ? " honeycomb__row--offset" : ""}`}
-											>
-												{rowSkills.map((skill, colIdx) => (
-													<HexCell
-														key={skill}
-														label={skill}
-														color={group.color}
-														delay={colIdx * 0.05}
-													/>
-												))}
-											</div>
-										))}
-									</motion.div>
+									{row.isSpacer ? (
+										<div className="hex-cell" style={{ visibility: "hidden" }} />
+									) : (
+										<>
+											{row.groupLabel && (
+												<span
+													className="mobile-stack__label"
+													style={{
+														position: "absolute",
+														top: "-30px", // spacer 영역으로 라벨을 띄움
+														left: row.rowIdx % 2 === 1 ? "calc(-1 * var(--row-offset))" : "0px",
+														color: row.groupColor,
+														zIndex: 20,
+													}}
+												>
+													{row.groupLabel}
+												</span>
+											)}
+											{row.skills.map((skill, colIdx) => (
+												<HexCell
+													key={skill}
+													label={skill}
+													color={row.groupColor}
+													delay={colIdx * 0.05}
+												/>
+											))}
+										</>
+									)}
 								</div>
-							</div>
-						))}
+							))}
+						</motion.div>
 					</div>
 				) : (
 					/* ── 데스크탑/태블릿: 기존 레이아웃 ── */
