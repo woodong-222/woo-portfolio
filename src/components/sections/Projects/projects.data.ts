@@ -74,7 +74,7 @@ export const projects: Project[] = [
 				'Integrates with other security systems via RESTful API.',
 			],
 		},
-		technologies: ['Python', 'FastAPI', 'SQLAlchemy', 'React', 'Docker'],
+		technologies: ['Python', 'FastAPI', 'React', 'Docker'],
 		githubUrl: undefined,
 		liveUrl: 'https://mon47.com',
 		screenshots: [
@@ -121,7 +121,7 @@ export const projects: Project[] = [
 				'Optimized real-time data processing with Redis caching.',
 			],
 		},
-		technologies: ['Python', 'AWS', 'Lambda', 'React', 'Redis', 'WebRTC'],
+		technologies: ['Python', 'AWS', 'Lambda', 'React', 'WebRTC'],
 		githubUrls: [
 			{ label: 'winection-api GIT 바로가기', url: 'https://github.com/DongUgaUga/winection-api' },
 			{ label: 'winection-web GIT 바로가기', url: 'https://github.com/DongUgaUga/winection-web' },
@@ -218,7 +218,7 @@ export const projects: Project[] = [
 				'Systematically manages styles with SCSS modules.',
 			],
 		},
-		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
+		technologies: ['React', 'TypeScript'],
 		githubUrls: [
 			{ label: 'pokeface-api GIT 바로가기', url: 'https://github.com/woodong-222/pokeface-api' },
 			{ label: 'pokeface-web GIT 바로가기', url: 'https://github.com/woodong-222/pokeface-web' },
@@ -268,7 +268,7 @@ export const projects: Project[] = [
 				'Optimized for all devices with responsive design.',
 			],
 		},
-		technologies: ['React', 'TypeScript', 'SCSS', 'Framer Motion', 'Vite'],
+		technologies: ['React', 'TypeScript'],
 		githubUrl: 'https://github.com/woodong-222/woo-portfolio',
 		liveUrl: 'https://woo-portfolio.vercel.app',
 		screenshots: [

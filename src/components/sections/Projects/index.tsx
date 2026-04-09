@@ -263,10 +263,11 @@ ProjectCard.displayName = "ProjectCard";
 
 interface ProjectModalProps {
 	project: Project;
+	theme: { bg: string; glow: string; border: string };
 	onClose: () => void;
 }
 
-const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
+const ProjectModal = ({ project, theme, onClose }: ProjectModalProps) => {
 	const { i18n, t } = useTranslation("common");
 	const lang = i18n.language as "ko" | "en";
 	const [isGitPanelOpen, setIsGitPanelOpen] = useState(false);
@@ -278,9 +279,9 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 				<div
 					className="project-modal__dialog"
 					style={{
-						"--modal-glow": project.glowColor,
-						"--modal-border": project.glowColor + "44",
-						"--modal-bg": "rgba(15, 23, 42, 0.55)",
+						"--modal-glow": theme.glow,
+						"--modal-border": theme.border,
+						"--modal-bg": theme.bg,
 					} as React.CSSProperties}
 				>
 					<button
@@ -418,7 +419,7 @@ const Projects = () => {
 	const { isMobile, isTablet } = useResponsive();
 	const titleRef = useRef<HTMLDivElement>(null);
 	const lastCardRef = useRef<HTMLDivElement>(null);
-	const [activeProject, setActiveProject] = useState<Project | null>(null);
+	const [activeItem, setActiveItem] = useState<{ project: Project; theme: { bg: string; glow: string; border: string } } | null>(null);
 	const [openingProjectId, setOpeningProjectId] = useState<string | null>(null);
 
 	const cardCount = projects.length;
@@ -464,9 +465,9 @@ const Projects = () => {
 	}, [lastCardVisualTop]);
 
 	useEffect(() => {
-		document.body.style.overflow = activeProject ? "hidden" : "";
+		document.body.style.overflow = activeItem ? "hidden" : "";
 		return () => { document.body.style.overflow = ""; };
-	}, [activeProject]);
+	}, [activeItem]);
 
 	return (
 		<>
@@ -492,7 +493,7 @@ const Projects = () => {
 							onOpen={() => {
 								setOpeningProjectId(project.id);
 								window.setTimeout(() => {
-									setActiveProject(project);
+									setActiveItem({ project, theme: CARD_THEMES[index % CARD_THEMES.length] });
 									setOpeningProjectId(null);
 								}, 200);
 							}}
@@ -504,11 +505,12 @@ const Projects = () => {
 				<div className="projects-stack__tail" aria-hidden />
 			</div>
 
-			{activeProject && (
+			{activeItem && (
 				<ProjectModal
-					project={activeProject}
+					project={activeItem.project}
+					theme={activeItem.theme}
 					onClose={() => {
-						setActiveProject(null);
+						setActiveItem(null);
 						setOpeningProjectId(null);
 					}}
 				/>
