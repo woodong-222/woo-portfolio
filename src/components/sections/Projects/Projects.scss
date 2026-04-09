@@ -284,15 +284,6 @@
 	}
 }
 
-// ─── Narrow viewport: cap screenshot height ──────────────────────────────────
-
-@media (max-width: 899px) {
-	.screenshot-slider__image {
-		aspect-ratio: auto;
-		height: 220px;
-		max-height: 220px;
-	}
-}
 
 // ─── Screenshot Skeleton ──────────────────────────────────────────────────────
 
@@ -348,6 +339,7 @@
 	&__image-wrapper {
 		flex: 1;
 		position: relative;
+		min-width: 0;
 	}
 
 	&__image {
