@@ -327,9 +327,8 @@
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
 .contact__footer {
-  margin-top: auto;
-  padding-top: 64px;
-  padding-top: 24px;
+  margin-top: 80px; // 버튼과 구분선 사이의 충분한 여백
+  padding-top: 32px; // 구분선과 저작권 텍스트 사이의 여백
   border-top: 1px solid rgba(15, 23, 42, 0.08);
   font-size: 13px;
   color: #94a3b8;

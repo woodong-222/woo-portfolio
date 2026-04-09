@@ -84,7 +84,11 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 		setTimeout(() => {
 			const element = document.getElementById(id);
 			if (element) {
-				const y = element.getBoundingClientRect().top + window.scrollY - 80;
+				let y = element.getBoundingClientRect().top + window.scrollY - 80;
+				// 연락하기 세션은 상단에 물결이 있으므로 넘겨서 타이틀부터 보이게끔 추가 오프셋
+				if (id === 'contact-me') {
+					y += 200;
+				}
 				window.scrollTo({ top: y, behavior: 'smooth' });
 			}
 		}, 100);
