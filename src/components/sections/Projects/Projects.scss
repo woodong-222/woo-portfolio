@@ -208,9 +208,15 @@
 		padding-top: 4px;
 
 		@include mobile-only {
-			flex-direction: column;
+			flex-direction: row;
 
-			.action-btn { justify-content: center; }
+			.action-btn { 
+				flex: 1;
+				justify-content: center;
+				padding: 8px 10px;
+				font-size: 12px;
+				white-space: nowrap;
+			}
 		}
 	}
 
