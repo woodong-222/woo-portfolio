@@ -7,11 +7,20 @@
   left: 0;
   width: 100%;
   z-index: map.get($z-index, fixed);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   padding: 1.6rem 4rem;
-  mask-image: linear-gradient(to bottom, rgb(0 0 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 57.5%, rgba(0, 0, 0, 0) 100%);
   transition: $transition-base;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    mask-image: linear-gradient(to bottom, rgb(0 0 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 57.5%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 57.5%, rgba(0, 0, 0, 0) 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
 
   @include mobile-only {
     padding: 1.2rem 2rem;
@@ -175,18 +184,8 @@
     .mobile-menu-btn {
       color: #cbd5e1;
 
-      &::before,
-      &::after {
-        background: #cbd5e1;
-      }
-
       &:hover {
         color: #f1f5f9;
-
-        &::before,
-        &::after {
-          background: #f1f5f9;
-        }
       }
     }
   }
@@ -209,37 +208,12 @@
       padding: 8px;
       cursor: pointer;
       flex-shrink: 0;
-      width: 24px;
-      height: 24px;
+      width: 40px;
+      height: 40px;
       transition: all 0.5s ease;
-      
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #1e293b;
-        width: 16px;
-        height: 2px;
-        transition: all 0.5s ease;
-      }
-
-      &::before {
-        top: 30%;
-      }
-
-      &::after {
-        top: 70%;
-      }
 
       &:hover {
         color: #0f172a;
-        
-        &::before,
-        &::after {
-          background: #0f172a;
-        }
       }
     }
   }

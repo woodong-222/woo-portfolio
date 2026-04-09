@@ -79,11 +79,15 @@ const Header = ({ currentSection, onSectionClick }: HeaderProps) => {
 	}, []);
 
 	const handleMenuClick = (id: string) => {
-		const element = document.getElementById(id);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
-		}
 		setIsMobileMenuOpen(false);
+		
+		setTimeout(() => {
+			const element = document.getElementById(id);
+			if (element) {
+				const y = element.getBoundingClientRect().top + window.scrollY - 80;
+				window.scrollTo({ top: y, behavior: 'smooth' });
+			}
+		}, 100);
 	};
 
 	const handleLogoClick = () => {
