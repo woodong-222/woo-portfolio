@@ -12,7 +12,6 @@ const ScrollIndicator = ({ text = "Scroll", onClick }: ScrollIndicatorProps) => 
 		if (onClick) {
 			onClick();
 		} else {
-			// 기본 동작: 다음 섹션으로 스크롤
 			window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
 		}
 	};
