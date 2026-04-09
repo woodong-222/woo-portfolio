@@ -6,7 +6,6 @@ import useResponsive from "@/utils/hooks/useResponsive";
 import { getSkillIcon } from "./skillIcons";
 import "./TechStack.scss";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 
 interface CategoryDef {
 	key: string;
@@ -25,8 +24,6 @@ const CATEGORIES: CategoryDef[] = [
 	{ key: "other", label: "Other",       color: "#8b5cf6",
 	  skills: ["Notion", "Slack", "Figma", "Photoshop", "Premiere"] },
 ];
-
-// ─── HexCell ─────────────────────────────────────────────────────────────────
 
 interface HexCellProps {
 	label: string;
@@ -68,8 +65,6 @@ const HexCell = ({ label, color, delay }: HexCellProps) => {
 	);
 };
 
-// ─── TechStackSection ─────────────────────────────────────────────────────────
-
 function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
 	return (node: T) => {
 		refs.forEach((ref) => {
@@ -84,7 +79,6 @@ const NEON_COLOR = "#818cf8";
 const NEON_GLOW =
 	`drop-shadow(0 0 6px ${NEON_COLOR}cc) drop-shadow(0 0 16px ${NEON_COLOR}55)`;
 
-// Mobile groups: one label per category, multiple rows allowed
 interface MobileGroupDef {
 	key: string;
 	label: string;
@@ -138,9 +132,12 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 		visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
-	// Flatten mobile groups into a single unified grid naturally mapped to the background
 	const flattenedMobileRows = React.useMemo(() => {
-		const list: any[] = [];
+		type FlattenedRow =
+			| { isSpacer: true; rowIdx: number }
+			| { isSpacer: false; rowIdx: number; skills: string[]; groupLabel: string | null; groupColor: string };
+		
+		const list: FlattenedRow[] = [];
 		let globalRowIdx = 0;
 		MOBILE_GROUPS.forEach((group, gIdx) => {
 			if (gIdx > 0) {
@@ -176,7 +173,6 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 				</motion.h2>
 
 				{isMobile ? (
-					/* ── 모바일: 완전히 평탄화된 단일 육각형 그리드 ── */
 					<div className="honeycomb-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
 						<motion.div
 							className="honeycomb"
@@ -203,7 +199,7 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 													className="mobile-stack__label"
 													style={{
 														position: "absolute",
-														top: "-30px", // spacer 영역으로 라벨을 띄움
+														top: "-30px",
 														left: row.rowIdx % 2 === 1 ? "calc(-1 * var(--row-offset))" : "0px",
 														color: row.groupColor,
 														zIndex: 20,
@@ -227,7 +223,6 @@ const TechStackSection = forwardRef<HTMLElement>((_, forwardedRef) => {
 						</motion.div>
 					</div>
 				) : (
-					/* ── 데스크탑/태블릿: 기존 레이아웃 ── */
 					<div className="honeycomb-wrapper">
 						<div className="labels-panel">
 							{CATEGORIES.map((cat, i) => (
