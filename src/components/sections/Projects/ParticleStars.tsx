@@ -15,8 +15,8 @@ const CustomStars = () => {
 			pos[i * 3 + 1] = (Math.random() - 0.5) * 60;
 			pos[i * 3 + 2] = (Math.random() - 0.5) * 20 - 5;
 			rand[i] = Math.random();
-			// 약 15% 확률로 파란색(1.0), 나머지는 하얀색(0.0)
-			col[i] = Math.random() > 0.85 ? 1.0 : 0.0;
+			// 약 30% 확률로 파란색(1.0), 나머지는 하얀색(0.0)
+			col[i] = Math.random() > 0.70 ? 1.0 : 0.0;
 		}
 		return [pos, rand, col];
 	}, []);
@@ -71,7 +71,8 @@ const CustomStars = () => {
             vec4 viewPosition = viewMatrix * modelPosition;
             gl_Position = projectionMatrix * viewPosition;
             
-            float twinkle = sin(uTime * (aRandom * 0.8 + 0.3) + aRandom * 20.0) * 0.5 + 0.5;
+            // 반짝임 속도를 약 절반으로 줄임 (계수 조정)
+            float twinkle = sin(uTime * (aRandom * 0.4 + 0.15) + aRandom * 20.0) * 0.5 + 0.5;
             vAlpha = 0.3 + twinkle * 1.2;
             vColorType = aColorType;
             
