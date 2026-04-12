@@ -1,10 +1,27 @@
 {
   "title": "About Me",
-  "bio": "I care about finding the right balance between security and user experience. I value the team moving in the same direction over individual performance, and when I hit a problem, I try not to default to the familiar solution.",
+  "headline": {
+    "line1": "On the path to becoming a",
+    "line2": "security engineer"
+  },
+  "bio": "Security comes first. My goal is to understand the threats in cloud environments and build products that defend against them. Development skills are a means to implement security more effectively, and full-stack experience gives me the foundation to design and build security products directly.",
+  "callout": "I think from the attacker's perspective first.",
   "principles": {
-    "balance": "A feature without security is meaningless, and security that's too inconvenient won't be used. I look for the point where neither has to be sacrificed.",
-    "communication": "I try to understand intent and context before methodology. Even with the same goal, people express it differently — so I figure out the background before deciding on an approach.",
-    "teamwork": "Clear goals reduce unnecessary confusion. I think aligning the team's direction is actually the fastest way forward.",
-    "growth": "New technologies are tools, not goals. If something can solve the problem, I'm willing to try unfamiliar approaches."
+    "balance": {
+      "title": "Attacker Mindset",
+      "text": "Before thinking about defense, I think about how an attacker would approach it. Vulnerabilities should be found at the design stage, not after the feature is complete."
+    },
+    "communication": {
+      "title": "Security by Design",
+      "text": "Security isn't something you add later. Starting with threat modeling at the requirements stage is what makes meaningful defense possible."
+    },
+    "teamwork": {
+      "title": "Teamwork",
+      "text": "Clear goals reduce unnecessary confusion. I think aligning the team's direction is actually the fastest way forward."
+    },
+    "growth": {
+      "title": "Continuous Learning",
+      "text": "Threats keep evolving. Staying current with new attack techniques and defense strategies is the most fundamental attitude for a security professional."
+    }
   }
 }

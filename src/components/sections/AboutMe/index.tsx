@@ -2,7 +2,6 @@ import React, { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
-import Tilt from "react-parallax-tilt";
 import { Shield, Target, Users, Lightbulb } from "lucide-react";
 import { createVariants } from "@/utils/types/motion";
 import "./AboutMe.scss";
@@ -21,45 +20,56 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]) {
 }
 
 const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
-	const { ref: inViewRef, inView } = useInView({ threshold: 0.15 });
+	const { ref: inViewRef, inView } = useInView({ threshold: 0.1 });
 	const { t } = useTranslation("aboutMe");
+
 	const containerVariants = createVariants({
 		hidden: { transition: { staggerChildren: 0.08, staggerDirection: -1 } },
-		visible: { transition: { delayChildren: 0.2, staggerChildren: 0.12 } },
+		visible: { transition: { delayChildren: 0.15, staggerChildren: 0.1 } },
 	});
 
 	const titleVariants = createVariants({
-		hidden: { y: 60, opacity: 0, scale: 0.9 },
-		visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] } },
+		hidden: { y: 40, opacity: 0 },
+		visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const cardVariants = createVariants({
-		hidden: { y: 80, opacity: 0, scale: 0.95 },
-		visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
+		hidden: { y: 30, opacity: 0 },
+		visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
 	});
 
 	const principles = [
 		{
-			icon: <Shield size={18} />,
-			text: t("principles.balance"),
+			num: "01",
+			title: t("principles.balance.title"),
+			icon: <Shield size={14} />,
+			text: t("principles.balance.text"),
 			color: "#f59e0b",
 		},
 		{
-			icon: <Target size={18} />,
-			text: t("principles.communication"),
+			num: "02",
+			title: t("principles.communication.title"),
+			icon: <Target size={14} />,
+			text: t("principles.communication.text"),
 			color: "#eab308",
 		},
 		{
-			icon: <Users size={18} />,
-			text: t("principles.teamwork"),
+			num: "03",
+			title: t("principles.teamwork.title"),
+			icon: <Users size={14} />,
+			text: t("principles.teamwork.text"),
 			color: "#fbbf24",
 		},
 		{
-			icon: <Lightbulb size={18} />,
-			text: t("principles.growth"),
+			num: "04",
+			title: t("principles.growth.title"),
+			icon: <Lightbulb size={14} />,
+			text: t("principles.growth.text"),
 			color: "#facc15",
 		},
 	];
+
+	const line2Words = t("headline.line2").split(" ");
 
 	return (
 		<section
@@ -73,62 +83,49 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 				initial="hidden"
 				animate={inView ? "visible" : "hidden"}
 			>
-				<motion.h2 className="section-title" variants={titleVariants}>
-					{t("title")}
-				</motion.h2>
-
-				<div className="about-me__layout">
-					<motion.div
-						className="about-me__photo"
-						variants={cardVariants}
-						whileHover={{ y: -6 }}
-						transition={{ duration: 0.35 }}
-					>
-					<Tilt
-						tiltMaxAngleX={10}
-						tiltMaxAngleY={10}
-						glareEnable
-						glareMaxOpacity={0.2}
-						glareColor="#ffffff"
-						glarePosition="all"
-						glareBorderRadius="24px"
-						scale={1.02}
-					>
-						<div className="photo-badge">
-							<div className="punch-hole" />
-							<div className="photo-frame">
-								<img
-									src="/profile.jpeg"
-									alt="Profile"
-									className="photo-image"
-								/>
-								<div className="photo-border" />
-							</div>
-							<div className="badge-strap" />
-						</div>
-					</Tilt>
+				{/* ① 디스플레이 헤드라인 */}
+				<motion.div className="about-me__headline" variants={titleVariants}>
+					<span className="about-me__headline-line1">{t("headline.line1")}</span>
+					<span className="about-me__headline-line2">
+						{line2Words.map((word, i) =>
+							i === line2Words.length - 1 ? (
+								<mark key={i} className="about-me__highlight">{word}</mark>
+							) : (
+								<span key={i}>{word} </span>
+							)
+						)}
+					</span>
 				</motion.div>
 
-					<div className="about-me__content">
-						<motion.p className="about-me__bio" variants={cardVariants}>
-							{t("bio")}
-						</motion.p>
+				{/* ② Bio + Callout */}
+				<motion.div className="about-me__main" variants={cardVariants}>
+					<p className="about-me__bio">{t("bio")}</p>
+					<blockquote className="about-me__callout">
+						{t("callout")}
+					</blockquote>
+				</motion.div>
 
-						<div className="about-me__values">
-							{principles.map((principle, index) => (
-								<motion.div
-									key={index}
-									className="value-item"
-									variants={cardVariants}
+				{/* ③ 번호형 원칙 카드 */}
+				<div className="about-me__values">
+					{principles.map((p, i) => (
+						<motion.div
+							key={i}
+							className="value-item"
+							variants={cardVariants}
+						>
+							<span className="value-item__num">{p.num}</span>
+							<div className="value-item__body">
+								<span
+									className="value-item__title"
+									style={{ color: p.color } as React.CSSProperties}
 								>
-									<span className="value-item__icon" style={{ color: principle.color }}>
-										{principle.icon}
-									</span>
-									<p className="value-item__text">{principle.text}</p>
-								</motion.div>
-							))}
-						</div>
-					</div>
+									{p.icon}
+									{p.title}
+								</span>
+								<p className="value-item__text">{p.text}</p>
+							</div>
+						</motion.div>
+					))}
 				</div>
 			</motion.div>
 		</section>

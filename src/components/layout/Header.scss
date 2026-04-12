@@ -26,9 +26,6 @@
     padding: 1.2rem 2rem;
   }
 
-  &.scrolled {
-  }
-
   &__container {
     position: relative;
     width: 100%;
@@ -151,7 +148,6 @@
     }
   }
 
-  // 어두운 섹션과 겹칠 때
   &.header--dark {
     .nav__item {
       color: #cbd5e1;
@@ -293,7 +289,6 @@
   }
 }
 
-// 어두운 섹션에서 모바일 메뉴 색상
 .header--dark {
   .mobile-menu {
     background: rgba(15, 23, 42, 0.95);

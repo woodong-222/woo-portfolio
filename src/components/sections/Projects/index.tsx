@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Github, ExternalLink, X, Link as LinkIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import useResponsive from "@/utils/hooks/useResponsive";
 import { projects, type Project, type Screenshot } from "./projects.data";
+import { ParticleStars } from "./ParticleStars";
 import "./Projects.scss";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -421,6 +422,7 @@ const Projects = () => {
 	const lastCardRef = useRef<HTMLDivElement>(null);
 	const [activeItem, setActiveItem] = useState<{ project: Project; theme: { bg: string; glow: string; border: string } } | null>(null);
 	const [openingProjectId, setOpeningProjectId] = useState<string | null>(null);
+	const [tailMargin, setTailMargin] = useState(0);
 
 	const cardCount = projects.length;
 	const stickyTop = HEADER_HEIGHT + TITLE_AREA_HEIGHT;
@@ -438,9 +440,34 @@ const Projects = () => {
 			"--card-stack-last-extra": layoutConfig.lastExtraSpacing,
 			"--card-count": cardCount,
 			"--card-offset": `${CARD_OFFSET}px`,
+			marginBottom: `${tailMargin}px`,
 		}) as CSSProperties,
-		[layoutConfig, cardCount]
+		[layoutConfig, cardCount, tailMargin]
 	);
+
+	// 큰 화면에서 마지막 카드 아래의 텅 빈 공간만큼 다음 섹션을 끌어올려 자연스럽게 덮어치게 함
+	useEffect(() => {
+		const updateMargin = () => {
+			if (lastCardRef.current && window.innerWidth >= 1024) {
+				const cardHeight = lastCardRef.current.offsetHeight;
+				const gap = window.innerHeight - stickyTop - cardHeight;
+				if (gap > 0) {
+					setTailMargin(-gap);
+				} else {
+					setTailMargin(0);
+				}
+			} else {
+				setTailMargin(0);
+			}
+		};
+
+		const timer = setTimeout(updateMargin, 300);
+		window.addEventListener("resize", updateMargin);
+		return () => {
+			clearTimeout(timer);
+			window.removeEventListener("resize", updateMargin);
+		};
+	}, [stickyTop]);
 
 	// 마지막 카드가 올라오면 제목도 밀어올리기
 	useEffect(() => {
@@ -472,6 +499,9 @@ const Projects = () => {
 	return (
 		<>
 			<div className="projects-stack" id="projects" style={stackStyle}>
+				<div className="projects-stack__bg" aria-hidden="true">
+					<ParticleStars />
+				</div>
 				<div
 					ref={titleRef}
 					className="projects-stack__title"

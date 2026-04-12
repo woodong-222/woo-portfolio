@@ -80,7 +80,7 @@ const ContactMe = forwardRef<HTMLDivElement>((_, ref) => {
 
 	return (
 		<section className="contact section" id="contact-me" ref={ref}>
-			<WaveDivider color="#0f0f1a" className="projects-to-contact" flip />
+			<WaveDivider color="#070710" className="projects-to-contact" flip />
 			<motion.div
 				ref={viewRef}
 				className="contact__container container"

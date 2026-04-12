@@ -20,7 +20,6 @@ body {
 
 // Scroll container
 .scroll-container {
-  // height와 overflow 제거 - sticky가 제대로 작동하도록
   scroll-behavior: smooth;
   
   &::-webkit-scrollbar {

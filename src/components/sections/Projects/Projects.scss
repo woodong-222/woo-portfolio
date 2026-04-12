@@ -1,23 +1,41 @@
 @use 'sass:map';
+@use 'sass:math';
+@use 'sass:string';
 @use '@/utils/styles/variables.scss' as *;
 
 // ─── Projects Stack ───────────────────────────────────────────────────────────
 
 .projects-stack {
 	position: relative;
-	background: #0a0a14;
-	// 총 스크롤 공간: 카드 수 × spacing + 마지막 여유
-	min-height: calc(
-		(var(--card-count) - 1) * var(--card-stack-spacing) +
-		var(--card-stack-last-extra)
-	);
+	min-height: calc((var(--card-count) - 1) * var(--card-stack-spacing) + var(--card-stack-last-extra));
 	padding-top: 0;
 
 	@include mobile-only {
 		padding-bottom: 60px;
 	}
 
-	// ── 제목 영역 ─────────────────────────────────────────────────
+	&__bg {
+		position: sticky;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		z-index: 0;
+		pointer-events: none;
+		margin-bottom: -100vh;
+		overflow: hidden;
+		background-color: #070710;
+	}
+
+	&__canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+	}
+
 	&__title {
 		position: sticky;
 		z-index: 200;
@@ -37,12 +55,16 @@
 			margin: 0;
 			letter-spacing: -0.5px;
 
-			@include tablet-only { font-size: map.get($font-sizes, 3xl); }
-			@include mobile-only { font-size: map.get($font-sizes, 2xl); }
+			@include tablet-only {
+				font-size: map.get($font-sizes, 3xl);
+			}
+
+			@include mobile-only {
+				font-size: map.get($font-sizes, 2xl);
+			}
 		}
 	}
 
-	// ── 카드 컨테이너 ─────────────────────────────────────────────
 	&__cards {
 		position: relative;
 	}
@@ -63,13 +85,10 @@
 	margin-right: auto;
 	border-radius: 20px;
 	border: 1.5px solid var(--border-color, rgba(255, 255, 255, 0.12));
-	// 글래스모피즘
 	backdrop-filter: blur(24px) saturate(160%);
 	-webkit-backdrop-filter: blur(24px) saturate(160%);
-	// 스택 translateY는 JS --stack-y 변수로 주입
 	transform: translateY(var(--stack-y, 0px));
 
-	// 네온 글로우 그림자
 	box-shadow:
 		0 0 0 1px rgba(255, 255, 255, 0.04),
 		0 4px 24px rgba(0, 0, 0, 0.5),
@@ -79,7 +98,6 @@
 		box-shadow 0.35s ease,
 		transform 0.3s ease;
 
-	// 컬러 액센트 top border
 	&::before {
 		content: '';
 		position: absolute;
@@ -105,7 +123,6 @@
 		-webkit-backdrop-filter: blur(12px);
 	}
 
-	// ── 내부 그리드 ───────────────────────────────────────────────
 	&__inner {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -130,7 +147,6 @@
 		}
 	}
 
-	// ── 좌: 텍스트 콘텐츠 ─────────────────────────────────────────
 	&__content {
 		color: #fff;
 		display: flex;
@@ -179,7 +195,9 @@
 		line-height: 1.5;
 		width: fit-content;
 
-		@include mobile-only { font-size: 11px; }
+		@include mobile-only {
+			font-size: 11px;
+		}
 	}
 
 	&__features {
@@ -210,7 +228,7 @@
 		@include mobile-only {
 			flex-direction: row;
 
-			.action-btn { 
+			.action-btn {
 				flex: 1;
 				justify-content: center;
 				padding: 8px 10px;
@@ -220,12 +238,12 @@
 		}
 	}
 
-	// ── 우: 스크린샷 ──────────────────────────────────────────────
 	&__visual {
-		@media (max-width: 899px) { order: -1; }
+		@media (max-width: 899px) {
+			order: -1;
+		}
 	}
 
-	// ── 확장 중 (모달 오픈 트랜지션) ─────────────────────────────
 	&--expanding {
 		z-index: 2200 !important;
 		box-shadow:
@@ -297,19 +315,22 @@
 	width: 100%;
 	aspect-ratio: 16 / 10;
 	border-radius: 12px;
-	background: linear-gradient(
-		90deg,
-		rgba(255, 255, 255, 0.03) 0%,
-		rgba(255, 255, 255, 0.07) 50%,
-		rgba(255, 255, 255, 0.03) 100%
-	);
+	background: linear-gradient(90deg,
+			rgba(255, 255, 255, 0.03) 0%,
+			rgba(255, 255, 255, 0.07) 50%,
+			rgba(255, 255, 255, 0.03) 100%);
 	background-size: 200% 100%;
 	animation: skeleton-shimmer 2s ease-in-out infinite;
 }
 
 @keyframes skeleton-shimmer {
-	0% { background-position: 200% 0; }
-	100% { background-position: -200% 0; }
+	0% {
+		background-position: 200% 0;
+	}
+
+	100% {
+		background-position: -200% 0;
+	}
 }
 
 // ─── Screenshot Slider ────────────────────────────────────────────────────────
@@ -446,8 +467,10 @@
 
 	&__close {
 		position: absolute;
-		top: 18px; right: 18px;
-		width: 40px; height: 40px;
+		top: 18px;
+		right: 18px;
+		width: 40px;
+		height: 40px;
 		border-radius: 8px;
 		border: none;
 		background: rgba(15, 23, 42, 0.5);
@@ -477,9 +500,9 @@
 		&::after {
 			content: '';
 			position: absolute;
-			bottom: -1px; 
+			bottom: -1px;
 			left: 0;
-			height: 2px; 
+			height: 2px;
 			width: 0%;
 			background: var(--modal-glow, rgba(255, 200, 0, 0.8));
 			animation: modal-line 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -608,7 +631,9 @@
 			box-shadow: 0 16px 28px rgba(255, 255, 255, 0.15);
 		}
 
-		&:active { transform: scale(0.93); }
+		&:active {
+			transform: scale(0.93);
+		}
 	}
 
 	&__action-btn svg {
@@ -638,7 +663,9 @@
 		transform: translateY(-50%) translateX(-4px);
 	}
 
-	&__action-btn--multi { cursor: pointer; }
+	&__action-btn--multi {
+		cursor: pointer;
+	}
 
 	&__action-panel {
 		position: absolute;
@@ -671,7 +698,9 @@
 		align-items: center;
 		gap: 6px;
 
-		&:hover { background: rgba(0, 0, 0, 0.08); }
+		&:hover {
+			background: rgba(0, 0, 0, 0.08);
+		}
 	}
 
 	&__action-item--multi:hover &__action-panel,
@@ -681,7 +710,7 @@
 		transform: translateY(-50%) translateX(-4px);
 	}
 
-	&__action-btn--multi.is-open + &__action-panel,
+	&__action-btn--multi.is-open+&__action-panel,
 	&__action-item--multi.is-open &__action-panel {
 		opacity: 1;
 		pointer-events: auto;
@@ -705,7 +734,9 @@
 	}
 
 	@include tablet-only {
-		&__body { grid-template-columns: 1fr; }
+		&__body {
+			grid-template-columns: 1fr;
+		}
 
 		&__external-actions {
 			top: auto;
@@ -718,28 +749,29 @@
 	@include mobile-only {
 		padding: 16px;
 
-		&__dialog { 
-			width: 100%; 
+		&__dialog {
+			width: 100%;
 			height: auto;
 			max-height: 85vh;
 			display: flex;
 			flex-direction: column;
 		}
 
-		&__header { 
-			padding: 24px 20px 16px; 
+		&__header {
+			padding: 24px 20px 16px;
 			flex-shrink: 0;
 		}
 
-		&__body { 
-			padding: 16px 20px 24px; 
-			grid-template-columns: 1fr; 
-			overflow-y: auto; 
+		&__body {
+			padding: 16px 20px 24px;
+			grid-template-columns: 1fr;
+			overflow-y: auto;
 			gap: 20px;
 
 			&::-webkit-scrollbar {
 				width: 4px;
 			}
+
 			&::-webkit-scrollbar-thumb {
 				background: rgba(255, 255, 255, 0.2);
 				border-radius: 4px;
@@ -747,7 +779,6 @@
 		}
 
 		&__right {
-			// 모바일 뷰에서 돔 순서를 바꿔 사진(오른쪽 요소를) 상단에 배치
 			order: -1;
 		}
 
@@ -763,7 +794,7 @@
 		&__action-btn {
 			width: 38px;
 			height: 38px;
-			
+
 			svg {
 				width: 16px;
 				height: 16px;
@@ -776,7 +807,6 @@
 	}
 }
 
-// Modal 내 슬라이더 오버라이드
 .project-modal .screenshot-slider {
 	transform: none;
 	width: 100%;
@@ -838,8 +868,13 @@
 	transform: translate(-10%, -10%);
 }
 
-.project-modal .screenshot-slider__preview--left { left: -90px; }
-.project-modal .screenshot-slider__preview--right { right: -90px; }
+.project-modal .screenshot-slider__preview--left {
+	left: -90px;
+}
+
+.project-modal .screenshot-slider__preview--right {
+	right: -90px;
+}
 
 .project-modal .screenshot-slider__caption {
 	margin-top: 8px;
@@ -849,7 +884,9 @@
 	letter-spacing: 0.3px;
 }
 
-.project-modal .screenshot-slider__dots { padding-top: 6px; }
+.project-modal .screenshot-slider__dots {
+	padding-top: 6px;
+}
 
 .project-modal .screenshot-slider__dots .dot {
 	background: rgba(255, 255, 255, 0.3);
@@ -863,16 +900,33 @@
 // ─── Keyframes ────────────────────────────────────────────────────────────────
 
 @keyframes modal-line {
-	from { width: 0%; }
-	to { width: 100%; }
+	from {
+		width: 0%;
+	}
+
+	to {
+		width: 100%;
+	}
 }
 
 @keyframes modal-scan {
-	from { height: 0%; opacity: 0.8; }
-	to { height: 100%; opacity: 0; }
+	from {
+		height: 0%;
+		opacity: 0.8;
+	}
+
+	to {
+		height: 100%;
+		opacity: 0;
+	}
 }
 
 @keyframes spin {
-	from { transform: rotate(0deg); }
-	to { transform: rotate(360deg); }
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 }

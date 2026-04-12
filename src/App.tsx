@@ -43,7 +43,7 @@ const App = () => {
 			<AboutMe ref={setSectionRef(1)} />
 			<TechStack ref={setSectionRef(2)} />
 			<Experience ref={setSectionRef(3)} />
-			<WaveDivider color="#0f0f1a" className="about-to-projects" />
+			<WaveDivider color="#070710" className="about-to-projects" />
 		</div>
 
 				<div ref={setSectionRef(4)} id="projects">
