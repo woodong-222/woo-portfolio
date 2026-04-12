@@ -42,28 +42,28 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 		{
 			num: "01",
 			title: t("principles.balance.title"),
-			icon: <Shield size={14} />,
+			icon: <Shield size={20} />,
 			text: t("principles.balance.text"),
 			color: "#f59e0b",
 		},
 		{
 			num: "02",
 			title: t("principles.communication.title"),
-			icon: <Target size={14} />,
+			icon: <Target size={20} />,
 			text: t("principles.communication.text"),
 			color: "#eab308",
 		},
 		{
 			num: "03",
 			title: t("principles.teamwork.title"),
-			icon: <Users size={14} />,
+			icon: <Users size={20} />,
 			text: t("principles.teamwork.text"),
 			color: "#fbbf24",
 		},
 		{
 			num: "04",
 			title: t("principles.growth.title"),
-			icon: <Lightbulb size={14} />,
+			icon: <Lightbulb size={20} />,
 			text: t("principles.growth.text"),
 			color: "#facc15",
 		},
@@ -83,49 +83,48 @@ const AboutMe = forwardRef<HTMLElement>((_, forwardedRef) => {
 				initial="hidden"
 				animate={inView ? "visible" : "hidden"}
 			>
-				{/* ① 디스플레이 헤드라인 */}
-				<motion.div className="about-me__headline" variants={titleVariants}>
-					<span className="about-me__headline-line1">{t("headline.line1")}</span>
-					<span className="about-me__headline-line2">
-						{line2Words.map((word, i) =>
-							i === line2Words.length - 1 ? (
-								<mark key={i} className="about-me__highlight">{word}</mark>
-							) : (
-								<span key={i}>{word} </span>
-							)
-						)}
-					</span>
-				</motion.div>
-
-				{/* ② Bio + Callout */}
-				<motion.div className="about-me__main" variants={cardVariants}>
-					<p className="about-me__bio">{t("bio")}</p>
-					<blockquote className="about-me__callout">
-						{t("callout")}
-					</blockquote>
-				</motion.div>
-
-				{/* ③ 번호형 원칙 카드 */}
-				<div className="about-me__values">
-					{principles.map((p, i) => (
-						<motion.div
-							key={i}
-							className="value-item"
-							variants={cardVariants}
-						>
-							<span className="value-item__num">{p.num}</span>
-							<div className="value-item__body">
-								<span
-									className="value-item__title"
-									style={{ color: p.color } as React.CSSProperties}
-								>
-									{p.icon}
-									{p.title}
-								</span>
-								<p className="value-item__text">{p.text}</p>
-							</div>
+				<div className="about-me__main-content">
+					{/* Left Side: Headline & Bio */}
+					<div className="about-me__intro">
+						<motion.div className="about-me__headline" variants={titleVariants}>
+							<span className="about-me__headline-line1">{t("headline.line1")}</span>
+							<span className="about-me__headline-line2">
+								{line2Words.map((word, i) =>
+									i === line2Words.length - 1 ? (
+										<mark key={i} className="about-me__highlight">{word}</mark>
+									) : (
+										<span key={i}>{word} </span>
+									)
+								)}
+							</span>
 						</motion.div>
-					))}
+
+						<motion.div className="about-me__bio-wrapper" variants={cardVariants}>
+							<p className="about-me__bio">{t("bio")}</p>
+						</motion.div>
+					</div>
+
+					{/* Right Side: Principles (Vertical) */}
+					<div className="about-me__principles">
+						{principles.map((p, i) => (
+							<motion.div
+								key={i}
+								className="value-item"
+								variants={cardVariants}
+							>
+								<span className="value-item__num">{p.num}</span>
+								<div className="value-item__body">
+									<span
+										className="value-item__title"
+									>
+										{p.icon}
+										{p.title}
+									</span>
+									<p className="value-item__text">{p.text}</p>
+								</div>
+							</motion.div>
+						))}
+					</div>
 				</div>
 			</motion.div>
 		</section>
